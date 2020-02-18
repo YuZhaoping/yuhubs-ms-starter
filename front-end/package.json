@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "build-report": "webpack --config webpack.prod.js --env.report",
-    "server-report": "webpack-bundle-analyzer deploy/build/stats.json deploy/build --port 8888",
+    "report-server": "webpack-bundle-analyzer deploy/html/public/stats.json deploy/html/public --port 8888",
     "build-dev": "webpack --config webpack.dev.js",
     "build-dev-report": "webpack --config webpack.dev.js --env.report",
     "dev-server": "webpack-dev-server --config webpack.dev.js",
