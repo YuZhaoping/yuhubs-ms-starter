@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/public/favicon.png">
+
+    <title>YUHUBS ECOM</title>
+
+    <link rel="stylesheet" href="/public/loader.css">
+    <link rel="stylesheet" href="/public/vendors/css/material-icons.css">
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.css[css] %>">
+    <% } %>
+
+    <script>
+      var modernBrowser = (
+        'fetch' in window &&
+        'assign' in Object
+      );
+
+      if ( !modernBrowser ) {
+        var scriptElement = document.createElement('script');
+
+        scriptElement.async = false;
+        scriptElement.src = '/public/js/polyfills.bundle.js';
+        document.head.appendChild(scriptElement);
+      }
+    </script>
+  </head>
+
+  <body id="body">
+    <div id="root">
+      <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.12.0/umd/react-dom.development.js"></script>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+    <script src="<%=htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+    <% } %>
+  </body>
+</html>
