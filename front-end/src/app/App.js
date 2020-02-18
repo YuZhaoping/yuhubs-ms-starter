@@ -1,11 +1,18 @@
 import React from 'react';
 
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+
+import AppThemeProvider from './AppThemeProvider';
+
+
 const App = () => {
 
   return (
-    <React.Fragment>
-    </React.Fragment>
+    <AppThemeProvider>
+      <CssBaseline />
+    </AppThemeProvider>
   );
 };
 

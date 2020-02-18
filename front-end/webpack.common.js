@@ -13,7 +13,7 @@ const webpack = require('webpack');
 const dev = process.env.NODE_ENV !== 'production';
 
 
-let cleanOptions = {
+const cleanOptions = {
   cleanOnceBeforeBuildPatterns: ['**/*'],
   verbose: false,
   dry: false
@@ -37,21 +37,25 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
+        materialui: {
+          test: /[\\/]@material-ui[\\/]/,
+          reuseExistingChunk: true,
+          name: 'material-ui'
+        },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
           reuseExistingChunk: true,
           priority: -10,
           name(module, chunks, cacheGroupKey) {
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            if (packageName === '@material-ui') {
-              return 'material-ui';
-            }
+
             const polyfillsPackages = [
               'whatwg-fetch'
             ];
             if (polyfillsPackages.includes(packageName)) {
               return 'polyfills';
             }
+
             return 'vendors';
           }
         }
