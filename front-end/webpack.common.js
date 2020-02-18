@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ChunkRenamePlugin = require("webpack-chunk-rename-plugin");
 const webpack = require('webpack');
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -25,7 +26,7 @@ module.exports = {
     main: './src/index.js'
   },
   output: {
-    filename: dev ? 'js/[name].bundle.js' : 'js/[name].[chunkhash].js',
+    filename: dev ? 'js/[name].bundle.js' : 'js/[name].[chunkhash].bundle.js',
     chunkFilename: dev ? 'js/[name].chunk.js' : 'js/[name].[chunkhash].chunk.js',
     path: path.resolve(__dirname, 'deploy/html/public'),
     publicPath: '/public/',
@@ -44,6 +45,12 @@ module.exports = {
             const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
             if (packageName === '@material-ui') {
               return 'material-ui';
+            }
+            const polyfillsPackages = [
+              'whatwg-fetch'
+            ];
+            if (polyfillsPackages.includes(packageName)) {
+              return 'polyfills';
             }
             return 'vendors';
           }
@@ -106,12 +113,15 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(cleanOptions),
+    new ChunkRenamePlugin({
+      initialChunksWithEntry: true,
+      polyfills: 'js/polyfills.bundle.js'
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: dev ? './public/dev/index.html' : './public/index.html',
       favicon: './public/favicon.png',
       inject: false,
-      title: 'Webpack Start',
       chunks: ['vendors', 'material-ui', 'main', 'runtime'],
       chunksSortMode: 'manual'
     }),
