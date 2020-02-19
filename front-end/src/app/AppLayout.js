@@ -3,6 +3,8 @@ import React from 'react';
 
 import { AppContent, MainContent } from './appStyles';
 
+import Footer from 'Components/Footer';
+
 
 const AppLayout = (props) => {
 
@@ -11,6 +13,7 @@ const AppLayout = (props) => {
       <AppContent>
         <MainContent>
         </MainContent>
+        <Footer />
       </AppContent>
     </React.Fragment>
   );
