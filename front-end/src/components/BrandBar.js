@@ -12,8 +12,8 @@ import styled from '@material-ui/core/styles/styled';
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 }));
 
 
