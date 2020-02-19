@@ -6,7 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import AppThemeProvider from './AppThemeProvider';
 
-import { Root, AppContent, MainContent } from './appStyles';
+import { Root } from './appStyles';
+import AppLayout from './AppLayout';
 
 
 const App = () => {
@@ -15,10 +16,7 @@ const App = () => {
     <AppThemeProvider>
       <CssBaseline />
       <Root>
-        <AppContent>
-          <MainContent>
-          </MainContent>
-        </AppContent>
+        <AppLayout />
       </Root>
     </AppThemeProvider>
   );
