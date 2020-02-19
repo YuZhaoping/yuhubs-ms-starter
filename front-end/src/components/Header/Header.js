@@ -4,6 +4,9 @@ import React from 'react';
 import styled from '@material-ui/core/styles/styled';
 
 import MuiAppBar from '@material-ui/core/AppBar';
+import MuiIconButton from '@material-ui/core/IconButton';
+
+import MenuIcon from '@material-ui/icons/Menu';
 
 
 const AppBar = styled(MuiAppBar)(({
@@ -26,9 +29,23 @@ const Toolbar = styled('div')({
 });
 
 
-const Header = () => (
+const SidebarButton = styled(MuiIconButton)(({
+  theme
+}) => ({
+  padding: theme.spacing(2)
+}));
+
+
+const Header = ({ onDrawerToggle }) => (
   <AppBar position="sticky" elevation={0}>
     <Toolbar>
+      <SidebarButton
+        onClick={ onDrawerToggle }
+        color="inherit"
+        aria-label="Open drawer"
+      >
+        <MenuIcon />
+      </SidebarButton>
     </Toolbar>
   </AppBar>
 );
