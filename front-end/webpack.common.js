@@ -38,26 +38,21 @@ module.exports = {
       chunks: 'all',
       cacheGroups: {
         materialui: {
-          test: /[\\/]@material-ui[\\/]/,
-          reuseExistingChunk: true,
+          test: /[\\/]node_modules[\\/]@material-ui[\\/]/,
           name: 'material-ui'
+        },
+        redux: {
+          test: /[\\/]node_modules[\\/](.*redux.*|.*react-router.*|history)[\\/]/,
+          name: 'redux'
+        },
+        polyfills: {
+          test: /[\\/]node_modules[\\/]whatwg-fetch[\\/]/,
+          name: 'polyfills'
         },
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          reuseExistingChunk: true,
           priority: -10,
-          name(module, chunks, cacheGroupKey) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            const polyfillsPackages = [
-              'whatwg-fetch'
-            ];
-            if (polyfillsPackages.includes(packageName)) {
-              return 'polyfills';
-            }
-
-            return 'vendors';
-          }
+          name: 'vendors'
         }
       }
     }
@@ -126,7 +121,7 @@ module.exports = {
       template: dev ? './public/dev/index.html' : './public/index.html',
       favicon: './public/favicon.png',
       inject: false,
-      chunks: ['vendors', 'material-ui', 'main', 'runtime'],
+      chunks: ['redux', 'vendors', 'material-ui', 'main', 'runtime'],
       chunksSortMode: 'manual'
     }),
     new MiniCssExtractPlugin({

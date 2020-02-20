@@ -1,1 +1,1 @@
-import 'NodeModules/react-perfect-scrollbar/dist/css/styles.min.css';
+import './css/react-perfect-scrollbar.css';
