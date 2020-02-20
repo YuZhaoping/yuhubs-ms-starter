@@ -5,7 +5,7 @@ import styled from '@material-ui/core/styles/styled';
 
 import Drawer from '@material-ui/core/Drawer';
 
-import Scrollbar from "react-double-scrollbar";
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 
 import BrandBarBase from 'Components/BrandBar';
@@ -22,6 +22,14 @@ const BrandBar = styled(BrandBarBase)(({
   color: theme.palette.common.white,
 
   height: `${brandBarHeight}px`
+}));
+
+
+const Scrollbar = styled(PerfectScrollbar)(({
+  theme
+}) => ({
+  borderRight: 0,
+  backgroundColor: theme.sidebar.background
 }));
 
 
