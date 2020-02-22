@@ -3,6 +3,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+import { useIntl } from 'react-intl';
+
+
 import withStyles from '@material-ui/styles/withStyles';
 import styled from '@material-ui/core/styles/styled';
 
@@ -90,6 +93,8 @@ import {
 const AppsMenu = (props) => {
   const { currentApp, switchApp } = props;
 
+  const intl = useIntl();
+
 
   const [anchorMenu, setAnchorMenu] = useState(null);
 
@@ -128,8 +133,12 @@ const AppsMenu = (props) => {
             component={ Link }
             to={ app.path }
           >
-            <ListItemIcon>{ app.icon }</ListItemIcon>
-            <ListItemText primary={ app.name } />
+            <ListItemIcon>
+              { app.icon }
+            </ListItemIcon>
+            <ListItemText
+              primary={ intl.formatMessage({id: app.name}) }
+            />
           </StyledMenuItem>
         ))}
       </StyledMenu>
