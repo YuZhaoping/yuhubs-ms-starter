@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 
+import { useIntl } from 'react-intl';
+
+
 import withStyles from '@material-ui/styles/withStyles';
 
 import MuiTabs from '@material-ui/core/Tabs';
@@ -25,7 +28,7 @@ const Tabs = withStyles(theme => ({
 
     '& > div': {
       backgroundColor: theme.palette.common.white,
-      maxWidth: theme.spacing(6),
+      maxWidth: theme.spacing(12),
       width: '100%'
     }
   }
@@ -81,12 +84,14 @@ const TabLink = (props) => (
 const PageTabs = (props) => {
   const { tabs, toTab } = props;
 
+  const intl = useIntl();
+
+
   const [currentTab, setCurrentTab] = useState(toTab);
 
   const handleTabsChange = (event, value) => {
     setCurrentTab(value);
   };
-
 
   useEffect(() => {
     if (toTab !== currentTab) {
@@ -97,14 +102,16 @@ const PageTabs = (props) => {
 
   return (
     <Tabs
-      value={currentTab}
+      value={ currentTab }
       onChange={ handleTabsChange }
       centered={true}
       scrollButtons="auto"
     >
       {tabs.map((tab, index) => (
-        <TabLink key={index} label={tab.label} value={tab.value}
-          to={tab.path}
+        <TabLink key={ index }
+          label={ intl.formatMessage({id: tab.label}) }
+          value={ tab.value }
+          to={ tab.path }
         />
       ))}
     </Tabs>
