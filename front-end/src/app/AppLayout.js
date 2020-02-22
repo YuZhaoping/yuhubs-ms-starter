@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 
 import styled from '@material-ui/core/styles/styled';
 
+
+import routes from 'Routes/index';
 
 import { AppContent, MainContent } from './appStyles';
 
@@ -49,6 +52,15 @@ const AppLayout = (props) => {
           onDrawerToggle={ handleDrawerToggle }
         />
         <MainContent>
+          <Switch>
+            {routes.map((route, index) => (
+              <Route
+                key={ index }
+                path={ route.path }
+                component={ route.component }
+              />
+            ))}
+          </Switch>
         </MainContent>
         <Footer />
       </AppContent>
