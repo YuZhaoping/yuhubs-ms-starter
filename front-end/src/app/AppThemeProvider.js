@@ -16,7 +16,7 @@ const AppThemeProvider = (props) => {
 
   return (
     <StylesProvider injectFirst>
-      <MuiThemeProvider theme={applyTheme}>
+      <MuiThemeProvider theme={ applyTheme }>
         { children }
       </MuiThemeProvider>
     </StylesProvider>
