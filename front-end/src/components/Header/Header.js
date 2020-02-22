@@ -9,6 +9,9 @@ import MuiIconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 
+const toolbarHeight = 48;
+
+
 const AppBar = styled(MuiAppBar)(({
   theme
 }) => ({
@@ -17,8 +20,6 @@ const AppBar = styled(MuiAppBar)(({
   color: theme.menubar.dark
 }));
 
-
-const toolbarHeight = 48;
 
 const Toolbar = styled('div')({
   position: 'relative',

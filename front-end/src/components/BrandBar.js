@@ -43,7 +43,7 @@ const BrandBar = (props) => {
       <BrandIcon>
         <img src={require("Assets/img/logo.png")} />
       </BrandIcon>
-      <BrandName>Ecom App</BrandName>
+      <BrandName>ECOM APP</BrandName>
     </div>
   );
 };
