@@ -2,6 +2,9 @@ import React from 'react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import styled from '@material-ui/core/styles/styled';
 
 import List from '@material-ui/core/List';
@@ -158,12 +161,16 @@ export const MenuItem = ({
     to={ to }
   >
     { icon }
-    <ItemText>{ name }</ItemText>
+    <ItemText>
+      <FormattedMessage id={ name }/>
+    </ItemText>
   </Item>
   :
   <Item {...rest}>
     { icon }
-    <ItemText>{ name }</ItemText>
+    <ItemText>
+      <FormattedMessage id={ name }/>
+    </ItemText>
     { isCollapsable ? (
       isOpen ? (
         <IconMore />
@@ -192,11 +199,15 @@ export const MenuSubItem = ({
     onClick={ onClick }
   >
     { icon }
-    <SubItemText>{ name }</SubItemText>
+    <SubItemText>
+      <FormattedMessage id={ name }/>
+    </SubItemText>
   </SubItem>
   :
   <SubItem>
     { icon }
-    <SubItemText>{ name }</SubItemText>
+    <SubItemText>
+      <FormattedMessage id={ name }/>
+    </SubItemText>
   </SubItem>
 )};

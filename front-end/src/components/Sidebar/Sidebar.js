@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import styled from '@material-ui/core/styles/styled';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -95,7 +98,7 @@ const Sidebar = (props) => {
 
                 {item.header ? (
                   <ItemHeader variant="caption">
-                    { item.header }
+                    <FormattedMessage id={ item.header }/>
                   </ItemHeader>
                 ) : null}
 
