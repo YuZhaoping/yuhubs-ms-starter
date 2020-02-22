@@ -1,27 +1,41 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 
 import StylesProvider from '@material-ui/styles/StylesProvider';
 import MuiThemeProvider from '@material-ui/styles/ThemeProvider';
 
+import { IntlProvider } from 'react-intl';
 
-import appThemes from './themes';
+
+import themes from './themes';
+import locales from '../i18n';
 
 
 const AppThemeProvider = (props) => {
-  const { children } = props;
+  const { currentLocale, children } = props;
 
-  const applyTheme = appThemes[0];
+  const theme = themes[0];
+
+  const localeData = locales[currentLocale.localeKey];
 
 
   return (
     <StylesProvider injectFirst>
-      <MuiThemeProvider theme={ applyTheme }>
-        { children }
+      <MuiThemeProvider theme={ theme }>
+        <IntlProvider locale={ localeData.locale } messages={ localeData.messages }>
+          { children }
+        </IntlProvider>
       </MuiThemeProvider>
     </StylesProvider>
   );
 };
 
 
-export default AppThemeProvider;
+const mapStateToProps = ({ customizings }) => {
+  const { currentLocale } = customizings;
+  return { currentLocale };
+};
+
+export default connect(mapStateToProps, {
+})(AppThemeProvider);
