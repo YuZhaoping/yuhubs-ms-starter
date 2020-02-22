@@ -1,4 +1,5 @@
 const en_US = {
+  "app.name": "E-com assistant",
   "Home": "Home",
   "Dashboard": "Dashboard",
   "Index": "Index",

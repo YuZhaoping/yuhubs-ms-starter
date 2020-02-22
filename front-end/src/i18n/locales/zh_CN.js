@@ -1,4 +1,5 @@
 const zh_CN = {
+  "app.name": "电商助手",
   "Home": "主页",
   "Dashboard": "仪表盘",
   "Index": "起始页",

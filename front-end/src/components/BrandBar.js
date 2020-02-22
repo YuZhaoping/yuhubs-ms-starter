@@ -1,6 +1,9 @@
 import React from 'react';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import clsx from 'clsx';
@@ -41,9 +44,11 @@ const BrandBar = (props) => {
   return (
     <div className={clsx(classes.root, className)} >
       <BrandIcon>
-        <img src={require("Assets/img/logo.png")} />
+        <img src={ require("Assets/img/logo.png") } />
       </BrandIcon>
-      <BrandName>ECOM APP</BrandName>
+      <BrandName>
+        <FormattedMessage id={ "app.name" }/>
+      </BrandName>
     </div>
   );
 };
