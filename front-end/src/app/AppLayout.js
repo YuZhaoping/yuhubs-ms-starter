@@ -14,7 +14,10 @@ import Footer from 'Components/Footer';
 import Sidebar from 'Components/Sidebar';
 
 
-const drawerWidth = 252;
+import sizes from 'Components/sizes';
+
+const drawerWidth = sizes.appSidebarWidth;
+
 
 const Drawer = styled('div')(({
   theme

@@ -8,7 +8,9 @@ import MuiTabs from '@material-ui/core/Tabs';
 import MuiTab from '@material-ui/core/Tab';
 
 
-const tabsHeight = 12;
+import sizes from 'Components/sizes';
+
+const tabsHeight = sizes.pageTabsHeight;
 
 
 const Tabs = withStyles(theme => ({

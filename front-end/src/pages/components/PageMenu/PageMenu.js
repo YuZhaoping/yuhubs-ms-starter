@@ -14,7 +14,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
-const menuItemHeight = 36;
+import sizes from 'Components/sizes';
+
+const menuItemHeight = sizes.pageMenuItemHeight;
 
 
 const IconButton = styled(MuiIconButton)(({

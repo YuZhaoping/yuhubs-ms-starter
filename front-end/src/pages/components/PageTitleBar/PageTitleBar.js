@@ -12,7 +12,9 @@ import PageMenu from 'Pages/components/PageMenu';
 import PageTabs from 'Pages/components/PageTabs';
 
 
-const titleBarHeight = 36;
+import sizes from 'Components/sizes';
+
+const titleBarHeight = sizes.pageTitleBarHeight;
 
 
 const useStyles = makeStyles(theme => ({
