@@ -10,6 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 
 import AppsMenu from 'Components/AppsMenu';
+import LanguageSwitcher from 'Components/LanguageSwitcher';
 
 
 import sizes from 'Components/sizes';
@@ -62,6 +63,8 @@ const Header = ({ onDrawerToggle }) => (
       <GrowSpace />
 
       <AppsMenu />
+
+      <LanguageSwitcher />
 
     </Toolbar>
   </AppBar>
