@@ -48,6 +48,7 @@
     "@material-ui/pickers": "^3.2.10",
     "connected-react-router": "^6.7.0",
     "history": "^4.10.1",
+    "polished": "^3.4.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-intl": "^3.12.0",
