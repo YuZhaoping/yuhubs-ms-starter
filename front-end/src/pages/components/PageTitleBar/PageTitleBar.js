@@ -1,6 +1,9 @@
 import React from 'react';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/styles/withStyles';
 import styled from '@material-ui/core/styles/styled';
@@ -33,7 +36,7 @@ const Title = withStyles(theme => ({
 }))(Typography);
 
 
-const BlackSpace = styled('div')({
+const GrowSpace = styled('div')({
   flexGrow: 1
 });
 
@@ -44,11 +47,14 @@ const PageTitleBar = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root} >
-      { title && <Title variant="h6">{title}</Title> }
-      <BlackSpace />
-      { tabs && <PageTabs tabs={tabs} { ...rest } /> }
-      { menus && <PageMenu menus={menus} />}
+    <div className={ classes.root } >
+      { title &&
+        <Title variant="h6">
+          <FormattedMessage id={ title }/>{ ' /' }
+        </Title> }
+      <GrowSpace />
+      { tabs && <PageTabs tabs={ tabs } { ...rest } /> }
+      { menus && <PageMenu menus={ menus } />}
     </div>
   );
 };

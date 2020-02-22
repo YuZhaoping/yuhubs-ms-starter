@@ -6,7 +6,7 @@ import PagesLayout from 'Pages/PagesLayout';
 import tabs from './tabs';
 
 
-const title = 'Catalog /';
+const title = 'Catalog';
 
 const Layout = (props) => {
   const { children, ...rest } = props;

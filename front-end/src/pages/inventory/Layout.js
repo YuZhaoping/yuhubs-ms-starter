@@ -7,7 +7,7 @@ import tabs from './tabs';
 import menus from './routes';
 
 
-const title = 'Inventory /';
+const title = 'Inventory';
 
 const Layout = (props) => {
   const { children, ...rest } = props;
