@@ -58,6 +58,14 @@ const SupplySuppliers = async(() => import(/* webpackChunkName: "supply-supplier
 const Profile = async(() => import(/* webpackChunkName: "user-profile" */ 'Pages/settings/Profile'));
 
 
+import {
+  APP_CATALOG,
+  APP_INVENTORY,
+  APP_SALE,
+  APP_SUPPLY
+} from 'Constants/appIds';
+
+
 const homeRoutes = {
   name: "Home",
   path: "/app",
@@ -86,6 +94,7 @@ const catalogRoutes = {
   path: "/app/catalog",
   icon: <FolderSpecialIcon />,
   component: CatalogDefault,
+  appId: APP_CATALOG,
   children: [
     {
       path: "/app/catalog/categories/:type",
@@ -119,6 +128,7 @@ const inventoryRoutes = {
   path: "/app/inventory",
   icon: <StorageIcon />,
   component: InventoryDefault,
+  appId: APP_INVENTORY,
   children: [
     {
       path: "/app/inventory/storages",
@@ -134,6 +144,7 @@ const saleRoutes = {
   path: "/app/sale",
   icon: <MonetizationOnIcon />,
   component: SaleDefault,
+  appId: APP_SALE,
   children: [
     {
       path: "/app/sale/accounts",
@@ -149,6 +160,7 @@ const supplyRoutes = {
   path: "/app/supply",
   icon: <LocalShippingIcon />,
   component: SupplyDefault,
+  appId: APP_SUPPLY,
   children: [
     {
       path: "/app/supply/suppliers",

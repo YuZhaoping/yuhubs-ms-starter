@@ -9,6 +9,9 @@ import MuiIconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
 
+import AppsMenu from 'Components/AppsMenu';
+
+
 import sizes from 'Components/sizes';
 
 const toolbarHeight = sizes.headerToolbarHeight;
@@ -32,6 +35,12 @@ const Toolbar = styled('div')({
 });
 
 
+const GrowSpace = styled('div')({
+  flexGrow: 1,
+  width: '100%'
+});
+
+
 const SidebarButton = styled(MuiIconButton)(({
   theme
 }) => ({
@@ -49,6 +58,11 @@ const Header = ({ onDrawerToggle }) => (
       >
         <MenuIcon />
       </SidebarButton>
+
+      <GrowSpace />
+
+      <AppsMenu />
+
     </Toolbar>
   </AppBar>
 );
