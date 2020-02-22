@@ -1,7 +1,7 @@
 
 const tabs = [
-  { value: 'global-categories', label: 'Global categories', path: '/app/catalog/categories/global' },
-  { value: 'self-categories', label: 'Self categories', path: '/app/catalog/categories/self' },
+  { value: 'common-categories', label: 'Common-categories', path: '/app/catalog/categories/common' },
+  { value: 'customized-categories', label: 'Customized-categories', path: '/app/catalog/categories/customized' },
   { value: 'products', label: 'Products', path: '/app/catalog/products' }
 ];
 

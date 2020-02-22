@@ -103,13 +103,13 @@ const catalogRoutes = {
       component: CatalogCategories,
       children: [
         {
-          path: "/app/catalog/categories/global",
-          name: "Global",
+          path: "/app/catalog/categories/common",
+          name: "Common",
           icon: <CreateNewFolderIcon />
         },
         {
-          path: "/app/catalog/categories/self",
-          name: "Self",
+          path: "/app/catalog/categories/customized",
+          name: "Customized",
           icon: <FolderSharedIcon />
         }
       ]

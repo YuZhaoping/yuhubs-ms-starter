@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 
 const Default = () => (
-  <Redirect to={'/app/catalog/categories/self'} />
+  <Redirect to={'/app/catalog/categories/common'} />
 );
 
 
