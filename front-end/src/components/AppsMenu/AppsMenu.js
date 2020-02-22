@@ -72,15 +72,7 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles(theme => ({
   root: {
-    height: `${menuItemHeight}px`,
-
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white
-      }
-    }
+    height: `${menuItemHeight}px`
   }
 }))(MenuItem);
 
