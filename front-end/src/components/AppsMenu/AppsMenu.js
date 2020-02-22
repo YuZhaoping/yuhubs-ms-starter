@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 import withStyles from '@material-ui/styles/withStyles';
@@ -89,7 +90,13 @@ const Link = React.forwardRef((props, ref) => (
 ));
 
 
+import {
+  switchApp
+} from 'Actions/appSettings';
+
+
 const AppsMenu = (props) => {
+  const { currentApp, switchApp } = props;
 
 
   const [anchorMenu, setAnchorMenu] = useState(null);
@@ -121,8 +128,10 @@ const AppsMenu = (props) => {
         {apps.map((app, index) => (
           <StyledMenuItem
             key={ index }
+            selected={ currentApp === app.id }
             onClick={() => {
               closeMenu();
+              switchApp(app.id);
             }}
             component={ Link }
             to={ app.path }
@@ -138,4 +147,11 @@ const AppsMenu = (props) => {
 };
 
 
-export default AppsMenu;
+const mapStateToProps = ({ appSettings }) => {
+  const { currentApp } = appSettings;
+  return { currentApp };
+};
+
+export default connect(mapStateToProps, {
+  switchApp
+})(AppsMenu);

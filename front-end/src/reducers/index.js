@@ -5,8 +5,12 @@ import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 
 
+import appSettings from './appSettings';
+
+
 const reducers = (history) => combineReducers({
-  router: connectRouter(history)
+  router: connectRouter(history),
+  appSettings
 });
 
 

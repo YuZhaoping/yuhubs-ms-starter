@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 import styled from '@material-ui/core/styles/styled';
@@ -46,8 +47,20 @@ const Scrollbar = styled(PerfectScrollbar)(({
 }));
 
 
+import {
+  switchApp
+} from 'Actions/appSettings';
+
+
 const Sidebar = (props) => {
-  const { classes, staticContext, ...rest } = props;
+  const {
+    classes,
+    staticContext,
+    dispatch,
+    currentApp,
+    switchApp,
+    ...rest
+  } = props;
 
 
   const [itemsState, setItemsState] = useState({});
@@ -62,7 +75,7 @@ const Sidebar = (props) => {
     });
 
     setItemsState(state);
-  }, []);
+  }, [currentApp]);
 
   const toggleCategory = (index) => {
     const state = { ...itemsState, [index]: !itemsState[index] };
@@ -111,6 +124,7 @@ const Sidebar = (props) => {
                             icon={ sub.icon }
                             to={ sub.children ? null : sub.path }
                             level={1}
+                            onClick={ () => switchApp(item.appId) }
                           />
 
                           {sub.children && sub.children.map((child, index) => (
@@ -120,6 +134,7 @@ const Sidebar = (props) => {
                               icon={ child.icon }
                               to={ child.path }
                               level={2}
+                              onClick={ () => switchApp(item.appId) }
                             />
                           ))}
 
@@ -134,6 +149,7 @@ const Sidebar = (props) => {
                     name={ item.name }
                     icon={ item.icon }
                     to={ item.path }
+                    onClick={ () => switchApp(item.appId) }
                   />
                 )}
 
@@ -148,4 +164,11 @@ const Sidebar = (props) => {
 };
 
 
-export default withRouter(Sidebar);
+const mapStateToProps = ({ appSettings }) => {
+  const { currentApp } = appSettings;
+  return { currentApp };
+};
+
+export default withRouter(connect(mapStateToProps, {
+  switchApp
+})(Sidebar));
