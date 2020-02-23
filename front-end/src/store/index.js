@@ -5,14 +5,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 
+import createSagaMiddleware from 'redux-saga';
+
 
 import reducers from '../reducers';
+import rootSaga from '../sagas';
 
 
 const history = createBrowserHistory();
 const routeMiddleware = routerMiddleware(history);
 
-const middlewares = [routeMiddleware];
+const sagaMiddleware = createSagaMiddleware();
+
+const middlewares = [sagaMiddleware, routeMiddleware];
 
 
 export default function configureStore(initialState) {
@@ -25,6 +30,8 @@ export default function configureStore(initialState) {
       applyMiddleware(...middlewares)
     )
   );
+
+	sagaMiddleware.run(rootSaga);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
