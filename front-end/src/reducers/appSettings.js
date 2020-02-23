@@ -1,6 +1,6 @@
 import {
   SWITCH_APP
-} from 'Constants/appActions';
+} from 'Constants/appSettings';
 
 
 const initialState = {
