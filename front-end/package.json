@@ -46,6 +46,7 @@
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/pickers": "^3.2.10",
+    "base64-url": "^2.3.3",
     "connected-react-router": "^6.7.0",
     "history": "^4.10.1",
     "polished": "^3.4.4",
