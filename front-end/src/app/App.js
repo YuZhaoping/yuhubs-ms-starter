@@ -1,29 +1,58 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 
 import 'Assets/Css';
+
+import AppThemeProvider from './AppThemeProvider';
+
+import { Root } from './appStyles';
+
+import AuthorizedRoute from './AuthorizedRoute';
+
+import AppLayout from './AppLayout';
+import AuthLayout from '../auth/AuthLayout';
 
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 
-import AppThemeProvider from './AppThemeProvider';
-
-import { Root } from './appStyles';
-import AppLayout from './AppLayout';
-
-
-const App = () => {
+const App = (props) => {
+  const { authUser } = props;
 
   return (
     <AppThemeProvider>
+
       <CssBaseline />
+
       <Root>
-        <AppLayout />
+
+        <Switch>
+          <AuthorizedRoute
+            path="/app"
+            component={ AppLayout }
+            authUser={ authUser }
+          />
+
+          <Route
+            path="/auth"
+            component={ AuthLayout }
+          />
+
+          <Redirect to="/app" />
+        </Switch>
+
       </Root>
+
     </AppThemeProvider>
   );
 };
 
 
-export default App;
+const mapStateToProps = ({ auth }) => {
+  return { authUser: auth.user };
+};
+
+export default connect(mapStateToProps, {
+})(App);
