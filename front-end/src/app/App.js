@@ -14,6 +14,8 @@ import AuthorizedRoute from './AuthorizedRoute';
 import AppLayout from './AppLayout';
 import AuthLayout from '../auth/AuthLayout';
 
+import ErrorHandler from './ErrorHandler';
+
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -27,6 +29,8 @@ const App = (props) => {
       <CssBaseline />
 
       <Root>
+
+        <ErrorHandler />
 
         <Switch>
           <AuthorizedRoute
