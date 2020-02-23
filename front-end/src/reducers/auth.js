@@ -8,7 +8,9 @@ import {
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-  CLEAN_AUTH_ERROR
+  CLEAN_AUTH_ERROR,
+  MARK_AUTH_STATE,
+  SET_AUTH_USERNAME
 } from 'Constants/auth';
 
 
@@ -22,6 +24,7 @@ const initialAuthState = () => {
     loading: false,
     user: authUser,
     username: authUser ? authUser.name : '',
+    fromPath: null,
     error: null
   };
 };
@@ -74,6 +77,18 @@ export default (state = initialAuthState(), action) => {
 
     case CLEAN_AUTH_ERROR:
       return { ...state, error: null };
+
+
+    case MARK_AUTH_STATE:
+      return { ...state,
+        fromPath: action.fromPath,
+        error: action.error
+      };
+
+    case SET_AUTH_USERNAME:
+      return { ...state,
+        username: action.username
+      };
 
 
     default:

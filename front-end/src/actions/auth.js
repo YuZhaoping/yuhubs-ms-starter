@@ -8,7 +8,12 @@ import {
   SIGNUP_USER,
   SIGNUP_USER_SUCCESS,
   SIGNUP_USER_FAILURE,
-  CLEAN_AUTH_ERROR
+  CLEAN_AUTH_ERROR,
+  START_REFRESH_TOKEN_TASK,
+  CANCEL_REFRESH_TOKEN_TASK,
+  CLEAN_AUTH_USER,
+  MARK_AUTH_STATE,
+  SET_AUTH_USERNAME
 } from 'Constants/auth';
 
 
@@ -62,4 +67,31 @@ export const signUpUserFailure = (error, username) => ({
 
 export const cleanAuthError = () => ({
   type: CLEAN_AUTH_ERROR
+});
+
+
+export const startRefreshTokenTaskAction = () => ({
+  type: START_REFRESH_TOKEN_TASK
+});
+
+export const cancelRefreshTokenTaskAction = () => ({
+  type: CANCEL_REFRESH_TOKEN_TASK
+});
+
+
+export const cleanAuthUser = () => ({
+  type: CLEAN_AUTH_USER
+});
+
+
+export const markAuthState = (fromPath, error) => ({
+  type: MARK_AUTH_STATE,
+  fromPath,
+  error
+});
+
+
+export const setAuthUsername = (username) => ({
+  type: SET_AUTH_USERNAME,
+  username
 });
