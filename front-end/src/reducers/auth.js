@@ -14,6 +14,23 @@ import {
 } from 'Constants/auth';
 
 
+import {
+  startRefreshTokenTaskAction
+} from 'Actions/auth';
+
+
+import auth from 'Services/auth';
+
+
+export const startAuthAction = (store) => {
+  const { auth } = store.getState();
+
+  if (auth && auth.user) {
+    store.dispatch(startRefreshTokenTaskAction());
+  }
+};
+
+
 /**
  * initial auth user
  */

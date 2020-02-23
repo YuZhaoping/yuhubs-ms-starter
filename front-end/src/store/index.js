@@ -11,6 +11,8 @@ import createSagaMiddleware from 'redux-saga';
 import reducers from '../reducers';
 import rootSaga from '../sagas';
 
+import { startAuthAction } from '../reducers/auth';
+
 
 const history = createBrowserHistory();
 const routeMiddleware = routerMiddleware(history);
@@ -40,6 +42,8 @@ export default function configureStore(initialState) {
       store.replaceReducer(nextRootReducer(history));
     });
   }
+
+  startAuthAction(store);
 
   return store;
 }
