@@ -8,7 +8,7 @@ const languages = [
   {
     languageId: 'chinese',
     localeKey: 'zh',
-    name: '简体中文',
+    name: '中文',
     icon: 'cn'
   }
 ];
