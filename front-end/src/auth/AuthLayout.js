@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
 
@@ -12,18 +13,32 @@ import {
 } from '../app/appStyles';
 
 
+import async from 'Components/Async';
+
+const SignInPage = async(() => import(/* webpackChunkName: "auth-signin" */ './SignIn'));
+
+
 const AuthLayout = (props) => {
   const { width } = props;
 
   return (
     <AppContent>
+
       <Header />
+
       <MainContent p={isWidthUp("md", width) ? 8 : 6}>
-        ...TODO...
+        <Switch>
+          <Route path="/auth/signin" component={ SignInPage } />
+
+          <Redirect to="/app" />
+        </Switch>
       </MainContent>
+
       <Footer />
+
     </AppContent>
   );
 };
+
 
 export default withWidth()(AuthLayout);
