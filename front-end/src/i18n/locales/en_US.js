@@ -1,5 +1,14 @@
 const en_US = {
   "app.name": "E-com assistant",
+
+  "auth.signin.title": "Sign in",
+  "auth.prompt.forgot-password": "Forgot password?",
+  "auth.prompt.signup": "Don't have an account? Sign up",
+  "auth.label.email-username": "Email or Username",
+  "auth.label.password": "Password",
+  "auth.label.remember-me": "Remember me",
+  "auth.signin.submit": "SIGN IN",
+
   "Home": "Home",
   "Dashboard": "Dashboard",
   "Index": "Index",

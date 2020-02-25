@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
+
 import context from 'Services/context';
 
 
@@ -12,6 +15,8 @@ import Button from '@material-ui/core/Button';
 
 const SignInForm = props => {
   const { classes, auth, onSubmit } = props;
+
+  const intl = useIntl();
 
 
   const [formData, setFormData] = useState(() => ({
@@ -50,7 +55,7 @@ const SignInForm = props => {
 
       <TextField
         id="username"
-        label="Email or Username"
+        label={ intl.formatMessage({ id: "auth.label.email-username" }) }
         name="username"
         onChange={ handleFieldChange }
         value={ formData.username }
@@ -64,7 +69,7 @@ const SignInForm = props => {
 
       <TextField
         id="password"
-        label="Password"
+        label={ intl.formatMessage({ id: "auth.label.password" }) }
         name="password"
         onChange={ handleFieldChange }
         value={ formData.password }
@@ -87,7 +92,7 @@ const SignInForm = props => {
             value="remember"
             color="primary"
           />}
-        label="Remember me"
+        label={ intl.formatMessage({ id: "auth.label.remember-me" }) }
       />
 
       <Button
@@ -102,7 +107,7 @@ const SignInForm = props => {
         color="primary"
         className={classes.submit}
       >
-        SIGN IN
+        <FormattedMessage id={ "auth.signin.submit" }/>
       </Button>
 
     </form>

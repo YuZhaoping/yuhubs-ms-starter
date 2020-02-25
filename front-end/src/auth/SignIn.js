@@ -4,6 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import withStyles from '@material-ui/styles/withStyles';
 
 import Container from '@material-ui/core/Container';
@@ -72,7 +75,7 @@ const SignIn = (props) => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign in
+          <FormattedMessage id={ "auth.signin.title" }/>
         </Typography>
 
         { auth.error &&
@@ -96,7 +99,7 @@ const SignIn = (props) => {
               to="/auth/reset_password"
               variant="body2"
             >
-              {"Forgot password?"}
+              <FormattedMessage id={ "auth.prompt.forgot-password" }/>
             </Link>
           </Grid>
 
@@ -106,7 +109,7 @@ const SignIn = (props) => {
               to="/auth/signup"
               variant="body2"
             >
-              {"Don't have an account? Sign up"}
+              <FormattedMessage id={ "auth.prompt.signup" }/>
             </Link>
           </Grid>
         </Grid>
