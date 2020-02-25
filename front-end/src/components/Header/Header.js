@@ -33,6 +33,8 @@ const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
 
     <AppsMenu />
 
+    <PlaceHold />
+
     <LanguageSwitcher />
 
     <AccountMenu />
