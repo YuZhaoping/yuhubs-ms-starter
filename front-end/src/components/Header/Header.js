@@ -39,8 +39,6 @@ const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
 
     <AccountMenu />
 
-    <PlaceHold />
-
   </Toolbar>
 );
 

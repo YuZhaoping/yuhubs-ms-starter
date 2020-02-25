@@ -41,6 +41,11 @@ const GrowSpace = styled('div')({
 });
 
 
+const PlaceHold = styled('div')({
+  width: '16px'
+});
+
+
 const PageTitleBar = (props) => {
   const { title, menus, tabs, ...rest } = props;
 
@@ -54,7 +59,10 @@ const PageTitleBar = (props) => {
         </Title> }
       <GrowSpace />
       { tabs && <PageTabs tabs={ tabs } { ...rest } /> }
-      { menus && <PageMenu menus={ menus } />}
+      { menus
+        ? <PageMenu menus={ menus } />
+        : <PlaceHold />
+      }
     </div>
   );
 };
