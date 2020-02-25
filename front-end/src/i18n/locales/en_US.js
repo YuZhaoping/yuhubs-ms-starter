@@ -19,9 +19,15 @@ const en_US = {
   "auth.prompt.signin-short": "Sign in",
   "auth.reset-password.submit": "RESET PASSWORD",
 
+  "Logout": "Logout",
+
+  "Settings": "Settings",
+  "Profile": "Profile",
+
   "Home": "Home",
   "Dashboard": "Dashboard",
   "Index": "Index",
+
   "Apps": "Apps",
   "Catalog": "Catalog",
   "Categories": "Categories",
@@ -35,9 +41,7 @@ const en_US = {
   "Sale": "Sale",
   "Accounts": "Accounts",
   "Supply": "Supply",
-  "Suppliers": "Suppliers",
-  "Settings": "Settings",
-  "Profile": "Profile"
+  "Suppliers": "Suppliers"
 };
 
 

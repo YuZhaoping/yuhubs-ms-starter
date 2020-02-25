@@ -3,6 +3,9 @@ import { withRouter, Link as RouterLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+import { useIntl } from 'react-intl';
+
+
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
@@ -41,6 +44,8 @@ const Link = React.forwardRef((props, ref) => (
 
 const AccountMenu = props => {
   const { username } = props;
+
+  const intl = useIntl();
 
 
   const [anchorMenu, setAnchorMenu] = useState(null);
@@ -99,7 +104,9 @@ const AccountMenu = props => {
             <ListItemIcon>
               { item.icon }
             </ListItemIcon>
-            <ListItemText primary={ item.name } />
+            <ListItemText
+              primary={ intl.formatMessage({id: item.name}) }
+            />
           </MenuItem>
         ))}
       </Menu>

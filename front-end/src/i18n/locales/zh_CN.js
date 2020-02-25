@@ -19,9 +19,15 @@ const zh_CN = {
   "auth.prompt.signin-short": "登录",
   "auth.reset-password.submit": "重置密码",
 
+  "Logout": "登出",
+
+  "Settings": "设置",
+  "Profile": "个人资料",
+
   "Home": "主页",
   "Dashboard": "仪表盘",
   "Index": "起始页",
+
   "Apps": "应用",
   "Catalog": "产品目录",
   "Categories": "类别",
@@ -35,9 +41,7 @@ const zh_CN = {
   "Sale": "销售",
   "Accounts": "账户",
   "Supply": "供应",
-  "Suppliers": "供应商",
-  "Settings": "设置",
-  "Profile": "个人资料"
+  "Suppliers": "供应商"
 };
 
 
