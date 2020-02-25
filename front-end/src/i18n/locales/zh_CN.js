@@ -9,6 +9,12 @@ const zh_CN = {
   "auth.label.remember-me": "记住我",
   "auth.signin.submit": "登录",
 
+  "auth.signup.title": "注册",
+  "auth.prompt.signin": "已注册? 登录",
+  "auth.label.username": "用户名",
+  "auth.label.email": "邮件地址",
+  "auth.signup.submit": "注册",
+
   "Home": "主页",
   "Dashboard": "仪表盘",
   "Index": "起始页",
@@ -29,5 +35,6 @@ const zh_CN = {
   "Settings": "设置",
   "Profile": "个人资料"
 };
+
 
 export default zh_CN;

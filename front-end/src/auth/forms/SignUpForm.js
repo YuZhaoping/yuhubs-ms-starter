@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
+
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -25,6 +28,8 @@ const hasText = function(field) {
 
 const SignUpForm = props => {
   const { classes, onSubmit } = props;
+
+  const intl = useIntl();
 
 
   const [formData, setFormData] = useState(() => ({
@@ -57,7 +62,7 @@ const SignUpForm = props => {
         <Grid item xs={12}>
           <TextField
             id="username"
-            label="Username"
+            label={ intl.formatMessage({ id: "auth.label.username" }) }
             name="username"
             onChange={ handleFieldChange }
             value={ formData.username }
@@ -72,7 +77,7 @@ const SignUpForm = props => {
         <Grid item xs={12}>
           <TextField
             id="email"
-            label="Email Address"
+            label={ intl.formatMessage({ id: "auth.label.email" }) }
             name="email"
             onChange={ handleFieldChange }
             value={ formData.email }
@@ -87,7 +92,7 @@ const SignUpForm = props => {
         <Grid item xs={12}>
           <TextField
             id="password"
-            label="Password"
+            label={ intl.formatMessage({ id: "auth.label.password" }) }
             name="password"
             onChange={ handleFieldChange }
             value={ formData.password }
@@ -114,7 +119,7 @@ const SignUpForm = props => {
         color="primary"
         className={classes.submit}
       >
-        SIGN UP
+        <FormattedMessage id={ "auth.signup.submit" }/>
       </Button>
 
     </form>

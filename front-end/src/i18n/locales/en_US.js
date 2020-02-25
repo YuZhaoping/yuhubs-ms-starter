@@ -9,6 +9,12 @@ const en_US = {
   "auth.label.remember-me": "Remember me",
   "auth.signin.submit": "SIGN IN",
 
+  "auth.signup.title": "Sign up",
+  "auth.prompt.signin": "Already have an account? Sign in",
+  "auth.label.username": "Username",
+  "auth.label.email": "Email Address",
+  "auth.signup.submit": "SIGN UP",
+
   "Home": "Home",
   "Dashboard": "Dashboard",
   "Index": "Index",
@@ -29,5 +35,6 @@ const en_US = {
   "Settings": "Settings",
   "Profile": "Profile"
 };
+
 
 export default en_US;
