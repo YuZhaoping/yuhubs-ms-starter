@@ -12,6 +12,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AppsMenu from 'Components/AppsMenu';
 import LanguageSwitcher from 'Components/LanguageSwitcher';
 
+import BrandBarBase from 'Components/BrandBar';
+
 
 import sizes from 'Components/sizes';
 
@@ -41,6 +43,10 @@ const GrowSpace = styled('div')({
   width: '100%'
 });
 
+const PlaceHold = styled('div')({
+  width: '16px'
+});
+
 
 const SidebarButton = styled(MuiIconButton)(({
   theme
@@ -48,25 +54,56 @@ const SidebarButton = styled(MuiIconButton)(({
   padding: theme.spacing(2)
 }));
 
+const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
+  <Toolbar>
+    <SidebarButton
+      onClick={ onDrawerToggle }
+      color="inherit"
+      aria-label="Open drawer"
+    >
+      <MenuIcon />
+    </SidebarButton>
 
-const Header = ({ onDrawerToggle }) => (
+    <GrowSpace />
+
+    <AppsMenu />
+
+    <LanguageSwitcher />
+
+    <PlaceHold />
+  </Toolbar>
+);
+
+
+const BrandBar = styled(BrandBarBase)(({
+  theme
+}) => ({
+  borderRadius: '4px',
+  margin: theme.spacing(0, 4),
+  padding: theme.spacing(1, 2, 0, 2)
+}));
+
+const UnauthedToolbar = () => (
+  <Toolbar>
+    <BrandBar />
+
+    <GrowSpace />
+
+    <LanguageSwitcher />
+
+    <PlaceHold />
+  </Toolbar>
+);
+
+
+const Header = ({ onDrawerToggle, authUser }) => (
   <AppBar position="sticky" elevation={0}>
-    <Toolbar>
-      <SidebarButton
-        onClick={ onDrawerToggle }
-        color="inherit"
-        aria-label="Open drawer"
-      >
-        <MenuIcon />
-      </SidebarButton>
 
-      <GrowSpace />
+    { authUser
+      ? AuthedToolbar({ onDrawerToggle, authUser })
+      : UnauthedToolbar()
+    }
 
-      <AppsMenu />
-
-      <LanguageSwitcher />
-
-    </Toolbar>
   </AppBar>
 );
 

@@ -5,15 +5,6 @@ import { Route, Switch } from 'react-router-dom';
 import styled from '@material-ui/core/styles/styled';
 
 
-import routes from 'Routes/index';
-
-import { AppContent, MainContent } from './appStyles';
-
-import Header from 'Components/Header';
-import Footer from 'Components/Footer';
-import Sidebar from 'Components/Sidebar';
-
-
 import sizes from 'Components/sizes';
 
 const drawerWidth = sizes.appSidebarWidth;
@@ -29,7 +20,19 @@ const Drawer = styled('div')(({
 }));
 
 
+import { AppContent, MainContent } from './appStyles';
+
+import Header from 'Components/Header';
+import Footer from 'Components/Footer';
+import Sidebar from 'Components/Sidebar';
+
+
+import routes from 'Routes/index';
+
+
 const AppLayout = (props) => {
+  const { authUser } = props;
+
 
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -40,6 +43,7 @@ const AppLayout = (props) => {
 
   return (
     <React.Fragment>
+
       { sidebarOpen &&
       <Drawer>
         <Sidebar
@@ -51,9 +55,12 @@ const AppLayout = (props) => {
       </Drawer> }
 
       <AppContent>
+
         <Header
           onDrawerToggle={ handleDrawerToggle }
+          authUser={ authUser }
         />
+
         <MainContent>
           <Switch>
             {routes.map((route, index) => (
@@ -65,8 +72,11 @@ const AppLayout = (props) => {
             ))}
           </Switch>
         </MainContent>
+
         <Footer />
+
       </AppContent>
+
     </React.Fragment>
   );
 };
