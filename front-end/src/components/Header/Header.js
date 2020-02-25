@@ -1,6 +1,9 @@
 import React from 'react';
 
 
+import MenuIcon from '@material-ui/icons/Menu';
+
+
 import {
   AppBar,
   Toolbar,
@@ -12,9 +15,7 @@ import {
 
 import AppsMenu from 'Components/AppsMenu';
 import LanguageSwitcher from 'Components/LanguageSwitcher';
-
-
-import MenuIcon from '@material-ui/icons/Menu';
+import AccountMenu from 'Components/AccountMenu';
 
 
 const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
@@ -33,6 +34,8 @@ const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
     <AppsMenu />
 
     <LanguageSwitcher />
+
+    <AccountMenu />
 
     <PlaceHold />
 
