@@ -16,6 +16,7 @@ import {
 import async from 'Components/Async';
 
 const SignInPage = async(() => import(/* webpackChunkName: "auth-signin" */ './SignIn'));
+const SignUpPage = async(() => import(/* webpackChunkName: "auth-signup" */ './SignUp'));
 
 
 const AuthLayout = (props) => {
@@ -29,6 +30,7 @@ const AuthLayout = (props) => {
       <MainContent p={isWidthUp("md", width) ? 8 : 6}>
         <Switch>
           <Route path="/auth/signin" component={ SignInPage } />
+          <Route path="/auth/signup" component={ SignUpPage } />
 
           <Redirect to="/app" />
         </Switch>
