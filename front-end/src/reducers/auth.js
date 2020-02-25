@@ -35,7 +35,7 @@ export const startAuthAction = (store) => {
  * initial auth user
  */
 const initialAuthState = () => {
-  const authUser = {id: 0, name: 'TODO'};
+  const authUser = auth.loadAuthUser();
 
   return {
     loading: false,
