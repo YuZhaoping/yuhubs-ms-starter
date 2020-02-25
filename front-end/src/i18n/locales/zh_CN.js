@@ -15,6 +15,10 @@ const zh_CN = {
   "auth.label.email": "邮件地址",
   "auth.signup.submit": "注册",
 
+  "auth.reset-password.title": "重置密码",
+  "auth.prompt.signin-short": "登录",
+  "auth.reset-password.submit": "重置密码",
+
   "Home": "主页",
   "Dashboard": "仪表盘",
   "Index": "起始页",

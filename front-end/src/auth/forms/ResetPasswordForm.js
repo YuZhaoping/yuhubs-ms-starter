@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
+
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -8,6 +11,8 @@ import Button from '@material-ui/core/Button';
 
 const ResetPasswordForm = props => {
   const { classes, onSubmit } = props;
+
+  const intl = useIntl();
 
 
   const [formData, setFormData] = useState(() => ({
@@ -38,7 +43,7 @@ const ResetPasswordForm = props => {
         <Grid item xs={12}>
           <TextField
             id="email"
-            label="Email Address"
+            label={ intl.formatMessage({ id: "auth.label.email" }) }
             name="email"
             onChange={ handleFieldChange }
             value={ formData.email }
@@ -65,7 +70,7 @@ const ResetPasswordForm = props => {
         color="primary"
         className={classes.submit}
       >
-        RESET PASSWORD
+        <FormattedMessage id={ "auth.reset-password.submit" }/>
       </Button>
 
     </form>

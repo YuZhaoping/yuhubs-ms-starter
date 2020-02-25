@@ -4,6 +4,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import withStyles from '@material-ui/styles/withStyles';
 
 import Container from '@material-ui/core/Container';
@@ -80,7 +83,7 @@ const ResetPassword = (props) => {
       <div className={classes.paper}>
 
         <Typography component="h1" variant="h5">
-          Reset password
+          <FormattedMessage id={ "auth.reset-password.title" }/>
         </Typography>
 
         { resp.error &&
@@ -103,7 +106,7 @@ const ResetPassword = (props) => {
               to="/auth/signin"
               variant="body2"
             >
-              {"Sign in"}
+              <FormattedMessage id={ "auth.prompt.signin-short" }/>
             </Link>
           </Grid>
 
@@ -113,7 +116,7 @@ const ResetPassword = (props) => {
               to="/auth/signup"
               variant="body2"
             >
-              {"Don't have an account? Sign up"}
+              <FormattedMessage id={ "auth.prompt.signup" }/>
             </Link>
           </Grid>
         </Grid>

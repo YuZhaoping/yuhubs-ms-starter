@@ -15,6 +15,10 @@ const en_US = {
   "auth.label.email": "Email Address",
   "auth.signup.submit": "SIGN UP",
 
+  "auth.reset-password.title": "Reset password",
+  "auth.prompt.signin-short": "Sign in",
+  "auth.reset-password.submit": "RESET PASSWORD",
+
   "Home": "Home",
   "Dashboard": "Dashboard",
   "Index": "Index",
