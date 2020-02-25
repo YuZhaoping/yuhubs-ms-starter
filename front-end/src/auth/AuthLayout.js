@@ -17,6 +17,7 @@ import async from 'Components/Async';
 
 const SignInPage = async(() => import(/* webpackChunkName: "auth-signin" */ './SignIn'));
 const SignUpPage = async(() => import(/* webpackChunkName: "auth-signup" */ './SignUp'));
+const ResetPasswordPage = async(() => import(/* webpackChunkName: "auth-reset-passwd" */ './ResetPassword'));
 
 
 const AuthLayout = (props) => {
@@ -31,6 +32,7 @@ const AuthLayout = (props) => {
         <Switch>
           <Route path="/auth/signin" component={ SignInPage } />
           <Route path="/auth/signup" component={ SignUpPage } />
+          <Route path="/auth/reset_password" component={ ResetPasswordPage } />
 
           <Redirect to="/app" />
         </Switch>
