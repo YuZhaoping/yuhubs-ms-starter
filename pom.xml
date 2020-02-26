@@ -109,6 +109,13 @@
 	</build>
 
 
+	<modules>
+		<module>auth</module>
+		<module>commons</module>
+		<module>utils</module>
+	</modules>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
