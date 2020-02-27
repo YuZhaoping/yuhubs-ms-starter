@@ -10,6 +10,6 @@ public interface AuthUserService {
 
 	Optional<AuthUser> getUserById(Long userId);
 
-	Optional<AuthUser> getUserByName(String emailOrUsername);
+	Optional<AuthUser> getUserByName(String username);
 
 }
