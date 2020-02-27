@@ -33,6 +33,8 @@
 		<!-- https://docs.spring.io/spring-boot/docs/2.2.4.RELEASE/reference/html/appendix-dependency-versions.html -->
 		<spring-data-commons.version>2.2.4.RELEASE</spring-data-commons.version>
 
+		<jsonwebtoken.version>0.9.1</jsonwebtoken.version>
+
 	</properties>
 
 
