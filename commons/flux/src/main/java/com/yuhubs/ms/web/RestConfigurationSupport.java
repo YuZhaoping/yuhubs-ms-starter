@@ -15,6 +15,14 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
 	private ObjectMapper objectMapper;
 
+	protected final RestExceptionHandler restExceptionHandler;
+
+
+	public RestConfigurationSupport() {
+		this.restExceptionHandler = createRestExceptionHandler();
+	}
+
+
 	@Bean
 	public ObjectMapper objectMapper() {
 		return getObjectMapper();
@@ -45,6 +53,11 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
 	protected ObjectMapper customizeObjectMapper(ObjectMapper objectMapper) {
 		return objectMapper;
+	}
+
+
+	protected RestExceptionHandler createRestExceptionHandler() {
+		return new RestExceptionHandler();
 	}
 
 
