@@ -6,7 +6,9 @@ import com.yuhubs.ms.web.api.RestApiError;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RestErrorResponse {
 
@@ -74,6 +76,18 @@ public class RestErrorResponse {
 
 	public RestApiError<? extends RestErrorResponse> toRestApiError() {
 		return new RestApiError<>(this);
+	}
+
+	public Map<String, Object> toAttributes() {
+		Map<String, Object> attrs = new LinkedHashMap<>();
+
+		attrs.put("statusCode", getStatusCode());
+		attrs.put("code", getCode());
+		attrs.put("message", getMessage());
+		if (getErrors() != null) attrs.put("errors", getErrors());
+		if (getBody() != null) attrs.put("body", getBody());
+
+		return attrs;
 	}
 
 
