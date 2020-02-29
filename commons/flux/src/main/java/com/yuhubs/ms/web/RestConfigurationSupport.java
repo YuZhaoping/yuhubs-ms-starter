@@ -24,6 +24,11 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
 
 	@Bean
+	public GlobalErrorAttributes globalErrorAttributes() {
+		return new GlobalErrorAttributes(this.restExceptionHandler);
+	}
+
+	@Bean
 	public ObjectMapper objectMapper() {
 		return getObjectMapper();
 	}
