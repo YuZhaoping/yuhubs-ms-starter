@@ -14,11 +14,11 @@ public class WebTestConfig extends RestConfigurationSupport {
 		return new DefaultExceptionHandler();
 	}
 
+
 	@Bean
 	public Object defaultHandler() {
 		return new DefaultController();
 	}
-
 
 	@Bean
 	public Object mockErrorController() {

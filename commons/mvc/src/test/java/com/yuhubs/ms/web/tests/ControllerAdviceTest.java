@@ -12,16 +12,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ControllerAdviceTest extends WebConfiguredTestBase {
 
 	@Test
-	public void testHandleBaseException() throws Exception {
+	public void testBaseException() throws Exception {
 		this.mockMvc.perform(get("/throwex").contentType(APPLICATION_JSON))
-//				.andDo(print())
+				//				.andDo(print())
 				.andExpect(status().is5xxServerError())
 				.andExpect(jsonPath("error.code", Matchers.is(500)))
 				.andExpect(jsonPath("error.message", Matchers.is("Internal Server Error")));
 	}
 
 	@Test
-	public void testHandleUnsupportedOperationException() throws Exception {
+	public void testUnsupportedOperationException() throws Exception {
 		this.mockMvc.perform(get("/unsupported").contentType(APPLICATION_JSON))
 //				.andDo(print())
 				.andExpect(status().is5xxServerError())
