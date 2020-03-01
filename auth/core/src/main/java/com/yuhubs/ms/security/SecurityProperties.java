@@ -3,7 +3,7 @@ package com.yuhubs.ms.security;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
-public class SecurityProperties implements EnvironmentAware {
+public final class SecurityProperties implements EnvironmentAware {
 
 	public static final String JWT_TOKEN_SECRET_KEY = "yuhubs.ms.security.jwt.key";
 
