@@ -1,8 +1,10 @@
 package com.yuhubs.ms.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
@@ -13,13 +15,14 @@ import org.springframework.web.reactive.config.WebFluxConfigurationSupport;
 @Configuration
 public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
-	private ObjectMapper objectMapper;
-
 	protected final RestExceptionHandler restExceptionHandler;
+
+	private ObjectMapper objectMapper;
 
 
 	public RestConfigurationSupport() {
 		this.restExceptionHandler = createRestExceptionHandler();
+		this.restExceptionHandler.init();
 	}
 
 
@@ -29,8 +32,29 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 	}
 
 	@Bean
+	@Order(-2)
+	public GlobalErrorWebExceptionHandler globalErrorWebExceptionHandler(
+			GlobalErrorAttributes globalErrorAttributes, ServerCodecConfigurer serverCodecConfigurer) {
+		return new GlobalErrorWebExceptionHandler(
+				globalErrorAttributes,
+				getResourceProperties(),
+				getApplicationContext(),
+				serverCodecConfigurer
+		);
+	}
+
+	@Bean
 	public ObjectMapper objectMapper() {
 		return getObjectMapper();
+	}
+
+
+	protected RestExceptionHandler createRestExceptionHandler() {
+		return new RestExceptionHandler();
+	}
+
+	protected ResourceProperties getResourceProperties() {
+		return new ResourceProperties();
 	}
 
 
@@ -58,11 +82,6 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
 	protected ObjectMapper customizeObjectMapper(ObjectMapper objectMapper) {
 		return objectMapper;
-	}
-
-
-	protected RestExceptionHandler createRestExceptionHandler() {
-		return new RestExceptionHandler();
 	}
 
 
