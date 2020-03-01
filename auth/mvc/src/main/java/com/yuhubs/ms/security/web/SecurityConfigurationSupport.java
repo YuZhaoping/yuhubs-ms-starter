@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @EnableWebSecurity
 @Configuration
@@ -31,6 +35,26 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SecurityHandlerSupplier securityHandlerSupplier() {
 		return this.handlerSupplier;
+	}
+
+	@Bean
+	public AuthenticationEntryPoint unauthorizedEntryPoint(SecurityHandlerSupplier supplier) {
+		return supplier.unauthorizedEntryPoint();
+	}
+
+	@Bean
+	public AccessDeniedHandler accessDeniedHandler(SecurityHandlerSupplier supplier) {
+		return supplier.accessDeniedHandler();
+	}
+
+	@Bean
+	public AuthenticationSuccessHandler authenticationSuccessHandler(SecurityHandlerSupplier supplier) {
+		return supplier.authenticationSuccessHandler();
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler(SecurityHandlerSupplier supplier) {
+		return supplier.authenticationFailureHandler();
 	}
 
 
