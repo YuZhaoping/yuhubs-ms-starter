@@ -17,9 +17,9 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 public class WebConfiguredTestBase {
 
 	@Autowired
-	ApplicationContext context;
+	protected ApplicationContext context;
 
-	WebTestClient client;
+	protected WebTestClient client;
 
 
 	@Before
