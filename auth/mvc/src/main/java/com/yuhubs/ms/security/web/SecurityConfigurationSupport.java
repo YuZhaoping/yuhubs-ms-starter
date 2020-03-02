@@ -2,6 +2,8 @@ package com.yuhubs.ms.security.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuhubs.ms.security.JwtTokenServiceContext;
+import com.yuhubs.ms.security.SecurityProperties;
+import com.yuhubs.ms.security.token.JwtTokenService;
 import com.yuhubs.ms.security.web.token.JwtAuthenticationFilter;
 import com.yuhubs.ms.security.web.token.JwtAuthenticationProvider;
 import com.yuhubs.ms.web.JsonMapperBuilder;
@@ -29,7 +31,7 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 
 
 	public SecurityConfigurationSupport() {
-		this.jwtTokenServiceContext = new JwtTokenServiceContext();
+		this.jwtTokenServiceContext = createJwtTokenServiceContext();
 		this.handlerSupplier = createSecurityHandlerSupplier();
 	}
 
@@ -37,6 +39,16 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 	@Bean
 	public JwtTokenServiceContext jwtTokenServiceContext() {
 		return this.jwtTokenServiceContext;
+	}
+
+	@Bean
+	public SecurityProperties securityProperties() {
+		return this.jwtTokenServiceContext.securityProperties();
+	}
+
+	@Bean
+	public JwtTokenService jwtTokenService(SecurityProperties properties) {
+		return this.jwtTokenServiceContext.jwtTokenService(properties);
 	}
 
 	@Bean
@@ -110,6 +122,10 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 	protected void configureFilters(HttpSecurity http) throws Exception {
 	}
 
+
+	protected JwtTokenServiceContext createJwtTokenServiceContext() {
+		return new JwtTokenServiceContext();
+	}
 
 	protected final JwtTokenServiceContext getJwtTokenServiceContext() {
 		return this.jwtTokenServiceContext;
