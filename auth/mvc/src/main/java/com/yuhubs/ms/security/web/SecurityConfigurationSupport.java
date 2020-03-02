@@ -127,7 +127,7 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 		return new JwtTokenServiceContext();
 	}
 
-	protected final JwtTokenServiceContext getJwtTokenServiceContext() {
+	public final JwtTokenServiceContext getJwtTokenServiceContext() {
 		return this.jwtTokenServiceContext;
 	}
 

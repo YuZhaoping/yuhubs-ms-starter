@@ -10,8 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 @Configuration
 public class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
 
+
+	protected final AuthWebSecurityContext context;
+
+
 	public AuthConfigurationSupport() {
 		super();
+		this.context = new AuthWebSecurityContext(this);
 	}
 
 
@@ -19,6 +24,12 @@ public class AuthConfigurationSupport extends SecurityConfigurationSupport imple
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
+	}
+
+
+	@Bean
+	public AuthWebSecurityContext authWebSecurityContext() {
+		return this.context;
 	}
 
 }
