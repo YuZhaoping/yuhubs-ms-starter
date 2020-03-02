@@ -2,10 +2,15 @@ package com.yuhubs.ms.security.auth;
 
 import com.yuhubs.ms.security.JwtTokenServiceContext;
 import com.yuhubs.ms.security.token.JwtTokenService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class AuthSecurityContext {
+public class AuthSecurityContext implements ApplicationContextAware {
+
+	protected ApplicationContext applicationContext;
 
 	protected final JwtTokenServiceContext jwtContext;
 
@@ -18,6 +23,18 @@ public class AuthSecurityContext {
 		this.jwtContext = context;
 		this.authProperties = new AuthProperties(context.getSecurityProperties());
 		this.passwordEncoder = createPasswordEncoder();
+	}
+
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
+
+	public void publishEvent(ApplicationEvent event) {
+		if (this.applicationContext != null) {
+			this.applicationContext.publishEvent(event);
+		}
 	}
 
 
