@@ -20,20 +20,20 @@
 	<dependencies>
 		<!-- Compile -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>com.yuhubs.ms.auth</groupId>
 			<artifactId>auth-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>com.yuhubs.ms.commons</groupId>
-			<artifactId>commons-web</artifactId>
+			<artifactId>commons-webmvc</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
