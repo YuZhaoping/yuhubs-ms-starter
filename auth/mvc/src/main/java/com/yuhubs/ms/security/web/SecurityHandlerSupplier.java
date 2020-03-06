@@ -1,9 +1,9 @@
 package com.yuhubs.ms.security.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuhubs.ms.security.JwtTokenServiceContext;
 import com.yuhubs.ms.security.SecurityProperties;
-import com.yuhubs.ms.security.token.JwtTokenService;
+import com.yuhubs.ms.security.jwt.JwtTokenService;
+import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
 import com.yuhubs.ms.security.web.handler.AccessForbiddenHandler;
 import com.yuhubs.ms.security.web.handler.DefaultAuthenticationFailureHandler;
 import com.yuhubs.ms.security.web.handler.TokenByAuthenticationSuccessHandler;

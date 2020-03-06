@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.token;
+package com.yuhubs.ms.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.authentication.AbstractAuthenticationToken;

@@ -1,6 +1,6 @@
 package com.yuhubs.ms.security.web.handler;
 
-import com.yuhubs.ms.security.token.JwtTokenService;
+import com.yuhubs.ms.security.jwt.JwtTokenService;
 import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

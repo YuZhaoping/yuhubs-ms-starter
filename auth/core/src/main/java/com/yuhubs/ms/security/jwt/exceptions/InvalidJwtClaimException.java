@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.exceptions;
+package com.yuhubs.ms.security.jwt.exceptions;
 
 public class InvalidJwtClaimException extends InvalidJwtException {
 

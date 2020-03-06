@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.web.token;
+package com.yuhubs.ms.security.web.jwt;
 
 import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.security.core.Authentication;

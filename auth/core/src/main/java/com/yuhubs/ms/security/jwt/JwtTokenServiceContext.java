@@ -1,7 +1,6 @@
-package com.yuhubs.ms.security;
+package com.yuhubs.ms.security.jwt;
 
-import com.yuhubs.ms.security.token.DefaultJwtTokenService;
-import com.yuhubs.ms.security.token.JwtTokenService;
+import com.yuhubs.ms.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

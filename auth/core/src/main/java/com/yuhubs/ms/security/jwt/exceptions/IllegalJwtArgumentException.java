@@ -1,28 +1,28 @@
-package com.yuhubs.ms.security.exceptions;
+package com.yuhubs.ms.security.jwt.exceptions;
 
 import com.yuhubs.ms.exceptions.api.ApiError;
 import com.yuhubs.ms.exceptions.api.CodeApiErrors;
 import com.yuhubs.ms.exceptions.api.RestApiCodeError;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 
 import java.util.List;
 
-public class BadCredentialsCodedException extends BadCredentialsException
+public class IllegalJwtArgumentException extends AuthenticationException
 		implements RestApiCodeError {
 
-	private static final long serialVersionUID = 3746552428862517926L;
+	private static final long serialVersionUID = 3895926252448659654L;
 
 
 	protected final CodeApiErrors codeApiErrors;
 
 
-	public BadCredentialsCodedException(String message) {
+	public IllegalJwtArgumentException(String message) {
 		super(message);
 
 		this.codeApiErrors = new CodeApiErrors(initCode());
 	}
 
-	public BadCredentialsCodedException(String message, Throwable cause) {
+	public IllegalJwtArgumentException(String message, Throwable cause) {
 		super(message, cause);
 
 		this.codeApiErrors = new CodeApiErrors(initCode());
@@ -44,7 +44,7 @@ public class BadCredentialsCodedException extends BadCredentialsException
 
 
 	protected int initCode() {
-		return 401410;
+		return 401400;
 	}
 
 }

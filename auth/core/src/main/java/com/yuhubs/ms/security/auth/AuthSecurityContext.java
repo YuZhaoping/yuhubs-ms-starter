@@ -1,7 +1,7 @@
 package com.yuhubs.ms.security.auth;
 
-import com.yuhubs.ms.security.JwtTokenServiceContext;
-import com.yuhubs.ms.security.token.JwtTokenService;
+import com.yuhubs.ms.security.jwt.JwtTokenService;
+import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;

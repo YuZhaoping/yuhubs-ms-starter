@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.exceptions;
+package com.yuhubs.ms.security.jwt.exceptions;
 
 import com.yuhubs.ms.exceptions.api.ApiError;
 import com.yuhubs.ms.exceptions.api.CodeApiErrors;
@@ -7,22 +7,22 @@ import org.springframework.security.core.AuthenticationException;
 
 import java.util.List;
 
-public class IllegalJwtArgumentException extends AuthenticationException
+public class InvalidJwtException extends AuthenticationException
 		implements RestApiCodeError {
 
-	private static final long serialVersionUID = 3895926252448659654L;
+	private static final long serialVersionUID = -8727726510404913804L;
 
 
 	protected final CodeApiErrors codeApiErrors;
 
 
-	public IllegalJwtArgumentException(String message) {
+	public InvalidJwtException(String message) {
 		super(message);
 
 		this.codeApiErrors = new CodeApiErrors(initCode());
 	}
 
-	public IllegalJwtArgumentException(String message, Throwable cause) {
+	public InvalidJwtException(String message, Throwable cause) {
 		super(message, cause);
 
 		this.codeApiErrors = new CodeApiErrors(initCode());
@@ -44,7 +44,7 @@ public class IllegalJwtArgumentException extends AuthenticationException
 
 
 	protected int initCode() {
-		return 401400;
+		return 401401;
 	}
 
 }

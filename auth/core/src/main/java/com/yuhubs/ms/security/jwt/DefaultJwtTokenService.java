@@ -1,7 +1,7 @@
-package com.yuhubs.ms.security.token;
+package com.yuhubs.ms.security.jwt;
 
 import com.yuhubs.ms.security.SecurityProperties;
-import com.yuhubs.ms.security.exceptions.*;
+import com.yuhubs.ms.security.jwt.exceptions.*;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

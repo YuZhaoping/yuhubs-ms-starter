@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.token;
+package com.yuhubs.ms.security.jwt;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
