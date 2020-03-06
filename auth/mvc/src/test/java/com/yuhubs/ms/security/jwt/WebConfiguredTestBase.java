@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.web;
+package com.yuhubs.ms.security.jwt;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

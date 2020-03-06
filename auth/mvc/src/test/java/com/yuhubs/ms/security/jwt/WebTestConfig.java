@@ -1,5 +1,6 @@
-package com.yuhubs.ms.security.web;
+package com.yuhubs.ms.security.jwt;
 
+import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import com.yuhubs.ms.web.RestConfigurationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

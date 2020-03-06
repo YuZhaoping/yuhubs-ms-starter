@@ -1,6 +1,7 @@
-package com.yuhubs.ms.security.web;
+package com.yuhubs.ms.security.jwt;
 
 import com.yuhubs.ms.security.RolePermissionsAuthentication;
+import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
