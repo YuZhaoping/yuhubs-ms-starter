@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.auth.events;
+package com.yuhubs.ms.security.auth.event;
 
 import org.springframework.context.ApplicationEvent;
 

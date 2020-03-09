@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.auth.events.data;
+package com.yuhubs.ms.security.auth.event.data;
 
 public class EmailAddressData {
 

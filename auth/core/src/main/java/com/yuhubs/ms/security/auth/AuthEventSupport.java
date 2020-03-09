@@ -1,7 +1,7 @@
 package com.yuhubs.ms.security.auth;
 
-import com.yuhubs.ms.security.auth.events.ConfirmEmailEvent;
-import com.yuhubs.ms.security.auth.events.data.ConfirmEmailData;
+import com.yuhubs.ms.security.auth.event.ConfirmEmailEvent;
+import com.yuhubs.ms.security.auth.event.data.ConfirmEmailData;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 

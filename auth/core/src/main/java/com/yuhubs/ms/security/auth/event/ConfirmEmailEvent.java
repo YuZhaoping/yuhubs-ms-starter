@@ -1,6 +1,6 @@
-package com.yuhubs.ms.security.auth.events;
+package com.yuhubs.ms.security.auth.event;
 
-import com.yuhubs.ms.security.auth.events.data.ConfirmEmailData;
+import com.yuhubs.ms.security.auth.event.data.ConfirmEmailData;
 
 public class ConfirmEmailEvent extends AuthBaseEvent<ConfirmEmailData> {
 
