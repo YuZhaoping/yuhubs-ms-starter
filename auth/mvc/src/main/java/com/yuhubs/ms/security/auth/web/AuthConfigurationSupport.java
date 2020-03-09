@@ -1,18 +1,21 @@
 package com.yuhubs.ms.security.auth.web;
 
+import com.yuhubs.ms.security.auth.AuthUserService;
+import com.yuhubs.ms.security.auth.details.AuthUserDetailsService;
 import com.yuhubs.ms.security.web.SecurityConfigurationSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 
 @EnableWebSecurity
 @Configuration
-public class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
+public abstract class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
 
 	private static final String SIGNOUT_SUCCESS_URL = SIGNIN_ENDPOINT + "?logout";
 
@@ -25,10 +28,13 @@ public class AuthConfigurationSupport extends SecurityConfigurationSupport imple
 
 	protected final AuthWebSecurityContext context;
 
+	protected final UserDetailsService userDetailsService;
+
 
 	public AuthConfigurationSupport() {
 		super();
 		this.context = new AuthWebSecurityContext(this);
+		this.userDetailsService = createUserDetailsService();
 	}
 
 
@@ -42,6 +48,11 @@ public class AuthConfigurationSupport extends SecurityConfigurationSupport imple
 	@Bean
 	public AuthWebSecurityContext authWebSecurityContext() {
 		return this.context;
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return this.userDetailsService;
 	}
 
 
@@ -62,5 +73,12 @@ public class AuthConfigurationSupport extends SecurityConfigurationSupport imple
 		super.configureRequestAuthorization(http);
 	}
 
+
+	protected abstract AuthUserService getAuthUserService();
+
+
+	protected UserDetailsService createUserDetailsService() {
+		return new AuthUserDetailsService(getAuthUserService());
+	}
 
 }
