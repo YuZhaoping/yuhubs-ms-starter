@@ -2,13 +2,19 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.details.AuthUserDetailsService;
+import com.yuhubs.ms.security.auth.web.login.LoginAuthenticationProvider;
+import com.yuhubs.ms.security.auth.web.login.LoginProcessingFilter;
 import com.yuhubs.ms.security.web.SecurityConfigurationSupport;
+import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
@@ -38,13 +44,6 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	}
 
 
-	@Bean(name="authenticationManager")
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-
 	@Bean
 	public AuthWebSecurityContext authWebSecurityContext() {
 		return this.context;
@@ -53,6 +52,13 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	@Bean
 	public UserDetailsService userDetailsService() {
 		return this.userDetailsService;
+	}
+
+
+	@Bean(name="authenticationManager")
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 
@@ -73,12 +79,59 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 		super.configureRequestAuthorization(http);
 	}
 
+	@Override
+	protected void configureAuthenticationManager(AuthenticationManagerBuilder auth) throws Exception {
+		super.configureAuthenticationManager(auth);
+		setupLoginProvider(auth, this.userDetailsService);
+	}
+
+	@Override
+	protected void configureFilters(HttpSecurity http) throws Exception {
+		super.configureFilters(http);
+		setupLoginFilter(http);
+	}
+
 
 	protected abstract AuthUserService getAuthUserService();
 
 
 	protected UserDetailsService createUserDetailsService() {
 		return new AuthUserDetailsService(getAuthUserService());
+	}
+
+
+	protected final void setupLoginProvider(AuthenticationManagerBuilder auth,
+											UserDetailsService userDetailsService) {
+		AuthenticationProvider loginProvider =
+				new LoginAuthenticationProvider(this.context, userDetailsService);
+
+		auth.authenticationProvider(loginProvider);
+	}
+
+
+	protected final void setupLoginFilter(HttpSecurity http) throws Exception {
+		LoginProcessingFilter loginFilter = createLoginFilter();
+
+		http.addFilterBefore(loginFilter, UsernamePasswordAuthenticationFilter.class);
+	}
+
+	private final LoginProcessingFilter createLoginFilter() throws Exception {
+		final SecurityHandlerSupplier supplier = this.handlerSupplier;
+
+		LoginProcessingFilter loginFilter =
+				new LoginProcessingFilter(SIGNIN_ENDPOINT, supplier.objectMapper());
+
+		AuthenticationManager authenticationManager = super.authenticationManagerBean();
+
+		loginFilter.setAuthenticationManager(authenticationManager);
+
+		loginFilter.setAuthenticationSuccessHandler(
+				supplier.authenticationSuccessHandler());
+
+		loginFilter.setAuthenticationFailureHandler(
+				supplier.authenticationFailureHandler());
+
+		return loginFilter;
 	}
 
 }
