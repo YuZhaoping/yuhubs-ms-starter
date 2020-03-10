@@ -1,13 +1,20 @@
 package com.yuhubs.ms.security.auth.web;
 
+import com.yuhubs.ms.security.auth.AuthUserAuthentication;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.service.AuthServiceSupplier;
+import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 public class AuthUserController implements AuthApiEndpoints {
@@ -57,6 +64,48 @@ public class AuthUserController implements AuthApiEndpoints {
 	@ResponseBody
 	public void signIn() {
 		// LoginAuthenticationProvider has already signed in.
+	}
+
+
+	@PostMapping(SIGNUP_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public void signUp(HttpServletRequest request, HttpServletResponse response,
+					   @RequestBody SignUpRequestDto dto)
+			throws IOException, ServletException {
+		Optional<AuthUserAuthentication> authOp = this.serviceSupplier.signUp(dto);
+
+		if (!authOp.isPresent()) {
+			return;
+		}
+
+		AuthUserAuthentication authentication = authOp.get();
+
+		this.securityContext.authenticationSuccessHandler()
+				.onAuthenticationSuccess(request, response, authentication);
+	}
+
+	@RequestMapping(SIGNUP_ENDPOINT + "/{id}/verify_email/")
+	public ModelAndView confirmEmail(@PathVariable("id") Long userId,
+									 @RequestParam("token") String token) {
+		String viewName = AuthTemplateViewID.VERIFY_EMAIL_DONE.getId();
+
+		ModelAndView view;
+
+		try {
+			this.serviceSupplier.confirmEmail(token);
+
+			view = new ModelAndView(viewName, HttpStatus.OK);
+
+		} catch (AuthenticationException ex) {
+			viewName = AuthTemplateViewID.VERIFY_EMAIL_FAIL.getId();
+
+			view = new ModelAndView(viewName, "error", ex.getMessage());
+
+			view.setStatus(HttpStatus.UNAUTHORIZED);
+		}
+
+		return view;
 	}
 
 

@@ -1,15 +1,22 @@
 package com.yuhubs.ms.security.auth.service;
 
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
+import com.yuhubs.ms.security.auth.AuthUserAuthentication;
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
+import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
+import org.springframework.security.core.AuthenticationException;
+
+import java.util.Optional;
 
 public final class AuthServiceSupplier {
 
 	private final AuthSecurityContext securityContext;
 	private final AuthUserService authUserService;
 	private final AuthEventPublisher eventPublisher;
+
+	private final SignUpService signUpService;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -18,6 +25,18 @@ public final class AuthServiceSupplier {
 		this.securityContext = context;
 		this.authUserService = service;
 		this.eventPublisher = new AuthEventPublisher(context, urlsBuilder);
+
+		this.signUpService = new SignUpService(this);
+	}
+
+
+	public Optional<AuthUserAuthentication> signUp(SignUpRequestDto dto)
+			throws AuthenticationException {
+		return this.signUpService.signUp(dto);
+	}
+
+	public void confirmEmail(String token) throws AuthenticationException {
+		this.signUpService.confirmEmail(token);
 	}
 
 
