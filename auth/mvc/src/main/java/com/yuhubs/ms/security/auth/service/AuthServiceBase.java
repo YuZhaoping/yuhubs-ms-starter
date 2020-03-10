@@ -3,7 +3,7 @@ package com.yuhubs.ms.security.auth.service;
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.AuthUserService;
-import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
+import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,8 +41,8 @@ public abstract class AuthServiceBase {
 		return this.supplier.authUserService();
 	}
 
-	protected final AuthConfirmUrlsBuilder authConfirmUrlsBuilder() {
-		return this.supplier.authConfirmUrlsBuilder();
+	protected final AuthEventPublisher authEventPublisher() {
+		return this.supplier.authEventPublisher();
 	}
 
 }

@@ -3,12 +3,13 @@ package com.yuhubs.ms.security.auth.service;
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
+import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
 
 public final class AuthServiceSupplier {
 
 	private final AuthSecurityContext securityContext;
 	private final AuthUserService authUserService;
-	private final AuthConfirmUrlsBuilder urlsBuilder;
+	private final AuthEventPublisher eventPublisher;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -16,7 +17,7 @@ public final class AuthServiceSupplier {
 							   AuthConfirmUrlsBuilder urlsBuilder) {
 		this.securityContext = context;
 		this.authUserService = service;
-		this.urlsBuilder = urlsBuilder;
+		this.eventPublisher = new AuthEventPublisher(context, urlsBuilder);
 	}
 
 
@@ -28,8 +29,8 @@ public final class AuthServiceSupplier {
 		return this.authUserService;
 	}
 
-	public AuthConfirmUrlsBuilder authConfirmUrlsBuilder() {
-		return this.urlsBuilder;
+	public AuthEventPublisher authEventPublisher() {
+		return this.eventPublisher;
 	}
 
 }
