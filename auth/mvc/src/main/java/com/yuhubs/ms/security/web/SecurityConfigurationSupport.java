@@ -144,4 +144,9 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 		return createSecurityHandlerSupplier(createObjectMapper());
 	}
 
+
+	protected final <T> T lookup(String beanName) {
+		return (T) getApplicationContext().getBean(beanName);
+	}
+
 }

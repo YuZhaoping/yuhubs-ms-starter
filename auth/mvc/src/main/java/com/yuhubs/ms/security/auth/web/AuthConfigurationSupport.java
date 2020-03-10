@@ -36,6 +36,8 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 
 	protected final UserDetailsService userDetailsService;
 
+	private AuthenticationManager authenticationManager;
+
 
 	public AuthConfigurationSupport() {
 		super();
@@ -58,7 +60,8 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	@Bean(name="authenticationManager")
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+		this.authenticationManager = super.authenticationManagerBean();
+		return this.authenticationManager;
 	}
 
 
@@ -121,9 +124,7 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 		LoginProcessingFilter loginFilter =
 				new LoginProcessingFilter(SIGNIN_ENDPOINT, supplier.objectMapper());
 
-		AuthenticationManager authenticationManager = super.authenticationManagerBean();
-
-		loginFilter.setAuthenticationManager(authenticationManager);
+		loginFilter.setAuthenticationManager(this.authenticationManager);
 
 		loginFilter.setAuthenticationSuccessHandler(
 				supplier.authenticationSuccessHandler());
