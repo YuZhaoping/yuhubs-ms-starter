@@ -132,6 +132,10 @@ public class SecurityConfigurationSupport extends WebSecurityConfigurerAdapter {
 	}
 
 
+	public final SecurityHandlerSupplier getSecurityHandlerSupplier() {
+		return this.handlerSupplier;
+	}
+
 	protected SecurityHandlerSupplier createSecurityHandlerSupplier(ObjectMapper objectMapper) {
 		return new SecurityHandlerSupplier(this, objectMapper);
 	}
