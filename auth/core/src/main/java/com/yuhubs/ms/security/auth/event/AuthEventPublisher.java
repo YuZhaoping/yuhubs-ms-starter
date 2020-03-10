@@ -53,4 +53,9 @@ public final class AuthEventPublisher {
 		securityContext.publishEvent(new ConfirmEmailEvent(eventData));
 	}
 
+
+	public AuthConfirmUrlsBuilder authConfirmUrlsBuilder() {
+		return this.urlsBuilder;
+	}
+
 }
