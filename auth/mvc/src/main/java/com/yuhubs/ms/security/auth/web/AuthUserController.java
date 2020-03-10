@@ -3,8 +3,11 @@ package com.yuhubs.ms.security.auth.web;
 import com.yuhubs.ms.security.auth.AuthUserAuthentication;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.service.AuthServiceSupplier;
+import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
+import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -99,6 +103,67 @@ public class AuthUserController implements AuthApiEndpoints {
 
 		} catch (AuthenticationException ex) {
 			viewName = AuthTemplateViewID.VERIFY_EMAIL_FAIL.getId();
+
+			view = new ModelAndView(viewName, "error", ex.getMessage());
+
+			view.setStatus(HttpStatus.UNAUTHORIZED);
+		}
+
+		return view;
+	}
+
+
+	@PutMapping(RESET_PASSWORD_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public void emitResetPassword(@RequestBody ResetPasswordRequestDto dto) {
+		this.serviceSupplier.emitResetPassword(dto);
+	}
+
+	@GetMapping(SIGNUP_ENDPOINT + "/{id}/reset_password/")
+	public ModelAndView getResetPasswordView(@PathVariable("id") Long userId,
+											 @RequestParam("token") String token) {
+		String viewName = AuthTemplateViewID.RESET_PASSWORD_VIEW.getId();
+
+		ModelAndView view;
+
+		try {
+			Map<String, ?> model = this.serviceSupplier.getResetPasswordModel(token);
+
+			view = new ModelAndView(viewName, model, HttpStatus.OK);
+
+		} catch (AuthenticationException ex) {
+			viewName = AuthTemplateViewID.RESET_PASSWORD_FAIL.getId();
+
+			view = new ModelAndView(viewName, "error", ex.getMessage());
+
+			view.setStatus(HttpStatus.UNAUTHORIZED);
+		}
+
+		return view;
+	}
+
+	@PostMapping(value = SIGNUP_ENDPOINT + "/{id}/reset_password/",
+			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ModelAndView confirmPassword(@PathVariable("id") Long userId,
+										@RequestParam Map<String, String> params) {
+		String token = params.get("token");
+
+		ConfirmPasswordDto dto = new ConfirmPasswordDto();
+		dto.setPassword(params.get("password"));
+		dto.setConfirmPassword(params.get("confirmPassword"));
+
+		String viewName = AuthTemplateViewID.RESET_PASSWORD_DONE.getId();
+
+		ModelAndView view;
+
+		try {
+			this.serviceSupplier.confirmPassword(token, dto);
+
+			view = new ModelAndView(viewName, HttpStatus.OK);
+
+		} catch (AuthenticationException ex) {
+			viewName = AuthTemplateViewID.RESET_PASSWORD_FAIL.getId();
 
 			view = new ModelAndView(viewName, "error", ex.getMessage());
 

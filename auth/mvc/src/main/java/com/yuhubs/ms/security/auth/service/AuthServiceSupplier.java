@@ -5,9 +5,12 @@ import com.yuhubs.ms.security.auth.AuthUserAuthentication;
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
+import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
+import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.security.core.AuthenticationException;
 
+import java.util.Map;
 import java.util.Optional;
 
 public final class AuthServiceSupplier {
@@ -17,6 +20,7 @@ public final class AuthServiceSupplier {
 	private final AuthEventPublisher eventPublisher;
 
 	private final SignUpService signUpService;
+	private final ResetPasswordService resetPasswordService;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -27,6 +31,7 @@ public final class AuthServiceSupplier {
 		this.eventPublisher = new AuthEventPublisher(context, urlsBuilder);
 
 		this.signUpService = new SignUpService(this);
+		this.resetPasswordService = new ResetPasswordService(this);
 	}
 
 
@@ -37,6 +42,22 @@ public final class AuthServiceSupplier {
 
 	public void confirmEmail(String token) throws AuthenticationException {
 		this.signUpService.confirmEmail(token);
+	}
+
+
+	public void emitResetPassword(ResetPasswordRequestDto dto)
+			throws AuthenticationException {
+		this.resetPasswordService.emitResetPassword(dto);
+	}
+
+	public Map<String, ?> getResetPasswordModel(String token)
+			throws AuthenticationException {
+		return resetPasswordService.getResetPasswordModel(token);
+	}
+
+	public void confirmPassword(String token, ConfirmPasswordDto dto)
+			throws AuthenticationException {
+		this.resetPasswordService.confirmPassword(token, dto);
 	}
 
 
