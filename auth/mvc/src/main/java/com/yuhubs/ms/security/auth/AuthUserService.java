@@ -6,6 +6,10 @@ import java.util.Optional;
 
 public interface AuthUserService {
 
+	interface Provider {
+		AuthUserService authUserService();
+	}
+
 	AuthUser signUpUser(SignUpRequest request) throws UserAlreadyExistsException;
 
 	Optional<AuthUser> getUserById(Long userId);

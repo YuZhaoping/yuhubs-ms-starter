@@ -17,7 +17,7 @@ import java.util.Optional;
 public final class AuthServiceSupplier {
 
 	private final AuthSecurityContext securityContext;
-	private final AuthUserService authUserService;
+	private final AuthUserService.Provider userServiceProvider;
 	private final AuthEventPublisher eventPublisher;
 
 	private final SignUpService signUpService;
@@ -26,10 +26,10 @@ public final class AuthServiceSupplier {
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
-							   AuthUserService service,
+							   AuthUserService.Provider userServiceProvider,
 							   AuthConfirmUrlsBuilder urlsBuilder) {
 		this.securityContext = context;
-		this.authUserService = service;
+		this.userServiceProvider = userServiceProvider;
 		this.eventPublisher = new AuthEventPublisher(context, urlsBuilder);
 
 		this.signUpService = new SignUpService(this);
@@ -75,7 +75,7 @@ public final class AuthServiceSupplier {
 	}
 
 	public AuthUserService authUserService() {
-		return this.authUserService;
+		return this.userServiceProvider.authUserService();
 	}
 
 	public AuthEventPublisher authEventPublisher() {

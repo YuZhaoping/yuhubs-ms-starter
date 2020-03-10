@@ -5,7 +5,7 @@ import com.yuhubs.ms.security.auth.AuthUserService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
-public class AuthWebSecurityContext extends AuthSecurityContext {
+public class AuthWebSecurityContext extends AuthSecurityContext implements AuthUserService.Provider {
 
 	private final AuthConfigurationSupport support;
 
@@ -30,6 +30,11 @@ public class AuthWebSecurityContext extends AuthSecurityContext {
 	}
 
 
+	public AuthUserService.Provider userServiceProvider() {
+		return this;
+	}
+
+	@Override
 	public AuthUserService authUserService() {
 		return this.support.getAuthUserService();
 	}

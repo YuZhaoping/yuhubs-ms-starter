@@ -59,7 +59,7 @@ public class AuthUserController implements AuthApiEndpoints {
 
 		this.serviceSupplier = new AuthServiceSupplier(
 				context,
-				context.authUserService(),
+				context.userServiceProvider(),
 				new UrlsBuilder());
 	}
 

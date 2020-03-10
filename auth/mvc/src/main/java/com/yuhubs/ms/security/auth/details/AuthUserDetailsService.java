@@ -15,11 +15,11 @@ public class AuthUserDetailsService implements UserDetailsService {
 			"^[-\\+]?[\\d]*$");
 
 
-	private final AuthUserService userService;
+	private final AuthUserService.Provider provider;
 
 
-	public AuthUserDetailsService(AuthUserService userService) {
-		this.userService = userService;
+	public AuthUserDetailsService(AuthUserService.Provider provider) {
+		this.provider = provider;
 	}
 
 
@@ -27,12 +27,14 @@ public class AuthUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
 
+		final AuthUserService userService = this.provider.authUserService();
+
 		Optional<AuthUser> user;
 
 		if (isNumeric(username)) {
-			user = this.userService.getUserById(Long.valueOf(username));
+			user = userService.getUserById(Long.valueOf(username));
 		} else {
-			user = this.userService.getUserByName(username);
+			user = userService.getUserByName(username);
 		}
 
 		if (!user.isPresent()) {
