@@ -8,6 +8,7 @@ import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -171,6 +172,19 @@ public class AuthUserController implements AuthApiEndpoints {
 		}
 
 		return view;
+	}
+
+
+	@GetMapping(REFRESH_TOKEN_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public void refreshToken(HttpServletRequest request, HttpServletResponse response,
+							 Authentication tokenAuth)
+			throws IOException, ServletException {
+		AuthUserAuthentication authentication = this.serviceSupplier.refreshToken(tokenAuth);
+
+		this.securityContext.authenticationSuccessHandler()
+				.onAuthenticationSuccess(request, response, authentication);
 	}
 
 

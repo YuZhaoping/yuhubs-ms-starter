@@ -8,6 +8,7 @@ import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
 import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
 import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public final class AuthServiceSupplier {
 
 	private final SignUpService signUpService;
 	private final ResetPasswordService resetPasswordService;
+	private final RefreshTokenService refreshTokenService;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -32,6 +34,7 @@ public final class AuthServiceSupplier {
 
 		this.signUpService = new SignUpService(this);
 		this.resetPasswordService = new ResetPasswordService(this);
+		this.refreshTokenService = new RefreshTokenService(this);
 	}
 
 
@@ -58,6 +61,12 @@ public final class AuthServiceSupplier {
 	public void confirmPassword(String token, ConfirmPasswordDto dto)
 			throws AuthenticationException {
 		this.resetPasswordService.confirmPassword(token, dto);
+	}
+
+
+	public AuthUserAuthentication refreshToken(Authentication tokenAuth)
+			throws AuthenticationException {
+		return this.refreshTokenService.refreshToken(tokenAuth);
 	}
 
 
