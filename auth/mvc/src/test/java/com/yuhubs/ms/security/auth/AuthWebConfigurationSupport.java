@@ -1,6 +1,7 @@
 package com.yuhubs.ms.security.auth;
 
 import com.yuhubs.ms.security.auth.web.AuthUserController;
+import com.yuhubs.ms.security.auth.web.AuthWebExceptionHandler;
 import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import com.yuhubs.ms.web.RestConfigurationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class AuthWebConfigurationSupport extends RestConfigurationSupport {
 	@Bean
 	public AuthUserController authUserController() {
 		return this.securityContext.createAuthUserController();
+	}
+
+	@Bean
+	public Object controllerAdvice() {
+		return new AuthWebExceptionHandler();
 	}
 
 }
