@@ -21,7 +21,7 @@ public final class ResetPasswordService extends AuthServiceBase {
 	public void emitResetPassword(ResetPasswordRequestDto dto) throws AuthenticationException {
 		Optional<AuthUser> userOp = authUserService().getUserByName(dto.getEmail());
 		if (!userOp.isPresent()) {
-			throw new UsernameNotFoundException("User not found by the email");
+			throw new UsernameNotFoundException("User not found by " + dto.getEmail());
 		}
 
 		AuthUser user = userOp.get();

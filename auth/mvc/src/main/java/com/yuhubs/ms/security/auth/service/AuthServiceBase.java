@@ -28,7 +28,7 @@ public abstract class AuthServiceBase {
 
 		Optional<AuthUser> userOp = authUserService().getUserById(userId);
 		if (!userOp.isPresent()) {
-			throw new UsernameNotFoundException("Invalid user id");
+			throw new UsernameNotFoundException("Invalid userId: " + userId);
 		}
 
 		return userOp.get();
