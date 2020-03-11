@@ -1,0 +1,16 @@
+mock:
+  roles:
+    ADMIN: 'ADMIN-ROLE, ADMIN-USER'
+    USER: 'USE-DATA-*, EDIT-DATA-*'
+
+  users:
+    - name: admin
+      email: admin@yuhubs.com
+      passwd: admin
+      role: ADMIN
+      status: 0
+    - name: user10
+      email: user10@yuhubs.com
+      passwd: user10
+      role: USER
+      status: 0

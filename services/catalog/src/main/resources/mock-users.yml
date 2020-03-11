@@ -1,0 +1,10 @@
+mock:
+  roles:
+    USER: 'USE-DATA-*'
+
+  users:
+    - name: user01
+      email: user01@yuhubs.com
+      passwd: user01
+      role: USER
+      status: 8
