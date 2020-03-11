@@ -41,6 +41,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.yuhubs.ms.auth</groupId>
+			<artifactId>auth-webmvc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
     <!-- Test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
