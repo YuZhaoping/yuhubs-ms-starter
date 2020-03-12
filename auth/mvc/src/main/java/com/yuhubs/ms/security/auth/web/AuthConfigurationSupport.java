@@ -45,7 +45,7 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 
 
 	@Bean
-	public AuthWebSecurityContext authWebSecurityContext() {
+	public AuthWebSecurityContext authSecurityContext() {
 		return this.context;
 	}
 

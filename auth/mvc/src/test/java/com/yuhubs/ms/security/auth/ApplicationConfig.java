@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @Import({
 		MockUserConfig.class,
-		SecurityTestConfig.class,
+		SecurityConfig.class,
 		AuthEventHandler.class
 })
 public class ApplicationConfig {

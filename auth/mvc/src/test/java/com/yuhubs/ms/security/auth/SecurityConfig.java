@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @EnableWebSecurity
 @Configuration
-public class SecurityTestConfig extends AuthConfigurationSupport {
+public class SecurityConfig extends AuthConfigurationSupport {
 
 	@Autowired
 	private MockAuthUserService authUserService;
