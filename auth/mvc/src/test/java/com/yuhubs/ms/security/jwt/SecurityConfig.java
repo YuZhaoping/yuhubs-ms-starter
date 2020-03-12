@@ -6,5 +6,5 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 @EnableWebSecurity
 @Configuration
-public class SecurityTestConfig extends SecurityConfigurationSupport {
+public class SecurityConfig extends SecurityConfigurationSupport {
 }

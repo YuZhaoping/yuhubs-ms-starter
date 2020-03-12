@@ -1,13 +1,12 @@
-package com.yuhubs.ms.security.auth;
+package com.yuhubs.ms;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({
-		MockUserConfig.class,
-		SecurityConfig.class,
-		AuthEventHandler.class
+		AsyncConfig.class,
+		EventConfig.class
 })
-public class ApplicationConfig {
+public class ApplicationTestConfig {
 }

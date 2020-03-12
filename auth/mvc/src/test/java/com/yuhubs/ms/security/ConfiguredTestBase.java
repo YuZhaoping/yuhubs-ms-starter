@@ -7,6 +7,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@ContextConfiguration(classes = ApplicationConfig.class)
+@ContextConfiguration(classes = ApplicationTestConfig.class)
 public class ConfiguredTestBase {
 }

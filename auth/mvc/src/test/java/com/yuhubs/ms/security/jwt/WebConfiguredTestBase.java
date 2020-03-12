@@ -17,7 +17,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @ContextHierarchy({
-		@ContextConfiguration(classes = SecurityTestConfig.class),
+		@ContextConfiguration(classes = SecurityConfig.class),
 		@ContextConfiguration(classes = WebTestConfig.class)
 })
 @WebAppConfiguration
