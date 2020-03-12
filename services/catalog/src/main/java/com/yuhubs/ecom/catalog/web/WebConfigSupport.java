@@ -1,8 +1,8 @@
 package com.yuhubs.ecom.catalog.web;
 
+import com.yuhubs.ms.web.RestConfigurationSupport;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
-public class WebConfigSupport extends WebMvcConfigurationSupport {
+public class WebConfigSupport extends RestConfigurationSupport {
 }
