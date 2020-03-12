@@ -1,0 +1,20 @@
+{
+    "CN": "catalog.ecom.yuhubs.com",
+    "hosts": [
+        "ecom.yuhubs.com",
+        "127.0.0.1"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "OU": "Yuhubs_ECOM_Catalog_Service",
+            "O": "Yuhubs_ECOM",
+            "L": "Cary",
+            "ST": "NC",
+            "C": "US"
+        }
+    ]
+}
