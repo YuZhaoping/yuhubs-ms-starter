@@ -1,0 +1,19 @@
+{
+    "CN": "Yuhubs_ECOM_Intermediate_CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "OU": "Yuhubs_ECOM_Intermediate_CA",
+            "O": "Yuhubs_ECOM",
+            "L": "Cary",
+            "ST": "NC",
+            "C": "US"
+        }
+    ],
+    "ca": {
+        "expiry": "87600h"
+    }
+}

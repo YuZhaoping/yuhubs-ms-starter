@@ -1,0 +1,16 @@
+{
+    "CN": "Yuhubs_MS_Root_CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "OU": "Yuhubs_MS_Root_CA",
+            "O": "Yuhubs_MS",
+            "L": "Cary",
+            "ST": "NC",
+            "C": "US"
+        }
+    ]
+}
