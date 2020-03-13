@@ -41,6 +41,7 @@ openssl verify -CAfile $OUTPUT_CA_DIR/$PREFIX-ca.pem \
 # Bundle the Root & Ecom CAs
 if [ ! -f "$OUTPUT_DIR/$PREFIX-ecom-ca.crt" ]; then
 echo "--- Bundle the Root & Ecom CAs ---"
+mkbundle -f $OUTPUT_DIR/$PREFIX-root-ca.crt $OUTPUT_CA_DIR/$PREFIX-ca.pem
 mkbundle -f $OUTPUT_DIR/$PREFIX-ecom-ca.crt \
   $OUTPUT_CA_DIR/$PREFIX-ca.pem $OUTPUT_CA_DIR/$PREFIX-ecom.pem
 fi

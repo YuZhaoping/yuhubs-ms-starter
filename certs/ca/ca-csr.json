@@ -6,8 +6,8 @@
     },
     "names": [
         {
-            "OU": "Yuhubs_MS_Root_CA",
-            "O": "Yuhubs_MS",
+            "OU": "Yuhubs_MS",
+            "O": "Yuhubs",
             "L": "Cary",
             "ST": "NC",
             "C": "US"

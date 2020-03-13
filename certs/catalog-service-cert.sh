@@ -7,6 +7,7 @@ export OUTPUT_DIR=./deploy
 export OUTPUT_CA_DIR=$OUTPUT_DIR/ca
 
 export CA_NAME=yuhubs-ecom
+
 export HOST_NAME=catalog-service
 
 export PASSWD=yuhubs123
