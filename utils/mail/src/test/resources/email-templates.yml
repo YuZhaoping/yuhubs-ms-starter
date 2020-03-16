@@ -1,0 +1,9 @@
+emails:
+  variables:
+    httpHost: 'http://localhost:8080'
+  location: 'classpath:templates/'
+  entries:
+    - id: 'confirm-email'
+      subject: 'Confirm Email'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'confirm-email.html'
