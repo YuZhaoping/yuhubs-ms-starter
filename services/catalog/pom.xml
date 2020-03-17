@@ -47,6 +47,12 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.yuhubs.ms.auth</groupId>
+			<artifactId>auth-mail</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
     <!-- Test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
