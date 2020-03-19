@@ -26,8 +26,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-core</artifactId>
+			<groupId>com.yuhubs.ms.commons</groupId>
+			<artifactId>commons-webflux</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- Test -->
