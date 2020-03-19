@@ -15,9 +15,12 @@ public class SecurityConfigurationSupport {
 
 	protected final JwtTokenServiceContext jwtTokenServiceContext;
 
+	protected final SecurityHandlerSupplier handlerSupplier;
+
 
 	public SecurityConfigurationSupport() {
 		this.jwtTokenServiceContext = createJwtTokenServiceContext();
+		this.handlerSupplier = createSecurityHandlerSupplier();
 	}
 
 
@@ -34,6 +37,11 @@ public class SecurityConfigurationSupport {
 	@Bean
 	public JwtTokenService jwtTokenService(SecurityProperties properties) {
 		return this.jwtTokenServiceContext.jwtTokenService(properties);
+	}
+
+	@Bean
+	public SecurityHandlerSupplier securityHandlerSupplier() {
+		return this.handlerSupplier;
 	}
 
 
@@ -54,6 +62,11 @@ public class SecurityConfigurationSupport {
 
 	public final JwtTokenServiceContext getJwtTokenServiceContext() {
 		return this.jwtTokenServiceContext;
+	}
+
+
+	private final SecurityHandlerSupplier createSecurityHandlerSupplier() {
+		return new SecurityHandlerSupplier(this);
 	}
 
 }
