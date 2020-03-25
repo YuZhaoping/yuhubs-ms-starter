@@ -1,8 +1,10 @@
 package com.yuhubs.ms.security.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuhubs.ms.security.SecurityProperties;
 import com.yuhubs.ms.security.jwt.JwtTokenService;
 import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
+import com.yuhubs.ms.web.JsonMapperBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -65,8 +67,20 @@ public class SecurityConfigurationSupport {
 	}
 
 
+	public final SecurityHandlerSupplier getSecurityHandlerSupplier() {
+		return this.handlerSupplier;
+	}
+
+	protected SecurityHandlerSupplier createSecurityHandlerSupplier(ObjectMapper objectMapper) {
+		return new SecurityHandlerSupplier(this, objectMapper);
+	}
+
+	protected ObjectMapper createObjectMapper() {
+		return JsonMapperBuilder.buildJacksonMapper();
+	}
+
 	private final SecurityHandlerSupplier createSecurityHandlerSupplier() {
-		return new SecurityHandlerSupplier(this);
+		return createSecurityHandlerSupplier(createObjectMapper());
 	}
 
 }
