@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
+import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
+import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 
 @EnableWebFluxSecurity
 @Configuration
@@ -44,6 +48,26 @@ public class SecurityConfigurationSupport {
 	@Bean
 	public SecurityHandlerSupplier securityHandlerSupplier() {
 		return this.handlerSupplier;
+	}
+
+	@Bean
+	public ServerAuthenticationEntryPoint unauthorizedEntryPoint(SecurityHandlerSupplier supplier) {
+		return supplier.unauthorizedEntryPoint();
+	}
+
+	@Bean
+	public ServerAccessDeniedHandler accessDeniedHandler(SecurityHandlerSupplier supplier) {
+		return supplier.accessDeniedHandler();
+	}
+
+	@Bean
+	public ServerAuthenticationSuccessHandler authenticationSuccessHandler(SecurityHandlerSupplier supplier) {
+		return supplier.authenticationSuccessHandler();
+	}
+
+	@Bean
+	public ServerAuthenticationFailureHandler authenticationFailureHandler(SecurityHandlerSupplier supplier) {
+		return supplier.authenticationFailureHandler();
 	}
 
 

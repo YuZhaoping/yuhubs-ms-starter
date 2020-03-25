@@ -5,8 +5,12 @@ import com.yuhubs.ms.security.SecurityProperties;
 import com.yuhubs.ms.security.jwt.JwtTokenService;
 import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
 import com.yuhubs.ms.security.web.handler.AccessForbiddenHandler;
+import com.yuhubs.ms.security.web.handler.DefaultAuthenticationFailureHandler;
+import com.yuhubs.ms.security.web.handler.TokenByAuthenticationSuccessHandler;
 import com.yuhubs.ms.security.web.handler.UnauthorizedEntryPoint;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
+import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
+import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +23,8 @@ public class SecurityHandlerSupplier {
 
 	private final ServerAuthenticationEntryPoint unauthorizedEntryPoint;
 	private final ServerAccessDeniedHandler accessDeniedHandler;
+	private final ServerAuthenticationSuccessHandler authenticationSuccessHandler;
+	private final ServerAuthenticationFailureHandler authenticationFailureHandler;
 
 
 	public SecurityHandlerSupplier(SecurityConfigurationSupport support,
@@ -28,6 +34,8 @@ public class SecurityHandlerSupplier {
 
 		this.unauthorizedEntryPoint = createUnauthorizedEntryPoint();
 		this.accessDeniedHandler = createAccessDeniedHandler();
+		this.authenticationSuccessHandler = createAuthenticationSuccessHandler();
+		this.authenticationFailureHandler = createAuthenticationFailureHandler();
 	}
 
 
@@ -39,6 +47,14 @@ public class SecurityHandlerSupplier {
 		return this.accessDeniedHandler;
 	}
 
+	public final ServerAuthenticationSuccessHandler authenticationSuccessHandler() {
+		return this.authenticationSuccessHandler;
+	}
+
+	public final ServerAuthenticationFailureHandler authenticationFailureHandler() {
+		return this.authenticationFailureHandler;
+	}
+
 
 	protected ServerAuthenticationEntryPoint createUnauthorizedEntryPoint() {
 		return new UnauthorizedEntryPoint(this);
@@ -46,6 +62,14 @@ public class SecurityHandlerSupplier {
 
 	protected ServerAccessDeniedHandler createAccessDeniedHandler() {
 		return new AccessForbiddenHandler(this);
+	}
+
+	protected ServerAuthenticationSuccessHandler createAuthenticationSuccessHandler() {
+		return new TokenByAuthenticationSuccessHandler(this);
+	}
+
+	protected ServerAuthenticationFailureHandler createAuthenticationFailureHandler() {
+		return new DefaultAuthenticationFailureHandler(this);
 	}
 
 
