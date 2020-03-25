@@ -53,7 +53,11 @@ public class SecurityConfigurationSupport {
 	}
 
 	protected final ServerHttpSecurity configure(ServerHttpSecurity http) {
-		http.csrf().disable();
+		http.csrf().disable()
+				.exceptionHandling()
+				.authenticationEntryPoint(this.handlerSupplier.unauthorizedEntryPoint())
+				.accessDeniedHandler(this.handlerSupplier.accessDeniedHandler())
+				.and();
 		return http;
 	}
 
