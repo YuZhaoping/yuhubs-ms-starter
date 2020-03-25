@@ -14,6 +14,7 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
+import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
 
 @EnableWebFluxSecurity
 @Configuration
@@ -81,7 +82,8 @@ public class SecurityConfigurationSupport {
 				.exceptionHandling()
 				.authenticationEntryPoint(this.handlerSupplier.unauthorizedEntryPoint())
 				.accessDeniedHandler(this.handlerSupplier.accessDeniedHandler())
-				.and();
+				.and()
+				.securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
 		return http;
 	}
 
