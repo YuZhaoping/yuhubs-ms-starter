@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuhubs.ms.security.SecurityProperties;
 import com.yuhubs.ms.security.jwt.JwtTokenService;
 import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
+import com.yuhubs.ms.security.web.jwt.JwtAuthenticationManager;
+import com.yuhubs.ms.security.web.jwt.JwtSecurityContextRepository;
 import com.yuhubs.ms.web.JsonMapperBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -14,7 +18,9 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
-import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
+
+import java.util.LinkedList;
+import java.util.List;
 
 @EnableWebFluxSecurity
 @Configuration
@@ -83,8 +89,41 @@ public class SecurityConfigurationSupport {
 				.authenticationEntryPoint(this.handlerSupplier.unauthorizedEntryPoint())
 				.accessDeniedHandler(this.handlerSupplier.accessDeniedHandler())
 				.and()
-				.securityContextRepository(NoOpServerSecurityContextRepository.getInstance());
+				.authenticationManager(configureAuthenticationManager())
+				.securityContextRepository(createSecurityContextRepository());
+
+		configureRequestAuthorization(http);
+
+		configureFilters(http);
+
 		return http;
+	}
+
+	private final ReactiveAuthenticationManager configureAuthenticationManager() {
+		List<ReactiveAuthenticationManager> entryPoints = new LinkedList<>();
+
+		entryPoints.add(new JwtAuthenticationManager());
+
+		configureAuthenticationManager(entryPoints);
+
+		return new DelegatingReactiveAuthenticationManager(entryPoints);
+	}
+
+	private final JwtSecurityContextRepository createSecurityContextRepository() {
+		return new JwtSecurityContextRepository(this.handlerSupplier);
+	}
+
+
+	protected void configureAuthenticationManager(List<ReactiveAuthenticationManager> entryPoints) {
+	}
+
+	protected void configureRequestAuthorization(ServerHttpSecurity http) {
+		http.authorizeExchange()
+				.pathMatchers("/").permitAll()
+				.anyExchange().authenticated();
+	}
+
+	protected void configureFilters(ServerHttpSecurity http) {
 	}
 
 
