@@ -5,6 +5,7 @@ import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 public class TokenByAuthenticationSuccessHandler implements ServerAuthenticationSuccessHandler {
@@ -24,13 +25,16 @@ public class TokenByAuthenticationSuccessHandler implements ServerAuthentication
 
 	@Override
 	public Mono<Void> onAuthenticationSuccess(WebFilterExchange exchange, Authentication authentication) {
+		return doAuthenticationSuccess(exchange.getExchange(), authentication);
+	}
+
+	public Mono<Void> doAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
 
 		int minutes = getExpirationMinutes();
 
 		String jwtToken = jwtTokenService().createJwtToken(authentication, minutes);
 
-		exchange.getExchange()
-				.getResponse().getHeaders()
+		exchange.getResponse().getHeaders()
 				.set(X_SET_AUTHORIZATION_BEARER_HEADER, jwtToken);
 
 		return Mono.empty();

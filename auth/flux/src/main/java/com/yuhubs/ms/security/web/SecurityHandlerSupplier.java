@@ -8,11 +8,14 @@ import com.yuhubs.ms.security.web.handler.AccessForbiddenHandler;
 import com.yuhubs.ms.security.web.handler.DefaultAuthenticationFailureHandler;
 import com.yuhubs.ms.security.web.handler.TokenByAuthenticationSuccessHandler;
 import com.yuhubs.ms.security.web.handler.UnauthorizedEntryPoint;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
 
 @Component
 public class SecurityHandlerSupplier {
@@ -38,6 +41,11 @@ public class SecurityHandlerSupplier {
 		this.authenticationFailureHandler = createAuthenticationFailureHandler();
 	}
 
+
+	public Mono<Void> onAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
+		return ((TokenByAuthenticationSuccessHandler)authenticationSuccessHandler)
+				.doAuthenticationSuccess(exchange, authentication);
+	}
 
 	public final ServerAuthenticationEntryPoint unauthorizedEntryPoint() {
 		return this.unauthorizedEntryPoint;
