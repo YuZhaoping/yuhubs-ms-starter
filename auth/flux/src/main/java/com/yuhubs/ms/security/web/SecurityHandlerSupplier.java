@@ -8,6 +8,7 @@ import com.yuhubs.ms.security.web.handler.AccessForbiddenHandler;
 import com.yuhubs.ms.security.web.handler.DefaultAuthenticationFailureHandler;
 import com.yuhubs.ms.security.web.handler.TokenByAuthenticationSuccessHandler;
 import com.yuhubs.ms.security.web.handler.UnauthorizedEntryPoint;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
@@ -61,6 +62,10 @@ public class SecurityHandlerSupplier {
 
 	public final ServerAuthenticationFailureHandler authenticationFailureHandler() {
 		return this.authenticationFailureHandler;
+	}
+
+	public final ReactiveAuthenticationManager authenticationManager() {
+		return this.support.getAuthenticationManager();
 	}
 
 

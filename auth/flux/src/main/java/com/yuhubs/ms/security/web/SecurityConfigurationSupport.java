@@ -9,15 +9,17 @@ import com.yuhubs.ms.security.web.jwt.JwtSecurityContextRepository;
 import com.yuhubs.ms.web.JsonMapperBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.DelegatingReactiveAuthenticationManager;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,10 +32,13 @@ public class SecurityConfigurationSupport {
 
 	protected final SecurityHandlerSupplier handlerSupplier;
 
+	private final DelegatingAuthenticationManager authenticationManager;
+
 
 	public SecurityConfigurationSupport() {
 		this.jwtTokenServiceContext = createJwtTokenServiceContext();
 		this.handlerSupplier = createSecurityHandlerSupplier();
+		this.authenticationManager = new DelegatingAuthenticationManager();
 	}
 
 
@@ -100,19 +105,23 @@ public class SecurityConfigurationSupport {
 	}
 
 	private final ReactiveAuthenticationManager configureAuthenticationManager() {
-		List<ReactiveAuthenticationManager> entryPoints = new LinkedList<>();
+		List<ReactiveAuthenticationManager> entryPoints = this.authenticationManager.entryPoints();
 
 		entryPoints.add(new JwtAuthenticationManager());
 
 		configureAuthenticationManager(entryPoints);
 
-		return new DelegatingReactiveAuthenticationManager(entryPoints);
+		return this.authenticationManager;
 	}
 
 	private final JwtSecurityContextRepository createSecurityContextRepository() {
 		return new JwtSecurityContextRepository(this.handlerSupplier);
 	}
 
+
+	protected final ReactiveAuthenticationManager getAuthenticationManager() {
+		return this.authenticationManager;
+	}
 
 	protected void configureAuthenticationManager(List<ReactiveAuthenticationManager> entryPoints) {
 	}
@@ -150,6 +159,30 @@ public class SecurityConfigurationSupport {
 
 	private final SecurityHandlerSupplier createSecurityHandlerSupplier() {
 		return createSecurityHandlerSupplier(createObjectMapper());
+	}
+
+
+	private static final class DelegatingAuthenticationManager implements ReactiveAuthenticationManager {
+
+		final List<ReactiveAuthenticationManager> entryPoints;
+
+
+		DelegatingAuthenticationManager() {
+			this.entryPoints = new LinkedList<>();
+		}
+
+
+		@Override
+		public Mono<Authentication> authenticate(Authentication authentication) {
+			return Flux.fromIterable(this.entryPoints)
+					.concatMap(m -> m.authenticate(authentication))
+					.next();
+		}
+
+		List<ReactiveAuthenticationManager> entryPoints() {
+			return this.entryPoints;
+		}
+
 	}
 
 }
