@@ -15,11 +15,11 @@ public class AuthUserDetailsService implements ReactiveUserDetailsService {
 			"^[-\\+]?[\\d]*$");
 
 
-	private final AuthUserService userService;
+	private final AuthUserService.Provider provider;
 
 
-	public AuthUserDetailsService(AuthUserService userService) {
-		this.userService = userService;
+	public AuthUserDetailsService(AuthUserService.Provider provider) {
+		this.provider = provider;
 	}
 
 
@@ -27,17 +27,19 @@ public class AuthUserDetailsService implements ReactiveUserDetailsService {
 	public Mono<UserDetails> findByUsername(final String username) {
 		Mono<AuthUser> user;
 
+		final AuthUserService userService = this.provider.authUserService();
+
 		if (isNumeric(username)) {
-			user = this.userService.getUserById(Long.valueOf(username));
+			user = userService.getUserById(Long.valueOf(username));
 		} else {
-			user = this.userService.getUserByName(username);
+			user = userService.getUserByName(username);
 		}
 
 		user.switchIfEmpty(Mono.defer(() -> {
 			return Mono.error(new UsernameNotFoundException("User not found by '" + username + "'"));
 		})).map(AuthUserDetails::of);
 
-		return null;
+		return Mono.empty();
 	}
 
 
