@@ -8,6 +8,7 @@ import com.yuhubs.ms.security.web.SecurityConfigurationSupport;
 import com.yuhubs.ms.security.web.SecurityHandlerSupplier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -26,10 +27,10 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	private static final String SIGNOUT_SUCCESS_URL = SIGNIN_ENDPOINT + "?logout";
 
 	private static final String VERIFY_EMAIL_PATTERN =
-			SIGNUP_ENDPOINT + "/.*/verify_email/.*";
+			SIGNUP_ENDPOINT + "/*/verify_email/*";
 
 	private static final String RESET_PASSWORD_PATTERN =
-			SIGNUP_ENDPOINT + "/.*/reset_password/.*";
+			SIGNUP_ENDPOINT + "/*/reset_password/*";
 
 
 	protected final AuthWebSecurityContext context;
@@ -53,6 +54,19 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 		return this.userDetailsService;
 	}
 
+
+	@Override
+	protected void configureRequestAuthorization(ServerHttpSecurity http) {
+		http.authorizeExchange()
+				.pathMatchers(SIGNOUT_ENDPOINT).permitAll()
+				.pathMatchers(HttpMethod.POST, SIGNIN_ENDPOINT).permitAll()
+				.pathMatchers(HttpMethod.POST, SIGNUP_ENDPOINT).permitAll()
+				.pathMatchers(HttpMethod.PUT, RESET_PASSWORD_ENDPOINT).permitAll()
+				.pathMatchers(VERIFY_EMAIL_PATTERN).permitAll()
+				.pathMatchers(RESET_PASSWORD_PATTERN).permitAll();
+
+		super.configureRequestAuthorization(http);
+	}
 
 	@Override
 	protected void configureFilters(ServerHttpSecurity http) {
