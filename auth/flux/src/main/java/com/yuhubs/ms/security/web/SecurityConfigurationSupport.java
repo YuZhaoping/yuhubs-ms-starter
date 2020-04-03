@@ -18,6 +18,7 @@ import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.security.web.server.authentication.ServerAuthenticationFailureHandler;
 import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
+import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -34,11 +35,14 @@ public class SecurityConfigurationSupport {
 
 	private final DelegatingAuthenticationManager authenticationManager;
 
+	protected final ServerSecurityContextRepository securityContextRepository;
+
 
 	public SecurityConfigurationSupport() {
 		this.jwtTokenServiceContext = createJwtTokenServiceContext();
 		this.handlerSupplier = createSecurityHandlerSupplier();
 		this.authenticationManager = new DelegatingAuthenticationManager();
+		this.securityContextRepository = createSecurityContextRepository();
 	}
 
 
@@ -95,7 +99,7 @@ public class SecurityConfigurationSupport {
 				.accessDeniedHandler(this.handlerSupplier.accessDeniedHandler())
 				.and()
 				.authenticationManager(configureAuthenticationManager())
-				.securityContextRepository(createSecurityContextRepository());
+				.securityContextRepository(this.securityContextRepository);
 
 		configureRequestAuthorization(http);
 
@@ -114,16 +118,16 @@ public class SecurityConfigurationSupport {
 		return this.authenticationManager;
 	}
 
-	private final JwtSecurityContextRepository createSecurityContextRepository() {
-		return new JwtSecurityContextRepository(this.handlerSupplier);
-	}
-
 
 	protected final ReactiveAuthenticationManager getAuthenticationManager() {
 		return this.authenticationManager;
 	}
 
 	protected void configureAuthenticationManager(List<ReactiveAuthenticationManager> entryPoints) {
+	}
+
+	protected ServerSecurityContextRepository createSecurityContextRepository() {
+		return new JwtSecurityContextRepository(this.handlerSupplier);
 	}
 
 	protected void configureRequestAuthorization(ServerHttpSecurity http) {

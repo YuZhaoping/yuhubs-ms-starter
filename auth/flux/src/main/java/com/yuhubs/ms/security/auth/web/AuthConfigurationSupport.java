@@ -13,7 +13,11 @@ import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;
+import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
 import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
+
+import java.net.URI;
 
 @EnableWebFluxSecurity
 @Configuration
@@ -53,6 +57,7 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	@Override
 	protected void configureFilters(ServerHttpSecurity http) {
 		super.configureFilters(http);
+		setupLogout(http);
 		setupLoginFilter(http);
 	}
 
@@ -64,6 +69,21 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 		return new AuthUserDetailsService(this.context.userServiceProvider());
 	}
 
+
+	protected final void setupLogout(ServerHttpSecurity http) {
+		final SecurityContextServerLogoutHandler logoutHandler =
+				new SecurityContextServerLogoutHandler();
+		logoutHandler.setSecurityContextRepository(this.securityContextRepository);
+
+		final RedirectServerLogoutSuccessHandler logoutSuccessHandler =
+				new RedirectServerLogoutSuccessHandler();
+		logoutSuccessHandler.setLogoutSuccessUrl(URI.create(SIGNOUT_SUCCESS_URL));
+
+		http.logout()
+				.requiresLogout(ServerWebExchangeMatchers.pathMatchers(SIGNOUT_ENDPOINT))
+				.logoutHandler(logoutHandler)
+				.logoutSuccessHandler(logoutSuccessHandler);
+	}
 
 	protected final void setupLoginFilter(ServerHttpSecurity http) {
 		AuthenticationWebFilter loginFilter = createLoginFilter();
