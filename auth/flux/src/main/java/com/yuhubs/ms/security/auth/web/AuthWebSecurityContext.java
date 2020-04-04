@@ -14,6 +14,11 @@ public class AuthWebSecurityContext extends AuthSecurityContext implements AuthU
 	}
 
 
+	public AuthUserController createAuthUserController() {
+		return new AuthUserController(this);
+	}
+
+
 	public AuthUserService.Provider userServiceProvider() {
 		return this;
 	}
