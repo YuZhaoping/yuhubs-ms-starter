@@ -2,12 +2,11 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.service.AuthServiceSupplier;
+import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Controller
@@ -59,6 +58,17 @@ public class AuthUserController implements AuthApiEndpoints {
 	public Mono<Void> signIn() {
 		// LoginAuthenticationManager has already signed in.
 		return Mono.empty();
+	}
+
+
+	@PostMapping(SIGNUP_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public Mono<Void> signUp(ServerWebExchange exchange, @RequestBody SignUpRequestDto dto) {
+		return this.serviceSupplier.signUp(dto)
+				.doOnNext(authentication -> {
+					this.securityContext.onAuthenticationSuccess(exchange, authentication);
+				}).then();
 	}
 
 
