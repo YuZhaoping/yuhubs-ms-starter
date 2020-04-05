@@ -25,10 +25,12 @@ public class TokenByAuthenticationSuccessHandler implements ServerAuthentication
 
 	@Override
 	public Mono<Void> onAuthenticationSuccess(WebFilterExchange exchange, Authentication authentication) {
-		return doAuthenticationSuccess(exchange.getExchange(), authentication);
+		doAuthenticationSuccess(exchange.getExchange(), authentication);
+
+		return Mono.empty();
 	}
 
-	public Mono<Void> doAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
+	public void doAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
 
 		int minutes = getExpirationMinutes();
 
@@ -36,8 +38,6 @@ public class TokenByAuthenticationSuccessHandler implements ServerAuthentication
 
 		exchange.getResponse().getHeaders()
 				.set(X_SET_AUTHORIZATION_BEARER_HEADER, jwtToken);
-
-		return Mono.empty();
 	}
 
 

@@ -16,7 +16,6 @@ import org.springframework.security.web.server.authentication.ServerAuthenticati
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 @Component
 public class SecurityHandlerSupplier {
@@ -43,8 +42,8 @@ public class SecurityHandlerSupplier {
 	}
 
 
-	public Mono<Void> onAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
-		return ((TokenByAuthenticationSuccessHandler)authenticationSuccessHandler)
+	public void onAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
+		((TokenByAuthenticationSuccessHandler)authenticationSuccessHandler)
 				.doAuthenticationSuccess(exchange, authentication);
 	}
 

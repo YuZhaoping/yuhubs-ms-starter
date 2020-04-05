@@ -2,6 +2,8 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
 import com.yuhubs.ms.security.auth.AuthUserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.server.ServerWebExchange;
 
 public class AuthWebSecurityContext extends AuthSecurityContext implements AuthUserService.Provider {
 
@@ -16,6 +18,10 @@ public class AuthWebSecurityContext extends AuthSecurityContext implements AuthU
 
 	public AuthUserController createAuthUserController() {
 		return new AuthUserController(this);
+	}
+
+	public void onAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
+		this.support.getSecurityHandlerSupplier().onAuthenticationSuccess(exchange, authentication);
 	}
 
 
