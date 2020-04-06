@@ -5,6 +5,7 @@ import com.yuhubs.ms.security.auth.AuthUserAuthentication;
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
+import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
 import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.security.core.AuthenticationException;
@@ -49,9 +50,14 @@ public final class AuthServiceSupplier {
 		return this.resetPasswordService.emitResetPassword(dto);
 	}
 
-	public Mono<Map<String, ?>> getResetPasswordModel(final String token)
+	public Mono<Map<String, ?>> getResetPasswordModel(String token)
 			throws AuthenticationException {
 		return this.resetPasswordService.getResetPasswordModel(token);
+	}
+
+	public Mono<Void> confirmPassword(String token, ConfirmPasswordDto dto)
+			throws AuthenticationException {
+		return this.resetPasswordService.confirmPassword(token, dto);
 	}
 
 

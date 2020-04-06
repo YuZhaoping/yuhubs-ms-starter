@@ -2,6 +2,7 @@ package com.yuhubs.ms.security.auth.service;
 
 import com.yuhubs.ms.security.auth.AccountChecker;
 import com.yuhubs.ms.security.auth.AuthUser;
+import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
 import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +18,8 @@ public final class ResetPasswordService extends AuthServiceBase {
 	}
 
 
-	public Mono<Void> emitResetPassword(ResetPasswordRequestDto dto) throws AuthenticationException {
+	public Mono<Void> emitResetPassword(final ResetPasswordRequestDto dto)
+			throws AuthenticationException {
 		return authUserService().getUserByName(dto.getEmail())
 				.switchIfEmpty(this.handleOnEmpty(dto))
 				.doOnNext(user -> AccountChecker.checkAccountStatus(user.getAccountStatus()))
@@ -25,12 +27,14 @@ public final class ResetPasswordService extends AuthServiceBase {
 				.then();
 	}
 
-	private Mono<AuthUser> handleOnEmpty(ResetPasswordRequestDto dto) throws AuthenticationException {
+	private Mono<AuthUser> handleOnEmpty(ResetPasswordRequestDto dto)
+			throws AuthenticationException {
 		throw new UsernameNotFoundException("User not found by " + dto.getEmail());
 	}
 
 
-	public Mono<Map<String, ?>> getResetPasswordModel(final String token) throws AuthenticationException {
+	public Mono<Map<String, ?>> getResetPasswordModel(final String token)
+			throws AuthenticationException {
 		return getUserByToken(token).flatMap(user -> this.getResetPasswordModel(user, token));
 	}
 
@@ -45,6 +49,20 @@ public final class ResetPasswordService extends AuthServiceBase {
 		model.put("token", token);
 
 		return Mono.just(model);
+	}
+
+
+	public Mono<Void> confirmPassword(final String token, final ConfirmPasswordDto dto)
+			throws AuthenticationException {
+		return getUserByToken(token)
+				.doOnNext(user -> resetUserPassword(user, dto))
+				.then();
+	}
+
+	private void resetUserPassword(AuthUser user, ConfirmPasswordDto dto) {
+		String passwordHash = authSecurityContext().passwordEncoder().encode(dto.getPassword());
+
+		user.setPasswordHash(passwordHash);
 	}
 
 }
