@@ -13,7 +13,8 @@ public final class SignUpService extends AuthServiceBase {
 	}
 
 
-	public Mono<AuthUserAuthentication> signUp(SignUpRequestDto dto) {
+	public Mono<AuthUserAuthentication> signUp(SignUpRequestDto dto)
+			throws AuthenticationException {
 		final AuthProperties properties = authSecurityContext().authProperties();
 
 		final String passwordHash = authSecurityContext().passwordEncoder().encode(dto.getPassword());
@@ -30,6 +31,13 @@ public final class SignUpService extends AuthServiceBase {
 					}
 					return Mono.just(AuthUserAuthentication.of(user));
 				});
+	}
+
+
+	public Mono<Void> confirmEmail(String token) throws AuthenticationException {
+		return getUserByToken(token)
+				.doOnNext(user -> user.setAccountStatus(AccountStatus.Op.SET_EMAIL_VERIFIED))
+				.then();
 	}
 
 

@@ -6,6 +6,7 @@ import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.result.view.Rendering;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -69,6 +70,21 @@ public class AuthUserController implements AuthApiEndpoints {
 				.doOnNext(authentication -> {
 					this.securityContext.onAuthenticationSuccess(exchange, authentication);
 				}).then();
+	}
+
+	@RequestMapping(SIGNUP_ENDPOINT + "/{id}/verify_email/")
+	public Mono<Rendering> confirmEmail(@PathVariable("id") Long userId,
+										@RequestParam("token") String token) {
+		String viewName = AuthTemplateViewID.VERIFY_EMAIL_DONE.getId();
+
+		return this.serviceSupplier.confirmEmail(token)
+				.then(Mono.just(Rendering.view(viewName).status(HttpStatus.OK).build()))
+				.onErrorResume(ex -> Mono.just(
+					Rendering.view(AuthTemplateViewID.VERIFY_EMAIL_FAIL.getId())
+							.status(HttpStatus.UNAUTHORIZED)
+							.modelAttribute("error", ex.getMessage())
+							.build()
+				));
 	}
 
 
