@@ -96,6 +96,24 @@ public class AuthUserController implements AuthApiEndpoints {
 		return this.serviceSupplier.emitResetPassword(dto);
 	}
 
+	@GetMapping(SIGNUP_ENDPOINT + "/{id}/reset_password/")
+	public Mono<Rendering> getResetPasswordView(@PathVariable("id") Long userId,
+												@RequestParam("token") String token) {
+		String viewName = AuthTemplateViewID.RESET_PASSWORD_VIEW.getId();
+
+		return this.serviceSupplier.getResetPasswordModel(token)
+				.flatMap(map -> Mono.just(
+						Rendering.view(viewName).status(HttpStatus.OK)
+								.model(map)
+								.build()))
+				.onErrorResume(ex -> Mono.just(
+						Rendering.view(AuthTemplateViewID.RESET_PASSWORD_FAIL.getId())
+								.status(HttpStatus.UNAUTHORIZED)
+								.modelAttribute("error", ex.getMessage())
+								.build()
+				));
+	}
+
 
 	@GetMapping(SIGNIN_ENDPOINT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
