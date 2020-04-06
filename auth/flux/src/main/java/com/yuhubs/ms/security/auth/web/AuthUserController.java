@@ -2,14 +2,18 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.service.AuthServiceSupplier;
+import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
 import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.result.view.Rendering;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.Map;
 
 @Controller
 public class AuthUserController implements AuthApiEndpoints {
@@ -106,6 +110,28 @@ public class AuthUserController implements AuthApiEndpoints {
 						Rendering.view(viewName).status(HttpStatus.OK)
 								.model(map)
 								.build()))
+				.onErrorResume(ex -> Mono.just(
+						Rendering.view(AuthTemplateViewID.RESET_PASSWORD_FAIL.getId())
+								.status(HttpStatus.UNAUTHORIZED)
+								.modelAttribute("error", ex.getMessage())
+								.build()
+				));
+	}
+
+	@PostMapping(value = SIGNUP_ENDPOINT + "/{id}/reset_password/",
+			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public Mono<Rendering> confirmPassword(@PathVariable("id") Long userId,
+										   @RequestParam Map<String, String> params) {
+		String token = params.get("token");
+
+		ConfirmPasswordDto dto = new ConfirmPasswordDto();
+		dto.setPassword(params.get("password"));
+		dto.setConfirmPassword(params.get("confirmPassword"));
+
+		String viewName = AuthTemplateViewID.RESET_PASSWORD_DONE.getId();
+
+		return this.serviceSupplier.confirmPassword(token, dto)
+				.then(Mono.just(Rendering.view(viewName).status(HttpStatus.OK).build()))
 				.onErrorResume(ex -> Mono.just(
 						Rendering.view(AuthTemplateViewID.RESET_PASSWORD_FAIL.getId())
 								.status(HttpStatus.UNAUTHORIZED)
