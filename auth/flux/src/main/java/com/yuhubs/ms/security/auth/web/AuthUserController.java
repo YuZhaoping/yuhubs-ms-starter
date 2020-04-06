@@ -2,6 +2,7 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.service.AuthServiceSupplier;
+import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -85,6 +86,14 @@ public class AuthUserController implements AuthApiEndpoints {
 							.modelAttribute("error", ex.getMessage())
 							.build()
 				));
+	}
+
+
+	@PutMapping(RESET_PASSWORD_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public Mono<Void> emitResetPassword(@RequestBody ResetPasswordRequestDto dto) {
+		return this.serviceSupplier.emitResetPassword(dto);
 	}
 
 
