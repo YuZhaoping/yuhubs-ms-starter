@@ -7,6 +7,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public final class ResetPasswordService extends AuthServiceBase {
 
 	ResetPasswordService(AuthServiceSupplier supplier) {
@@ -24,6 +27,24 @@ public final class ResetPasswordService extends AuthServiceBase {
 
 	private Mono<AuthUser> handleOnEmpty(ResetPasswordRequestDto dto) throws AuthenticationException {
 		throw new UsernameNotFoundException("User not found by " + dto.getEmail());
+	}
+
+
+	public Mono<Map<String, ?>> getResetPasswordModel(final String token) throws AuthenticationException {
+		return getUserByToken(token).flatMap(user -> this.getResetPasswordModel(user, token));
+	}
+
+	private Mono<Map<String, ?>> getResetPasswordModel(AuthUser user, String token) {
+		Map<String, Object> model = new HashMap<>();
+
+		model.put("username", user.getProfile().getName());
+
+		String confirmUrl = authUrlsBuilder().buildResetPasswordUrl(user.getId(), token);
+		model.put("confirmUrl", confirmUrl);
+
+		model.put("token", token);
+
+		return Mono.just(model);
 	}
 
 }

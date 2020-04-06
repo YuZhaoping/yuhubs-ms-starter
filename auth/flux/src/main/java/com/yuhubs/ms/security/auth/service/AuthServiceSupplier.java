@@ -10,6 +10,8 @@ import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.security.core.AuthenticationException;
 import reactor.core.publisher.Mono;
 
+import java.util.Map;
+
 public final class AuthServiceSupplier {
 
 	private final AuthSecurityContext securityContext;
@@ -45,6 +47,11 @@ public final class AuthServiceSupplier {
 	public Mono<Void> emitResetPassword(ResetPasswordRequestDto dto)
 			throws AuthenticationException {
 		return this.resetPasswordService.emitResetPassword(dto);
+	}
+
+	public Mono<Map<String, ?>> getResetPasswordModel(final String token)
+			throws AuthenticationException {
+		return this.resetPasswordService.getResetPasswordModel(token);
 	}
 
 
