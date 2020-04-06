@@ -16,6 +16,7 @@ public final class AuthServiceSupplier {
 	private final AuthEventPublisher eventPublisher;
 
 	private final SignUpService signUpService;
+	private final ResetPasswordService resetPasswordService;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -26,6 +27,7 @@ public final class AuthServiceSupplier {
 		this.eventPublisher = new AuthEventPublisher(context, urlsBuilder);
 
 		this.signUpService = new SignUpService(this);
+		this.resetPasswordService = new ResetPasswordService(this);
 	}
 
 
