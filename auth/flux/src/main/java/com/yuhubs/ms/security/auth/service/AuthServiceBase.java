@@ -1,9 +1,14 @@
 package com.yuhubs.ms.security.auth.service;
 
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
+import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.event.AuthConfirmUrlsBuilder;
 import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import reactor.core.publisher.Mono;
 
 public abstract class AuthServiceBase {
 
@@ -12,6 +17,20 @@ public abstract class AuthServiceBase {
 
 	public AuthServiceBase(AuthServiceSupplier supplier) {
 		this.supplier = supplier;
+	}
+
+
+	protected final Mono<AuthUser> getUserByToken(String token) throws AuthenticationException {
+		final Authentication authentication = authSecurityContext().jwtTokenService().parseJwtToken(token);
+
+		final Long userId = (Long) authentication.getPrincipal();
+
+		return authUserService().getUserById(userId)
+				.switchIfEmpty(this.handleOnEmpty(userId));
+	}
+
+	private final Mono<AuthUser> handleOnEmpty(Long userId) throws AuthenticationException {
+		throw new UsernameNotFoundException("Invalid userId: " + userId);
 	}
 
 
