@@ -21,6 +21,7 @@ public final class AuthServiceSupplier {
 
 	private final SignUpService signUpService;
 	private final ResetPasswordService resetPasswordService;
+	private final RefreshTokenService refreshTokenService;
 
 
 	public AuthServiceSupplier(AuthSecurityContext context,
@@ -32,6 +33,7 @@ public final class AuthServiceSupplier {
 
 		this.signUpService = new SignUpService(this);
 		this.resetPasswordService = new ResetPasswordService(this);
+		this.refreshTokenService = new RefreshTokenService(this);
 	}
 
 
