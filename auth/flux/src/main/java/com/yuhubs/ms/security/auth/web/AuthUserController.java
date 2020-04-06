@@ -7,6 +7,8 @@ import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.result.view.Rendering;
@@ -138,6 +140,20 @@ public class AuthUserController implements AuthApiEndpoints {
 								.modelAttribute("error", ex.getMessage())
 								.build()
 				));
+	}
+
+
+	@GetMapping(REFRESH_TOKEN_ENDPOINT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseBody
+	public Mono<Void> refreshToken(ServerWebExchange exchange) {
+		return ReactiveSecurityContextHolder.getContext()
+				.map(SecurityContext::getAuthentication)
+				.flatMap(this.serviceSupplier::refreshToken)
+				.doOnNext(authentication -> {
+					this.securityContext.onAuthenticationSuccess(exchange, authentication);
+				})
+				.then();
 	}
 
 

@@ -8,6 +8,7 @@ import com.yuhubs.ms.security.auth.event.AuthEventPublisher;
 import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
 import com.yuhubs.ms.security.auth.web.dto.ResetPasswordRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import reactor.core.publisher.Mono;
 
@@ -60,6 +61,12 @@ public final class AuthServiceSupplier {
 	public Mono<Void> confirmPassword(String token, ConfirmPasswordDto dto)
 			throws AuthenticationException {
 		return this.resetPasswordService.confirmPassword(token, dto);
+	}
+
+
+	public Mono<AuthUserAuthentication> refreshToken(Authentication tokenAuth)
+			throws AuthenticationException {
+		return this.refreshTokenService.refreshToken(tokenAuth);
 	}
 
 
