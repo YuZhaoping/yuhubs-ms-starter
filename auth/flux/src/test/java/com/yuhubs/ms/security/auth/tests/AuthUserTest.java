@@ -81,16 +81,26 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 
 		assertNotNull(jwtToken.value());
 
-		doTestLogin(email, password);
+		doTestLoginSuccess(email, password);
 	}
 
 	@Test
 	public void testLogin() throws Exception {
-		doTestLogin("root", "root@Yuhubs");
+		doTestLoginSuccess("root", "root@Yuhubs");
+	}
+
+	@Test
+	public void testLoginWithInvalidUsername() throws Exception {
+		doTestLoginFailure("test", "root@Yuhubs");
+	}
+
+	@Test
+	public void testLoginWithInvalidPassword() throws Exception {
+		doTestLoginFailure("root", "test@Yuhubs");
 	}
 
 
-	private void doTestLogin(String username, String password) throws Exception {
+	private void doTestLoginSuccess(String username, String password) throws Exception {
 		LoginRequestDto dto = new LoginRequestDto(username, password);
 		JsonContent<LoginRequestDto> json = loginJson.write(dto);
 
@@ -110,6 +120,20 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 				.header(AUTHORIZATION_HEADER, createBearerToken(jwtToken.value()))
 				.exchange()
 				.expectStatus().isNoContent();
+	}
+
+	private void doTestLoginFailure(String username, String password) throws Exception {
+		LoginRequestDto dto = new LoginRequestDto(username, password);
+		JsonContent<LoginRequestDto> json = loginJson.write(dto);
+
+		this.client.post().uri(SIGNIN_ENDPOINT).accept(APPLICATION_JSON)
+				.contentType(APPLICATION_JSON)
+				.bodyValue(json.getJson())
+				.exchange()
+				.expectStatus().isUnauthorized()
+				.expectBody()
+				//.consumeWith(body -> System.out.println(body))
+				.jsonPath("error.statusCode").isEqualTo(401);
 	}
 
 
