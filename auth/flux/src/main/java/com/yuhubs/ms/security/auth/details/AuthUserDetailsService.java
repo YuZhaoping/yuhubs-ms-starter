@@ -35,11 +35,9 @@ public class AuthUserDetailsService implements ReactiveUserDetailsService {
 			user = userService.getUserByName(username);
 		}
 
-		user.switchIfEmpty(Mono.defer(() -> {
+		return user.switchIfEmpty(Mono.defer(() -> {
 			return Mono.error(new UsernameNotFoundException("User not found by '" + username + "'"));
 		})).map(AuthUserDetails::of);
-
-		return Mono.empty();
 	}
 
 
