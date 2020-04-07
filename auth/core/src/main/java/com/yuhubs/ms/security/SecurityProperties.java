@@ -19,6 +19,8 @@ public final class SecurityProperties implements EnvironmentAware {
 
 	private Environment environment;
 
+	private volatile int jwtTokenExpiration = -1;
+
 
 	@Override
 	public void setEnvironment(Environment environment) {
@@ -29,11 +31,24 @@ public final class SecurityProperties implements EnvironmentAware {
 		return environment;
 	}
 
+
 	public String getJwtTokenSecretKey() {
 		return environment.getProperty(JWT_TOKEN_SECRET_KEY, DEFAULT_JWT_TOKEN_SECRET_KEY);
 	}
 
+
 	public int getJwtTokenExpiration() {
+		if (this.jwtTokenExpiration <= 0) {
+			this.jwtTokenExpiration = envJwtTokenExpiration();
+		}
+		return this.jwtTokenExpiration;
+	}
+
+	public void setJwtTokenExpiration(int expiration) {
+		this.jwtTokenExpiration = expiration;
+	}
+
+	private int envJwtTokenExpiration() {
 		String exp = environment.getProperty(JWT_TOKEN_EXPIRATION);
 		if (exp != null) {
 			return Integer.parseInt(exp);

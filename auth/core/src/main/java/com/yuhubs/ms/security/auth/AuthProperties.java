@@ -47,4 +47,8 @@ public final class AuthProperties {
 		return this.properties.getJwtTokenExpiration();
 	}
 
+	public void setJwtTokenExpiration(int expiration) {
+		this.properties.setJwtTokenExpiration(expiration);
+	}
+
 }
