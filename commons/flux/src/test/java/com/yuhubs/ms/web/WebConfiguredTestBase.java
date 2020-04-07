@@ -23,7 +23,7 @@ public class WebConfiguredTestBase {
 
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		this.client = WebTestClient
 				.bindToApplicationContext(this.context)
 				.configureClient()
