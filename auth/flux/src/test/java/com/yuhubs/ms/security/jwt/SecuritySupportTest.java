@@ -47,7 +47,7 @@ public class SecuritySupportTest extends WebConfiguredTestBase {
 
 	@Test
 	public void testAccessPermitted() {
-		JwtTokenValue jwtToken = new JwtTokenValue();
+		final JwtTokenValue jwtToken = new JwtTokenValue();
 
 		this.client.get().uri("/?action=signup").accept(APPLICATION_JSON)
 				.exchange()
