@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 
 @Configuration
-public class AuthEventSupport {
+public class AuthEventListenerSupport {
 
 	@EventListener
 	public void onConfirmEmailEvent(ConfirmEmailEvent event) {

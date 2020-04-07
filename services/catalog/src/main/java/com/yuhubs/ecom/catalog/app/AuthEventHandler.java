@@ -2,7 +2,7 @@ package com.yuhubs.ecom.catalog.app;
 
 import com.yuhubs.ms.auth.mail.AuthEmailSender;
 import com.yuhubs.ms.mail.MailTemplateSupport;
-import com.yuhubs.ms.security.auth.AuthEventSupport;
+import com.yuhubs.ms.security.auth.AuthEventListenerSupport;
 import com.yuhubs.ms.security.auth.event.data.ConfirmEmailData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import org.springframework.mail.MailException;
 
 @Configuration
 @Profile("dev")
-public class AuthEventHandler extends AuthEventSupport {
+public class AuthEventHandler extends AuthEventListenerSupport {
 
 	private static Logger LOG = LoggerFactory.getLogger("yuhubs.ms.auth.mail");
 
