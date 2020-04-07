@@ -1,5 +1,7 @@
 package com.yuhubs.ms.security.auth;
 
+import com.yuhubs.ms.auth.mock.MockAuthUserService;
+import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,16 @@ public class WebConfiguredTestBase {
 	protected WebTestClient client;
 
 
+	@Autowired
+	protected AuthWebSecurityContext securityContext;
+
+	protected MockAuthUserService authUserService() {
+		return (MockAuthUserService)this.securityContext.authUserService();
+	}
+
+
 	@Before
-	public void setup() {
+	public void setUp() {
 		this.client = WebTestClient
 				.bindToApplicationContext(this.context)
 				.configureClient()
