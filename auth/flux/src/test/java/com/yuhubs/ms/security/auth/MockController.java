@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @RestController
-public class TestController {
+public class MockController {
 
 	@GetMapping("/")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

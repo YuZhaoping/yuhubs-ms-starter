@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 public class WebTestConfig extends AuthWebConfigurationSupport {
 
 	@Bean
-	public TestController testController() {
-		return new TestController();
+	public MockController mockController() {
+		return new MockController();
 	}
 
 }

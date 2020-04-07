@@ -14,8 +14,8 @@ public class WebTestConfig extends RestConfigurationSupport {
 
 
 	@Bean
-	public TestController testController() {
-		return new TestController(this.securityHandlerSupplier);
+	public MockController mockController() {
+		return new MockController(this.securityHandlerSupplier);
 	}
 
 }
