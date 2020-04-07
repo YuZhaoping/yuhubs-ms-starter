@@ -27,7 +27,7 @@ public class TokenByAuthenticationSuccessHandler implements ServerAuthentication
 	public Mono<Void> onAuthenticationSuccess(WebFilterExchange exchange, Authentication authentication) {
 		doAuthenticationSuccess(exchange.getExchange(), authentication);
 
-		return Mono.empty();
+		return exchange.getChain().filter(exchange.getExchange());
 	}
 
 	public void doAuthenticationSuccess(ServerWebExchange exchange, Authentication authentication) {
