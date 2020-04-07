@@ -32,7 +32,7 @@ public class SecurityErrorHandlerBase {
 		SecurityErrorResponse errorResponse = SecurityErrorResponse.of(httpStatus, exception);
 
 		try {
-			objectMapper().writeValue(dataBuffer.asOutputStream(), errorResponse);
+			objectMapper().writeValue(dataBuffer.asOutputStream(), errorResponse.toRestApiError());
 		} catch (Exception ex) {
 			DataBufferUtils.release(dataBuffer);
 			return Mono.error(ex);
