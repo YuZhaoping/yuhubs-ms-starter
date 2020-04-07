@@ -2,15 +2,15 @@ package com.yuhubs.ms.security.auth;
 
 import com.yuhubs.ms.security.jwt.JwtTokenService;
 import com.yuhubs.ms.security.jwt.JwtTokenServiceContext;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class AuthSecurityContext implements ApplicationContextAware {
+public class AuthSecurityContext implements ApplicationEventPublisherAware {
 
-	protected ApplicationContext applicationContext;
+	protected ApplicationEventPublisher publisher;
 
 	protected final JwtTokenServiceContext jwtContext;
 
@@ -27,13 +27,13 @@ public class AuthSecurityContext implements ApplicationContextAware {
 
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
+	public void setApplicationEventPublisher(ApplicationEventPublisher publisher) {
+		this.publisher = publisher;
 	}
 
 	public void publishEvent(ApplicationEvent event) {
-		if (this.applicationContext != null) {
-			this.applicationContext.publishEvent(event);
+		if (this.publisher != null) {
+			this.publisher.publishEvent(event);
 		}
 	}
 
