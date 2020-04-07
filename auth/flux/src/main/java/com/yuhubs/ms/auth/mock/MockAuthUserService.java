@@ -49,4 +49,9 @@ public class MockAuthUserService implements AuthUserService {
 				});
 	}
 
+
+	public MockUserManager mockUserManager() {
+		return this.userManager;
+	}
+
 }
