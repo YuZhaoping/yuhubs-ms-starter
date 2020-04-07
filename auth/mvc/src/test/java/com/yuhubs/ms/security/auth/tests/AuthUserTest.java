@@ -5,9 +5,9 @@ import com.yuhubs.ms.auth.mock.MockAuthUserService;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.WebConfiguredTestBase;
 import com.yuhubs.ms.security.auth.web.AuthApiEndpoints;
-import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import com.yuhubs.ms.security.auth.web.dto.LoginRequestDto;
 import com.yuhubs.ms.security.auth.web.dto.SignUpRequestDto;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoints {
@@ -68,16 +69,26 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 		String jwtToken = result.getResponse().getHeader(X_SET_AUTHORIZATION_BEARER_HEADER);
 		assertNotNull(jwtToken);
 
-		doTestLogin(email, password);
+		doTestLoginSuccess(email, password);
 	}
 
 	@Test
 	public void testLogin() throws Exception {
-		doTestLogin("root", "root@Yuhubs");
+		doTestLoginSuccess("root", "root@Yuhubs");
+	}
+
+	@Test
+	public void testLoginWithInvalidUsername() throws Exception {
+		doTestLoginFailure("test", "root@Yuhubs");
+	}
+
+	@Test
+	public void testLoginWithInvalidPassword() throws Exception {
+		doTestLoginFailure("root", "test@Yuhubs");
 	}
 
 
-	private void doTestLogin(String username, String password) throws Exception {
+	private void doTestLoginSuccess(String username, String password) throws Exception {
 		LoginRequestDto dto = new LoginRequestDto(username, password);
 		JsonContent<LoginRequestDto> json = loginJson.write(dto);
 
@@ -98,6 +109,21 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 						.contentType(APPLICATION_JSON))
 				//.andDo(print())
 				.andExpect(status().isNoContent());
+	}
+
+	private void doTestLoginFailure(String username, String password) throws Exception {
+		LoginRequestDto dto = new LoginRequestDto(username, password);
+		JsonContent<LoginRequestDto> json = loginJson.write(dto);
+
+		MvcResult result = this.mockMvc.perform(
+				post(SIGNIN_ENDPOINT)
+						.contentType(APPLICATION_JSON)
+						.content(json.getJson()))
+				//.andDo(print())
+				.andExpect(status().isUnauthorized())
+				.andExpect(jsonPath("error.statusCode", Matchers.is(401)))
+				.andExpect(jsonPath("error.code", Matchers.is(401)))
+				.andReturn();
 	}
 
 
