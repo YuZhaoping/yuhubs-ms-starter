@@ -39,8 +39,9 @@ public final class AuthProperties {
 		return this.userAccountInitialStatus;
 	}
 
-	public void setUserAccountInitialStatus(int status) {
+	public AuthProperties setUserAccountInitialStatus(int status) {
 		this.userAccountInitialStatus = status;
+		return this;
 	}
 
 	private int envUserAccountInitialStatus() {
@@ -59,8 +60,9 @@ public final class AuthProperties {
 		return this.signUpConfirmLogin > 0;
 	}
 
-	public void setSignUpConfirmLogin(boolean enabled) {
+	public AuthProperties setSignUpConfirmLogin(boolean enabled) {
 		this.signUpConfirmLogin = enabled ? 1 : 0;
+		return this;
 	}
 
 	private boolean envSignUpConfirmLogin() {
@@ -76,8 +78,9 @@ public final class AuthProperties {
 		return this.properties.getJwtTokenExpiration();
 	}
 
-	public void setJwtTokenExpiration(int expiration) {
+	public AuthProperties setJwtTokenExpiration(int expiration) {
 		this.properties.setJwtTokenExpiration(expiration);
+		return this;
 	}
 
 }
