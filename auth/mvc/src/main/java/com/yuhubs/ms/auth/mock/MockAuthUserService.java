@@ -20,8 +20,8 @@ public class MockAuthUserService implements AuthUserService {
 
 
 	@Override
-	public AuthUser signUpUser(SignUpRequest request) throws UserAlreadyExistsException {
-		return this.userManager.signUpUser(request);
+	public Optional<AuthUser> signUpUser(SignUpRequest request) throws UserAlreadyExistsException {
+		return Optional.of(this.userManager.signUpUser(request));
 	}
 
 	@Override

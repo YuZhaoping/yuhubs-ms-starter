@@ -10,7 +10,7 @@ public interface AuthUserService {
 		AuthUserService authUserService();
 	}
 
-	AuthUser signUpUser(SignUpRequest request) throws UserAlreadyExistsException;
+	Optional<AuthUser> signUpUser(SignUpRequest request) throws UserAlreadyExistsException;
 
 	Optional<AuthUser> getUserById(Long userId);
 

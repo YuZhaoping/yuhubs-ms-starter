@@ -23,7 +23,13 @@ public final class SignUpService extends AuthServiceBase {
 		SignUpRequest signUpReq = createSignUpRequest(dto).setPassword(passwordHash);
 		signUpReq.setStatus(properties.getUserAccountInitialStatus());
 
-		AuthUser user = authUserService().signUpUser(signUpReq);
+
+		Optional<AuthUser> userOp = authUserService().signUpUser(signUpReq);
+		if (!userOp.isPresent()) {
+			return Optional.empty();
+		}
+
+		AuthUser user = userOp.get();
 
 		try {
 			AccountChecker.checkAccountStatus(user.getAccountStatus());
