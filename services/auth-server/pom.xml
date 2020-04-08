@@ -30,13 +30,24 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.yuhubs.ms.auth</groupId>
+			<artifactId>auth-webflux</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yuhubs.ms.auth</groupId>
+			<artifactId>auth-mail</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 
 	</dependencies>
 
