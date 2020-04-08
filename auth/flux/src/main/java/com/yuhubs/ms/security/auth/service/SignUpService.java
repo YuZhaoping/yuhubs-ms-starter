@@ -22,8 +22,7 @@ public final class SignUpService extends AuthServiceBase {
 		final SignUpRequest signUpReq = createSignUpRequest(dto).setPassword(passwordHash);
 		signUpReq.setStatus(properties.getUserAccountInitialStatus());
 
-		return authUserService()
-				.signUpUser(signUpReq)
+		return authUserService().signUpUser(signUpReq)
 				.doOnNext(user -> checkAccountStatus(user, signUpReq))
 				.flatMap(user -> {
 					if (properties.isSignUpConfirmLogin()) {
