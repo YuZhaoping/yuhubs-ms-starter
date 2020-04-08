@@ -45,6 +45,10 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 
 		JacksonTester.initFields(this, objectMapper);
 
+		securityContext.authProperties()
+				.setUserAccountInitialStatus(0)
+				.setSignUpConfirmLogin(false);
+
 		resetUsers();
 	}
 
@@ -71,6 +75,29 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 
 		doTestLoginSuccess(email, password);
 	}
+
+	@Test
+	public void testSignUpToVerifyEmail() throws Exception {
+		securityContext.authProperties().setUserAccountInitialStatus(16);
+
+		String email = "u001@yuhubs.com";
+		String username = "u001";
+		String password = "u001@Yuhubs";
+
+		SignUpRequestDto dto = new SignUpRequestDto(email, username, password);
+		JsonContent<SignUpRequestDto> json = signUpJson.write(dto);
+
+		MvcResult result = this.mockMvc.perform(
+				post(SIGNUP_ENDPOINT)
+						.contentType(APPLICATION_JSON)
+						.content(json.getJson()))
+				//.andDo(print())
+				.andExpect(status().isUnauthorized())
+				.andExpect(jsonPath("error.statusCode", Matchers.is(401)))
+				.andExpect(jsonPath("error.code", Matchers.is(401005)))
+				.andReturn();
+	}
+
 
 	@Test
 	public void testLogin() throws Exception {
