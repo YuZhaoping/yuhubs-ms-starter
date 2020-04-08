@@ -94,7 +94,7 @@ public class AuthUserAccountStatusTest extends WebConfiguredTestBase implements 
 		SignUpRequest request = new SignUpRequest(email, username, passwordHash);
 		request.setStatus(status);
 
-		authUserService.signUpUser(request);
+		authUserService.mockUserManager().signUpUser(request);
 	}
 
 

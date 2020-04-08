@@ -164,7 +164,7 @@ public class AuthUserTest extends WebConfiguredTestBase implements AuthApiEndpoi
 		SignUpRequest request = new SignUpRequest();
 		request.setEmail(rootEmail).setUsername("root").setPassword(passwordHash);
 
-		authUserService.signUpUser(request);
+		authUserService.mockUserManager().signUpUser(request);
 	}
 
 
