@@ -23,6 +23,7 @@ public final class SignUpService extends AuthServiceBase {
 		signUpReq.setStatus(properties.getUserAccountInitialStatus());
 
 		return authUserService().signUpUser(signUpReq)
+				.switchIfEmpty(Mono.empty())
 				.doOnNext(user -> checkAccountStatus(user, signUpReq))
 				.flatMap(user -> {
 					if (properties.isSignUpConfirmLogin()) {

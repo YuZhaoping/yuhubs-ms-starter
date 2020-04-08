@@ -2,6 +2,7 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.details.AuthUserDetailsService;
+import com.yuhubs.ms.security.auth.service.NoOpAuthUserService;
 import com.yuhubs.ms.security.auth.web.login.LoginAuthenticationProvider;
 import com.yuhubs.ms.security.auth.web.login.LoginProcessingFilter;
 import com.yuhubs.ms.security.web.SecurityConfigurationSupport;
@@ -21,7 +22,7 @@ import static org.springframework.http.HttpMethod.PUT;
 
 @EnableWebSecurity
 @Configuration
-public abstract class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
+public class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
 
 	private static final String SIGNOUT_SUCCESS_URL = SIGNIN_ENDPOINT + "?logout";
 
@@ -92,7 +93,9 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	}
 
 
-	protected abstract AuthUserService getAuthUserService();
+	protected AuthUserService getAuthUserService() {
+		return NoOpAuthUserService.getInstance();
+	}
 
 
 	protected UserDetailsService createUserDetailsService() {

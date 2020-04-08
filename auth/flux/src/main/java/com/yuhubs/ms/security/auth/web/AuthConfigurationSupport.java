@@ -2,6 +2,7 @@ package com.yuhubs.ms.security.auth.web;
 
 import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.details.AuthUserDetailsService;
+import com.yuhubs.ms.security.auth.service.NoOpAuthUserService;
 import com.yuhubs.ms.security.auth.web.login.LoginAuthenticationConverter;
 import com.yuhubs.ms.security.auth.web.login.LoginAuthenticationManager;
 import com.yuhubs.ms.security.web.SecurityConfigurationSupport;
@@ -22,7 +23,7 @@ import java.net.URI;
 
 @EnableWebFluxSecurity
 @Configuration
-public abstract class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
+public class AuthConfigurationSupport extends SecurityConfigurationSupport implements AuthApiEndpoints {
 
 	private static final String SIGNOUT_SUCCESS_URL = SIGNIN_ENDPOINT + "?logout";
 
@@ -76,7 +77,9 @@ public abstract class AuthConfigurationSupport extends SecurityConfigurationSupp
 	}
 
 
-	protected abstract AuthUserService getAuthUserService();
+	protected AuthUserService getAuthUserService() {
+		return NoOpAuthUserService.getInstance();
+	}
 
 
 	protected ReactiveUserDetailsService createUserDetailsService() {
