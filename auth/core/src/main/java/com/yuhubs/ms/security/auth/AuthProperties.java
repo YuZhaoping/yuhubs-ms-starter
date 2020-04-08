@@ -12,7 +12,10 @@ public final class AuthProperties {
 
 	private final SecurityProperties properties;
 
+
 	private volatile int userAccountInitialStatus = -1;
+
+	private volatile int signUpConfirmLogin = -1;
 
 
 	AuthProperties(SecurityProperties properties) {
@@ -50,6 +53,17 @@ public final class AuthProperties {
 
 
 	public boolean isSignUpConfirmLogin() {
+		if (this.signUpConfirmLogin < 0) {
+			setSignUpConfirmLogin(envSignUpConfirmLogin());
+		}
+		return this.signUpConfirmLogin > 0;
+	}
+
+	public void setSignUpConfirmLogin(boolean enabled) {
+		this.signUpConfirmLogin = enabled ? 1 : 0;
+	}
+
+	private boolean envSignUpConfirmLogin() {
 		String value = getEnvironment().getProperty(SIGN_UP_CONFIRM_LOGIN);
 		if (value != null) {
 			return "true".equalsIgnoreCase(value);
