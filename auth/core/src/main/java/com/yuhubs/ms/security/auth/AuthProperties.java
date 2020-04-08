@@ -12,6 +12,8 @@ public final class AuthProperties {
 
 	private final SecurityProperties properties;
 
+	private volatile int userAccountInitialStatus = -1;
+
 
 	AuthProperties(SecurityProperties properties) {
 		this.properties = properties;
@@ -28,12 +30,24 @@ public final class AuthProperties {
 
 
 	public int getUserAccountInitialStatus() {
+		if (this.userAccountInitialStatus < 0) {
+			this.userAccountInitialStatus = envUserAccountInitialStatus();
+		}
+		return this.userAccountInitialStatus;
+	}
+
+	public void setUserAccountInitialStatus(int status) {
+		this.userAccountInitialStatus = status;
+	}
+
+	private int envUserAccountInitialStatus() {
 		String status = getEnvironment().getProperty(USER_ACCOUNT_INITIAL_STATUS);
 		if (status != null) {
 			return Integer.parseInt(status);
 		}
 		return 0;
 	}
+
 
 	public boolean isSignUpConfirmLogin() {
 		String value = getEnvironment().getProperty(SIGN_UP_CONFIRM_LOGIN);
@@ -42,6 +56,7 @@ public final class AuthProperties {
 		}
 		return false;
 	}
+
 
 	public int getJwtTokenExpiration() {
 		return this.properties.getJwtTokenExpiration();
