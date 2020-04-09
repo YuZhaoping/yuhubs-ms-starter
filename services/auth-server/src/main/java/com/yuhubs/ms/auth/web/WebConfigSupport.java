@@ -1,8 +1,8 @@
 package com.yuhubs.ms.auth.web;
 
+import com.yuhubs.ms.web.RestConfigurationSupport;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.WebFluxConfigurationSupport;
 
 @Configuration
-public class WebConfigSupport extends WebFluxConfigurationSupport {
+public class WebConfigSupport extends RestConfigurationSupport {
 }
