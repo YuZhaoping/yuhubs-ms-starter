@@ -11,12 +11,15 @@ import java.util.List;
 
 public class SecurityErrorResponse extends RestErrorResponse {
 
-	public static SecurityErrorResponse of(HttpStatus status, Throwable ex, Object body) {
+	public static SecurityErrorResponse of(HttpStatus status,
+										   Throwable ex,
+										   String message,
+										   Object body) {
 		if (ex == null) {
 			return new SecurityErrorResponse(
 					status.value(),
 					status.value(),
-					status.getReasonPhrase(),
+					(message == null) ? status.getReasonPhrase() : message,
 					null,
 					body);
 		} else  if (ex instanceof RestApiCodeError) {
@@ -28,7 +31,7 @@ public class SecurityErrorResponse extends RestErrorResponse {
 			return new SecurityErrorResponse(
 					status.value(),
 					code,
-					ex.getMessage(),
+					(message == null) ? ex.getMessage() : message,
 					codeError.getErrors(),
 					body);
 		} else {
@@ -37,18 +40,22 @@ public class SecurityErrorResponse extends RestErrorResponse {
 			return new SecurityErrorResponse(
 					status.value(),
 					status.value(),
-					ex.getMessage(),
+					(message == null) ? ex.getMessage() : message,
 					errors,
 					body);
 		}
 	}
 
+	public static SecurityErrorResponse of(HttpStatus status, Throwable ex, String message) {
+		return of(status, ex, message, null);
+	}
+
 	public static SecurityErrorResponse of(HttpStatus status, Throwable ex) {
-		return of(status, ex, null);
+		return of(status, ex, null, null);
 	}
 
 	public static SecurityErrorResponse of(HttpStatus status) {
-		return of(status, null, null);
+		return of(status, null, null, null);
 	}
 
 
