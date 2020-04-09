@@ -13,6 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.*;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
 import java.util.Map;
 
 @Component
@@ -20,7 +21,8 @@ import java.util.Map;
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
 	GlobalErrorWebExceptionHandler(ErrorAttributes errorAttributes,
-								   ResourceProperties resourceProperties, ApplicationContext applicationContext,
+								   ResourceProperties resourceProperties,
+								   ApplicationContext applicationContext,
 								   ServerCodecConfigurer serverCodecConfigurer) {
 		super(errorAttributes, resourceProperties, applicationContext);
 
@@ -37,6 +39,13 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 	private final Mono<ServerResponse> renderErrorResponse(final ServerRequest request) {
 		final Map<String, Object> errorAttrs = getErrorAttributes(request, false);
 
+		final URI redirectUri = getRedirectAttribute(errorAttrs);
+		if (redirectUri != null) {
+			return ServerResponse.permanentRedirect(redirectUri)
+					.contentType(MediaType.TEXT_PLAIN)
+					.bodyValue(redirectUri.toASCIIString());
+		}
+
 		return ServerResponse.status(determineStatus(errorAttrs))
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(BodyInserters.fromValue(errorAttrs));
@@ -52,6 +61,14 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 		}
 
 		return status;
+	}
+
+	private static URI getRedirectAttribute(Map<String, Object> errorAttrs) {
+		Object obj = errorAttrs.get(GlobalErrorAttributes.REDIRECT_URI_ATTR);
+		if (obj != null) {
+			return (URI) obj;
+		}
+		return null;
 	}
 
 }

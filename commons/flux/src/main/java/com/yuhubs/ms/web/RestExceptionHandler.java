@@ -3,10 +3,12 @@ package com.yuhubs.ms.web;
 import com.yuhubs.ms.exceptions.BadRequestException;
 import com.yuhubs.ms.web.annotation.ExceptionStatusMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.handler.WebFluxResponseStatusExceptionHandler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -89,6 +91,17 @@ public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler 
 	protected final void handleMapperAnnotations() {
 		Helper helper = new Helper(this, this.getClass());
 		helper.handleMapperAnnotation();
+	}
+
+
+	protected String getNoMatchingHandlerExceptionMessage() {
+		return "No matching handler";
+	}
+
+	protected URI getNotFoundRedirectUri(ServerRequest request,
+										 String httpMethod,
+										 String requestURL) {
+		return null;
 	}
 
 

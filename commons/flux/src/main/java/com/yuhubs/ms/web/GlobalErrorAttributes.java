@@ -7,10 +7,15 @@ import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
 public class GlobalErrorAttributes extends DefaultErrorAttributes {
+
+	static final String REDIRECT_URI_ATTR = "redirect-uri";
+
 
 	private final RestExceptionHandler restExceptionHandler;
 
@@ -30,9 +35,20 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 			return super.getErrorAttributes(request, includeStackTrace);
 		}
 
-		RestErrorResponse response =
-				RestErrorResponse.of(determineHttpStatus(error),
-						determineException(error), determineMessage(error));
+		HttpStatus status = determineHttpStatus(error);
+		String message = determineMessage(error);
+
+		if (status.value() == HttpStatus.NOT_FOUND.value() &&
+				this.restExceptionHandler.getNoMatchingHandlerExceptionMessage().equals(message)) {
+			URI redirectUri = this.restExceptionHandler
+					.getNotFoundRedirectUri(request, request.methodName(), request.path());
+
+			if (redirectUri != null) {
+				return redirectAttributes(redirectUri);
+			}
+		}
+
+		RestErrorResponse response = RestErrorResponse.of(status, determineException(error), message);
 
 		return response.toRestApiError().toAttributes();
 	}
@@ -51,14 +67,14 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 		return status;
 	}
 
-	private final Throwable determineException(Throwable error) {
+	private static Throwable determineException(Throwable error) {
 		if (error instanceof ResponseStatusException) {
 			return (error.getCause() != null) ? error.getCause() : error;
 		}
 		return error;
 	}
 
-	private final String determineMessage(Throwable error) {
+	private static String determineMessage(Throwable error) {
 		if (error instanceof WebExchangeBindException) {
 			return error.getMessage();
 		}
@@ -66,6 +82,15 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 			return ((ResponseStatusException) error).getReason();
 		}
 		return error.getMessage();
+	}
+
+
+	private static Map<String, Object> redirectAttributes(URI redirectUri) {
+		Map<String, Object> attributes = new LinkedHashMap<>();
+
+		attributes.put(REDIRECT_URI_ATTR, redirectUri);
+
+		return attributes;
 	}
 
 }
