@@ -1,0 +1,39 @@
+template:
+  variables:
+    httpHost: 'https://ecom.yuhubs.com:8080'
+  location: 'classpath:templates/'
+  entries:
+    - id: 'verify-email'
+      subject: 'Verify email for ${username}'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'verify-email.html'
+
+    - id: 'verify-email-done'
+      subject: 'Verify email done'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'verify-email-done.html'
+
+    - id: 'verify-email-fail'
+      subject: 'Verify email fail'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'verify-email-fail.html'
+
+    - id: 'reset-password'
+      subject: 'Reset password for ${username}'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'reset-password.html'
+
+    - id: 'reset-password-view'
+      subject: 'Reset password'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'reset-password-view.html'
+
+    - id: 'reset-password-done'
+      subject: 'Reset password done'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'reset-password-done.html'
+
+    - id: 'reset-password-fail'
+      subject: 'Reset password fail'
+      contentType: 'text/html; charset=utf-8'
+      fileName: 'reset-password-fail.html'
