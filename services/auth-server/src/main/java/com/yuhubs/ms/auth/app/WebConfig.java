@@ -1,8 +1,12 @@
 package com.yuhubs.ms.auth.app;
 
 import com.yuhubs.ms.auth.web.WebConfigSupport;
+import com.yuhubs.ms.security.auth.web.AuthUserController;
+import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import com.yuhubs.ms.web.RestExceptionHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
@@ -26,6 +30,15 @@ public class WebConfig extends WebConfigSupport {
 
 	@Value("${yuhubs.ms.app.not-found-redirect.uri:/public/index.html}")
 	private String redirectURI;
+
+
+	@Autowired
+	private AuthWebSecurityContext authSecurityContext;
+
+	@Bean
+	public AuthUserController authUserController() {
+		return this.authSecurityContext.createAuthUserController();
+	}
 
 
 	@Override
