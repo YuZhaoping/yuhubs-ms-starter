@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.reactive.config.ResourceHandlerRegistry;
+import org.springframework.web.reactive.config.ViewResolverRegistry;
 import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.result.view.freemarker.FreeMarkerViewResolver;
 
 import java.net.URI;
 
@@ -35,6 +37,10 @@ public class WebConfig extends WebConfigSupport {
 	@Autowired
 	private AuthWebSecurityContext authSecurityContext;
 
+	@Autowired
+	private FreeMarkerViewResolver freeMarkerViewResolver;
+
+
 	@Bean
 	public AuthUserController authUserController() {
 		return this.authSecurityContext.createAuthUserController();
@@ -47,6 +53,11 @@ public class WebConfig extends WebConfigSupport {
 			registry.addResourceHandler("/public/**")
 					.addResourceLocations(resourceLocations);
 		}
+	}
+
+	@Override
+	protected void configureViewResolvers(ViewResolverRegistry registry) {
+		registry.viewResolver(freeMarkerViewResolver);
 	}
 
 
