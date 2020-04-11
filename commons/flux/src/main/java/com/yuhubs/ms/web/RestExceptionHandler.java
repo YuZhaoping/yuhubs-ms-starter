@@ -2,6 +2,7 @@ package com.yuhubs.ms.web;
 
 import com.yuhubs.ms.exceptions.BadRequestException;
 import com.yuhubs.ms.web.annotation.ExceptionStatusMapper;
+import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.handler.WebFluxResponseStatusExceptionHandler;
@@ -102,6 +103,35 @@ public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler 
 										 String httpMethod,
 										 String requestURL) {
 		return null;
+	}
+
+
+	protected void logError(ServerRequest request, HttpStatus status, Throwable throwable) {
+		if (throwable != null) {
+			Logger logger = getLogger();
+			if (logger != null) {
+				logger.error("{} for {}\n{}",
+						formatHttpStatus(status), formatRequest(request),
+						formatThrowable(throwable));
+			}
+		}
+	}
+
+	protected Logger getLogger() {
+		return null;
+	}
+
+
+	private final String formatHttpStatus(HttpStatus status) {
+		return status.value() + " " + status.getReasonPhrase();
+	}
+
+	private final String formatRequest(ServerRequest request) {
+		return "HTTP " + request.methodName() + " \"" + request.path() + "\"";
+	}
+
+	private final String formatThrowable(Throwable throwable) {
+		return throwable.getClass().getName() + ": " + throwable.getMessage();
 	}
 
 

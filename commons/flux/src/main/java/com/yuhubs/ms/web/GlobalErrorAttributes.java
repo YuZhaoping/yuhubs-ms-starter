@@ -93,4 +93,8 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 		return attributes;
 	}
 
+	RestExceptionHandler getRestExceptionHandler() {
+		return this.restExceptionHandler;
+	}
+
 }

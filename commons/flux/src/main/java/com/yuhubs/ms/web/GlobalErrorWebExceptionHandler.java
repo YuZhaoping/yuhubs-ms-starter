@@ -20,6 +20,9 @@ import java.util.Map;
 @Order(-2)
 public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
+	private final RestExceptionHandler restExceptionHandler;
+
+
 	GlobalErrorWebExceptionHandler(ErrorAttributes errorAttributes,
 								   ResourceProperties resourceProperties,
 								   ApplicationContext applicationContext,
@@ -28,6 +31,9 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 
 		super.setMessageReaders(serverCodecConfigurer.getReaders());
 		super.setMessageWriters(serverCodecConfigurer.getWriters());
+
+		this.restExceptionHandler = ((GlobalErrorAttributes)errorAttributes)
+				.getRestExceptionHandler();
 	}
 
 
@@ -69,6 +75,19 @@ public class GlobalErrorWebExceptionHandler extends AbstractErrorWebExceptionHan
 			return (URI) obj;
 		}
 		return null;
+	}
+
+
+	@Override
+	protected void logError(ServerRequest request,
+							ServerResponse response,
+							Throwable throwable) {
+		HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+		if (HttpStatus.resolve(response.rawStatusCode()) != null) {
+			status = response.statusCode();
+		}
+
+		this.restExceptionHandler.logError(request, status, throwable);
 	}
 
 }
