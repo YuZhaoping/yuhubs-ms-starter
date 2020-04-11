@@ -10,12 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.result.view.Rendering;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Map;
 
 @Controller
 public class AuthUserController implements AuthApiEndpoints {
@@ -123,12 +122,18 @@ public class AuthUserController implements AuthApiEndpoints {
 	@PostMapping(value = SIGNUP_ENDPOINT + "/{id}/reset_password/",
 			consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public Mono<Rendering> confirmPassword(@PathVariable("id") Long userId,
-										   @RequestParam Map<String, String> params) {
-		String token = params.get("token");
+										   ServerWebExchange exchange) {
+		Mono<MultiValueMap<String, String>> formData = exchange.getFormData();
+
+		return formData.flatMap(params -> doConfirmPassword(userId, params));
+	}
+
+	private Mono<Rendering> doConfirmPassword(Long userId, MultiValueMap<String, String> params) {
+		String token = params.getFirst("token");
 
 		ConfirmPasswordDto dto = new ConfirmPasswordDto();
-		dto.setPassword(params.get("password"));
-		dto.setConfirmPassword(params.get("confirmPassword"));
+		dto.setPassword(params.getFirst("password"));
+		dto.setConfirmPassword(params.getFirst("confirmPassword"));
 
 		String viewName = AuthTemplateViewID.RESET_PASSWORD_DONE.getId();
 
