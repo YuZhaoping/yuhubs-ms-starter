@@ -20,7 +20,7 @@ public final class RefreshTokenService extends AuthServiceBase {
 		final Long userId = (Long)tokenAuth.getPrincipal();
 
 		return authUserService().getUserById(userId)
-				.switchIfEmpty(this.handleOnEmpty(userId))
+				.switchIfEmpty(Mono.defer(() -> this.handleOnEmpty(userId)))
 				.doOnNext(user -> AccountChecker.checkAccountStatus(user.getAccountStatus()))
 				.flatMap(user -> Mono.just(AuthUserAuthentication.of(user)));
 	}

@@ -26,7 +26,7 @@ public abstract class AuthServiceBase {
 		final Long userId = (Long) authentication.getPrincipal();
 
 		return authUserService().getUserById(userId)
-				.switchIfEmpty(this.handleOnEmpty(userId));
+				.switchIfEmpty(Mono.defer(() -> this.handleOnEmpty(userId)));
 	}
 
 	private final Mono<AuthUser> handleOnEmpty(Long userId) throws AuthenticationException {

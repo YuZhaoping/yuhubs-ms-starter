@@ -21,7 +21,7 @@ public final class ResetPasswordService extends AuthServiceBase {
 	public Mono<Void> emitResetPassword(final ResetPasswordRequestDto dto)
 			throws AuthenticationException {
 		return authUserService().getUserByName(dto.getEmail())
-				.switchIfEmpty(this.handleOnEmpty(dto))
+				.switchIfEmpty(Mono.defer(() -> this.handleOnEmpty(dto)))
 				.doOnNext(user -> AccountChecker.checkAccountStatus(user.getAccountStatus()))
 				.doOnNext(user -> authEventPublisher().publishResetPasswordEvent(user, dto.getEmail()))
 				.then();
