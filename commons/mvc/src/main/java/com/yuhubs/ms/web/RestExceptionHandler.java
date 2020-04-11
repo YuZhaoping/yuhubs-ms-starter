@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -19,21 +20,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(
 			Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-		log(ex);
+		logError(request, status, ex);
 		RestErrorResponse response = RestErrorResponse.of(status, ex);
 		return super.handleExceptionInternal(ex,
 				response.toRestApiError(),
 				headers, status, request);
 	}
 
-	private final void log(Exception ex) {
-		if (ex != null) {
+
+	protected void logError(WebRequest request, HttpStatus status, Throwable throwable) {
+		if (throwable != null) {
 			Logger logger = getLogger();
 			if (logger != null) {
-				StringBuilder buf = new StringBuilder();
-				buf.append('\n').append(ex.getClass().getName()).append(':');
-				buf.append(' ').append(ex.getMessage());
-				logger.error(buf.toString());
+				logger.error("{} for {}\n{}",
+						formatHttpStatus(status), formatRequest(request),
+						formatThrowable(throwable));
 			}
 		}
 	}
@@ -41,6 +42,25 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected Logger getLogger() {
 		return null;
 	}
+
+
+	private final String formatHttpStatus(HttpStatus status) {
+		return status.value() + " " + status.getReasonPhrase();
+	}
+
+	private final String formatRequest(WebRequest request) {
+		if (request instanceof ServletWebRequest) {
+			ServletWebRequest servletRequest = (ServletWebRequest)request;
+			return "HTTP " + servletRequest.getRequest().getMethod() +
+					" \"" + servletRequest.getRequest().getRequestURI() + "\"";
+		}
+		return "HTTP ";
+	}
+
+	private final String formatThrowable(Throwable throwable) {
+		return throwable.getClass().getName() + ": " + throwable.getMessage();
+	}
+
 
 	protected ResponseEntity<Object> handleExceptionInternal(
 			Exception ex, HttpStatus status, WebRequest request) {
