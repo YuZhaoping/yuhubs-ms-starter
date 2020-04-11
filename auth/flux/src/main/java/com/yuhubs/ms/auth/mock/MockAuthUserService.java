@@ -6,6 +6,8 @@ import com.yuhubs.ms.security.auth.SignUpRequest;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.util.Optional;
+
 @Service("AuthUserService")
 public class MockAuthUserService implements AuthUserService {
 
@@ -25,28 +27,22 @@ public class MockAuthUserService implements AuthUserService {
 
 	@Override
 	public Mono<AuthUser> getUserById(Long userId) {
-		return Mono.just(userId)
-				.map(this.userManager::getUserById)
-				.flatMap(userOp -> {
-					if (userOp.isPresent()) {
-						return Mono.just(userOp.get());
-					} else {
-						return Mono.empty();
-					}
-				});
+		final Optional<AuthUser> userOp = this.userManager.getUserById(userId);
+		if (userOp.isPresent()) {
+			return Mono.just(userOp.get());
+		} else {
+			return Mono.empty();
+		}
 	}
 
 	@Override
 	public Mono<AuthUser> getUserByName(String username) {
-		return Mono.just(username)
-				.map(this.userManager::getUserByName)
-				.flatMap(userOp -> {
-					if (userOp.isPresent()) {
-						return Mono.just(userOp.get());
-					} else {
-						return Mono.empty();
-					}
-				});
+		final Optional<AuthUser> userOp = this.userManager.getUserByName(username);
+		if (userOp.isPresent()) {
+			return Mono.just(userOp.get());
+		} else {
+			return Mono.empty();
+		}
 	}
 
 
