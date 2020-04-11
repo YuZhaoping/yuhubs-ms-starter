@@ -55,10 +55,6 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 
 
 	private final HttpStatus determineHttpStatus(Throwable error) {
-		if (error instanceof ResponseStatusException) {
-			return ((ResponseStatusException) error).getStatus();
-		}
-
 		HttpStatus status = this.restExceptionHandler.determineStatus(error);
 		if (status == null) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
