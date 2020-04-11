@@ -60,6 +60,7 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 
 	@Override
 	protected void configureContentTypeResolver(RequestedContentTypeResolverBuilder builder) {
+		builder.headerResolver();
 		builder.fixedResolver(MediaType.APPLICATION_JSON);
 	}
 
