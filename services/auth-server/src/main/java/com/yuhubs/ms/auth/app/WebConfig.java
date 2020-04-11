@@ -4,6 +4,8 @@ import com.yuhubs.ms.auth.web.WebConfigSupport;
 import com.yuhubs.ms.security.auth.web.AuthUserController;
 import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import com.yuhubs.ms.web.RestExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,9 @@ import java.net.URI;
 
 @Configuration
 public class WebConfig extends WebConfigSupport {
+
+	private static Logger LOG = LoggerFactory.getLogger("yuhubs.ms.auth");
+
 
 	@Value("${yuhubs.ms.static-resources.enabled:false}")
 	private boolean staticResourcesEnabled;
@@ -85,6 +90,11 @@ public class WebConfig extends WebConfigSupport {
 				return URI.create(config.redirectURI);
 			}
 			return null;
+		}
+
+		@Override
+		protected Logger getLogger() {
+			return WebConfig.LOG;
 		}
 
 	}
