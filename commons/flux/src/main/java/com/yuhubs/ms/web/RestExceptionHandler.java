@@ -48,23 +48,23 @@ public class RestExceptionHandler {
 	}
 
 
-	public final HttpStatus determineStatus(Throwable ex) {
-		HttpStatus status = mapHttpStatus(ex, true);
+	public final HttpStatus determineStatus(Throwable error) {
+		HttpStatus status = mapHttpStatus(error, true);
 		if (status != null) {
 			return status;
 		}
 
-		status = this.responseStatusExceptionHandler.determineStatus(ex);
+		status = this.responseStatusExceptionHandler.determineStatus(error);
 		if (status != null) {
 			return status;
 		}
 
-		status = mapHttpStatus(ex, false);
+		status = mapHttpStatus(error, false);
 		if (status != null) {
 			return status;
 		}
 
-		if (ex instanceof RuntimeException) {
+		if (error instanceof RuntimeException) {
 			return HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 
