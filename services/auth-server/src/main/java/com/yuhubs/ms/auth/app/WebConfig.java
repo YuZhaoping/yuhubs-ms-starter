@@ -2,6 +2,7 @@ package com.yuhubs.ms.auth.app;
 
 import com.yuhubs.ms.auth.web.WebConfigSupport;
 import com.yuhubs.ms.security.auth.web.AuthUserController;
+import com.yuhubs.ms.security.auth.web.AuthWebExceptionHandler;
 import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import com.yuhubs.ms.web.RestExceptionHandler;
 import org.slf4j.Logger;
@@ -72,7 +73,7 @@ public class WebConfig extends WebConfigSupport {
 	}
 
 
-	private static final class ExceptionHandler extends RestExceptionHandler {
+	private static final class ExceptionHandler extends AuthWebExceptionHandler {
 
 		private final WebConfig config;
 
