@@ -49,6 +49,10 @@ public class RestConfigurationSupport extends WebFluxConfigurationSupport {
 	}
 
 
+	public RestExceptionHandler getRestExceptionHandler() {
+		return this.restExceptionHandler;
+	}
+
 	protected RestExceptionHandler createRestExceptionHandler() {
 		return new RestExceptionHandler();
 	}
