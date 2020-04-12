@@ -4,10 +4,13 @@ import com.yuhubs.ms.exceptions.BadRequestException;
 import com.yuhubs.ms.web.annotation.ExceptionStatusMapper;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.handler.WebFluxResponseStatusExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
+import reactor.core.publisher.Mono;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -108,6 +111,22 @@ public class RestExceptionHandler {
 			return ((ResponseStatusException) error).getReason();
 		}
 		return error.getMessage();
+	}
+
+
+	public Mono<ServerResponse> renderExceptionResponse(Throwable error) {
+		HttpStatus status = determineStatus(error);
+		if (status == null) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		String message = determineMessage(error);
+
+		RestErrorResponse response = RestErrorResponse.of(status, determineException(error), message);
+
+		return ServerResponse.status(status)
+				.contentType(MediaType.APPLICATION_JSON)
+				.bodyValue(response.toRestApiError());
 	}
 
 
