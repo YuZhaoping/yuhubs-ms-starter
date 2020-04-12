@@ -4,8 +4,10 @@ import com.yuhubs.ms.exceptions.BadRequestException;
 import com.yuhubs.ms.web.annotation.ExceptionStatusMapper;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.handler.WebFluxResponseStatusExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,12 +15,15 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler {
+public class RestExceptionHandler {
+
+	private final ResponseStatusExceptionHandler responseStatusExceptionHandler;
 
 	private final Map<Class<? extends Throwable>, HttpStatus> statusMap;
 
 
 	public RestExceptionHandler() {
+		this.responseStatusExceptionHandler = new ResponseStatusExceptionHandler();
 		this.statusMap = new HashMap<>();
 	}
 
@@ -43,14 +48,13 @@ public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler 
 	}
 
 
-	@Override
 	public final HttpStatus determineStatus(Throwable ex) {
 		HttpStatus status = mapHttpStatus(ex, true);
 		if (status != null) {
 			return status;
 		}
 
-		status = super.determineStatus(ex);
+		status = this.responseStatusExceptionHandler.determineStatus(ex);
 		if (status != null) {
 			return status;
 		}
@@ -86,6 +90,24 @@ public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler 
 		}
 
 		return null;
+	}
+
+
+	public Throwable determineException(Throwable error) {
+		if (error instanceof ResponseStatusException) {
+			return (error.getCause() != null) ? error.getCause() : error;
+		}
+		return error;
+	}
+
+	public String determineMessage(Throwable error) {
+		if (error instanceof WebExchangeBindException) {
+			return error.getMessage();
+		}
+		if (error instanceof ResponseStatusException) {
+			return ((ResponseStatusException) error).getReason();
+		}
+		return error.getMessage();
 	}
 
 
@@ -132,6 +154,16 @@ public class RestExceptionHandler extends WebFluxResponseStatusExceptionHandler 
 
 	private final String formatThrowable(Throwable throwable) {
 		return throwable.getClass().getName() + ": " + throwable.getMessage();
+	}
+
+
+	private static final class ResponseStatusExceptionHandler extends WebFluxResponseStatusExceptionHandler {
+
+		@Override
+		public final HttpStatus determineStatus(Throwable throwable) {
+			return super.determineStatus(throwable);
+		}
+
 	}
 
 

@@ -3,9 +3,7 @@ package com.yuhubs.ms.web;
 import org.springframework.boot.web.reactive.error.DefaultErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.support.WebExchangeBindException;
 import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.util.LinkedHashMap;
@@ -63,21 +61,12 @@ public class GlobalErrorAttributes extends DefaultErrorAttributes {
 		return status;
 	}
 
-	private static Throwable determineException(Throwable error) {
-		if (error instanceof ResponseStatusException) {
-			return (error.getCause() != null) ? error.getCause() : error;
-		}
-		return error;
+	private final Throwable determineException(Throwable error) {
+		return this.restExceptionHandler.determineException(error);
 	}
 
-	private static String determineMessage(Throwable error) {
-		if (error instanceof WebExchangeBindException) {
-			return error.getMessage();
-		}
-		if (error instanceof ResponseStatusException) {
-			return ((ResponseStatusException) error).getReason();
-		}
-		return error.getMessage();
+	private final String determineMessage(Throwable error) {
+		return this.restExceptionHandler.determineMessage(error);
 	}
 
 
