@@ -52,7 +52,9 @@ public class RestExceptionHandler {
 
 
 	public final HttpStatus determineStatus(Throwable error) {
-		HttpStatus status = mapHttpStatus(error, true);
+		HttpStatus status;
+
+		status = mapHttpStatus(determineException(error), true);
 		if (status != null) {
 			return status;
 		}
@@ -62,7 +64,7 @@ public class RestExceptionHandler {
 			return status;
 		}
 
-		status = mapHttpStatus(error, false);
+		status = mapHttpStatus(determineException(error), false);
 		if (status != null) {
 			return status;
 		}
