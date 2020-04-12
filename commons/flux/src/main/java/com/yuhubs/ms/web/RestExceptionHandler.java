@@ -96,14 +96,14 @@ public class RestExceptionHandler {
 	}
 
 
-	public Throwable determineException(Throwable error) {
+	protected Throwable determineException(Throwable error) {
 		if (error instanceof ResponseStatusException) {
 			return (error.getCause() != null) ? error.getCause() : error;
 		}
 		return error;
 	}
 
-	public String determineMessage(Throwable error) {
+	protected String determineMessage(Throwable error) {
 		if (error instanceof WebExchangeBindException) {
 			return error.getMessage();
 		}
@@ -114,11 +114,13 @@ public class RestExceptionHandler {
 	}
 
 
-	public Mono<ServerResponse> renderExceptionResponse(Throwable error) {
+	public Mono<ServerResponse> renderErrorResponse(Throwable error, ServerRequest request) {
 		HttpStatus status = determineStatus(error);
 		if (status == null) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+
+		logError(request, status, error);
 
 		String message = determineMessage(error);
 
