@@ -45,6 +45,9 @@ public class SecurityConfig extends AuthConfigurationSupport {
 
 	@Override
 	protected void configureRequestAuthorization(ServerHttpSecurity http) {
+		http.authorizeExchange()
+				.pathMatchers("/sockjs-node/**").permitAll();
+
 		if (staticResourcesEnabled) {
 			http.authorizeExchange()
 					.pathMatchers(HttpMethod.GET, "/public/**").permitAll();
