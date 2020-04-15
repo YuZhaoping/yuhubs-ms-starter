@@ -37,8 +37,9 @@ public class WebConfig extends WebConfigSupport {
 	@Value("${yuhubs.ms.static-resources.enabled:false}")
 	private boolean staticResourcesEnabled;
 
-	@Value("${spring.resources.static-locations}")
+	@Value("${spring.resources.static-locations:classpath:/static/}")
 	private String resourceLocations;
+
 
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
