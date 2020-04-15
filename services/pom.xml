@@ -123,7 +123,7 @@
 		</profile>
 
 		<profile>
-			<id>jetty</id>
+			<id>prod</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
