@@ -15,7 +15,7 @@
     value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%15.15t] %-40.40logger{39} : %m%n%wEx}"/>
 
 
-  <springProfile name="test, dev">
+  <springProfile name="dev, prod">
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
         <level>DEBUG</level>
@@ -33,7 +33,7 @@
   </springProfile>
 
 
-  <springProfile name="prod">
+  <springProfile name="test">
     <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
       <filter class="ch.qos.logback.classic.filter.LevelFilter">
         <level>ERROR</level>
