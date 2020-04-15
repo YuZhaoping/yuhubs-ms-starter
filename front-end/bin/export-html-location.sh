@@ -2,6 +2,6 @@
 
 cd $(dirname $0) && cd ../
 
-export YUHUBS_MS_HTML_LOCATION="file:$(pwd)/deploy/html/public/"
+export YUHUBS_MS_HTML_LOCATION="$(pwd)/deploy/html"
 
 echo $YUHUBS_MS_HTML_LOCATION
