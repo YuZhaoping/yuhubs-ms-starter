@@ -2,12 +2,29 @@
 
 cd $(dirname $0) && cd ../
 
+
 APP_NAME="auth-server"
 APP_PROD_JAR="deploy/build/$APP_NAME-*.jar"
 
+
+APP_ARGS=
+
+while (( "$#" )); do
+  case "$1" in
+    --ssl)
+      APP_ARGS="$APP_ARGS --spring.config.additional-location=classpath:server-ssl.properties"
+      shift
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+
 if ls $APP_PROD_JAR 1> /dev/null 2>&1; then
-  java -jar $APP_PROD_JAR
+  java -jar $APP_PROD_JAR $APP_ARGS
 else
   mvn clean && mvn package -DskipTests && \
-  java -jar $APP_PROD_JAR
+  java -jar $APP_PROD_JAR $APP_ARGS
 fi
