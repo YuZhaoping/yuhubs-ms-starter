@@ -2,4 +2,4 @@
 
 cd $(dirname $0) && cd ../
 
-mvn clean && mvn -Pdev package -DskipTests
+mvn clean && mvn -Pdev package -DskipTests && mvn clean
