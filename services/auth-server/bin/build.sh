@@ -3,4 +3,4 @@
 cd $(dirname $0) && cd ../
 
 mvn clean && rm -f deploy/build/*.jar && \
-mvn package -DskipTests
+mvn package -DskipTests && mvn clean

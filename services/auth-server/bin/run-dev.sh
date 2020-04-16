@@ -31,6 +31,6 @@ done
 if ls $APP_DEV_JAR 1> /dev/null 2>&1; then
   java -jar $APP_DEV_JAR $APP_ARGS
 else
-  mvn clean && mvn -Pdev package -DskipTests && \
+  mvn clean && mvn -Pdev package -DskipTests && mvn clean && \
   java -jar $APP_DEV_JAR $APP_ARGS
 fi
