@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+
+  front-end:
+    container_name: ecom-front-end
+    build: ./front-end/deploy
+    image: com.yuhubs.ecom/front-end:0.0.1
+    ports:
+      - "8080:80"
+    depends_on:
+      - auth-server
+      - catalog-service
+    networks:
+      - backend
+
+  auth-server:
+    container_name: ecom-auth-server
+    build: ./services/auth-server/deploy
+    image: com.yuhubs.ms/auth-server:0.0.1
+    expose:
+      - "8080"
+    networks:
+      - backend
+
+  catalog-service:
+    container_name: ecom-catalog-service
+    build: ./services/catalog/deploy
+    image: com.yuhubs.ecom/catalog-service:0.0.1
+    expose:
+      - "8080"
+    networks:
+      - backend
+
+
+networks:
+  backend:
+    driver: bridge
+    name: ecom-backend
