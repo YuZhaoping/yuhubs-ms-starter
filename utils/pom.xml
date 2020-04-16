@@ -18,4 +18,9 @@
 	<packaging>pom</packaging>
 
 
+	<modules>
+		<module>mail</module>
+	</modules>
+
+
 </project>

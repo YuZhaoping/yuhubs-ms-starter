@@ -18,4 +18,12 @@
 	<packaging>pom</packaging>
 
 
+	<modules>
+		<module>basis</module>
+		<module>web</module>
+		<module>mvc</module>
+		<module>flux</module>
+	</modules>
+
+
 </project>
