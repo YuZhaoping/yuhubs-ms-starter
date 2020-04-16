@@ -1,0 +1,5 @@
+Dockerfile
+.dockerignore
+.directory
+docker-bin/
+build/dev/
