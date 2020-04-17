@@ -8,6 +8,7 @@ services:
     image: com.yuhubs.ecom/front-end:0.0.1
     ports:
       - "8080:80"
+      - "8443:443"
     depends_on:
       - auth-server
       - catalog-service
