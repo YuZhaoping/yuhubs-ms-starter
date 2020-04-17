@@ -1,4 +1,4 @@
-FROM com.yuhubs.ms/server-jre:8u241
+FROM com.yuhubs.ms/server-jre:8u251
 
 
 ENV MS_HOME="/opt/yuhubs/ms" \

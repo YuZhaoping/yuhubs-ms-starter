@@ -6,7 +6,7 @@ MAINTAINER Zhaoping Yu <yuzhaoping1970@gmail.com>
 
 # Java version and other ENV
 ENV JAVA_VERSION_MAJOR=8 \
-    JAVA_VERSION_MINOR=241 \
+    JAVA_VERSION_MINOR=251 \
     JAVA_HOME=/opt/jdk \
     PATH=/opt/jdk/bin:${PATH} \
     LD_LIBRARY_PATH=/usr/glibc-compat/lib:/usr/lib:/lib \
