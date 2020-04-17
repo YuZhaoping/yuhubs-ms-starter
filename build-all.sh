@@ -5,9 +5,9 @@ cd $(dirname $0)
 
 mvn -N install
 
-cd commons/ && mvn install && mvn clean && cd ../
-cd utils/ && mvn install && mvn clean && cd ../
-cd auth/ && mvn install && mvn clean && cd ../
+./commons/build-all.sh
+./utils/build-all.sh
+./auth/build-all.sh
 
 ./services/auth-server/bin/build.sh
 ./services/catalog/bin/build.sh
