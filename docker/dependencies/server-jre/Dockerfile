@@ -1,5 +1,5 @@
 # AlpineLinux with a glibc-2.31-r0 and Oracle Java 8
-FROM alpine:3.10
+FROM alpine:3.11
 
 MAINTAINER Zhaoping Yu <yuzhaoping1970@gmail.com>
 # Thanks to Anastas Dancha <anapsix@random.io> for the original work
