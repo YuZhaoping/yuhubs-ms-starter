@@ -1,7 +1,7 @@
 package com.yuhubs.ms.security.auth.details;
 
+import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
-import com.yuhubs.ms.security.auth.AuthUserService;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

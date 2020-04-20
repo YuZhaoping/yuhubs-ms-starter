@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>core</module>
+		<module>model</module>
 		<module>mvc</module>
 		<module>flux</module>
 		<module>mail</module>

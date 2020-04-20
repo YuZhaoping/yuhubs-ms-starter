@@ -1,7 +1,8 @@
-package com.yuhubs.ms.auth.mock;
+package com.yuhubs.ms.auth.mock.service;
 
+import com.yuhubs.ms.auth.mock.MockUserManager;
+import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
-import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
 import org.springframework.stereotype.Service;

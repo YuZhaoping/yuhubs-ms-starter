@@ -1,5 +1,7 @@
-package com.yuhubs.ms.security.auth;
+package com.yuhubs.ms.auth.reactive;
 
+import com.yuhubs.ms.security.auth.AuthUser;
+import com.yuhubs.ms.security.auth.SignUpRequest;
 import reactor.core.publisher.Mono;
 
 public interface AuthUserService {

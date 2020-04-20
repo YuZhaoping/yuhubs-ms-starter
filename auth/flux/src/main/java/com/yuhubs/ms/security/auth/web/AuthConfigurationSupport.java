@@ -1,6 +1,6 @@
 package com.yuhubs.ms.security.auth.web;
 
-import com.yuhubs.ms.security.auth.AuthUserService;
+import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.security.auth.details.AuthUserDetailsService;
 import com.yuhubs.ms.security.auth.service.NoOpAuthUserService;
 import com.yuhubs.ms.security.auth.web.login.LoginAuthenticationConverter;

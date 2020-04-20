@@ -1,7 +1,7 @@
 package com.yuhubs.ms.security.auth.web;
 
+import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
-import com.yuhubs.ms.security.auth.AuthUserService;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 

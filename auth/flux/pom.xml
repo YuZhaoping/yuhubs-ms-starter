@@ -21,7 +21,7 @@
 		<!-- Compile -->
 		<dependency>
 			<groupId>com.yuhubs.ms.auth</groupId>
-			<artifactId>auth-core</artifactId>
+			<artifactId>auth-model</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

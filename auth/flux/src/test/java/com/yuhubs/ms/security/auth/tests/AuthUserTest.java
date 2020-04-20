@@ -1,7 +1,7 @@
 package com.yuhubs.ms.security.auth.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yuhubs.ms.auth.mock.MockAuthUserService;
+import com.yuhubs.ms.auth.mock.reactive.MockAuthUserService;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.WebConfiguredTestBase;
 import com.yuhubs.ms.security.auth.web.AuthApiEndpoints;

@@ -1,8 +1,8 @@
 package com.yuhubs.ecom.catalog.app;
 
-import com.yuhubs.ms.auth.mock.MockAuthUserService;
 import com.yuhubs.ms.auth.mock.MockUserManager;
-import com.yuhubs.ms.security.auth.AuthUserService;
+import com.yuhubs.ms.auth.mock.service.MockAuthUserService;
+import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.web.AuthConfigurationSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

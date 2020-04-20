@@ -1,6 +1,6 @@
 package com.yuhubs.ms.security.auth;
 
-import com.yuhubs.ms.auth.mock.MockAuthUserService;
+import com.yuhubs.ms.auth.mock.reactive.MockAuthUserService;
 import com.yuhubs.ms.security.auth.web.AuthWebSecurityContext;
 import org.junit.Before;
 import org.junit.runner.RunWith;

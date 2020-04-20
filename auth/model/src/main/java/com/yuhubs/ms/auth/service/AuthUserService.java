@@ -1,5 +1,7 @@
-package com.yuhubs.ms.security.auth;
+package com.yuhubs.ms.auth.service;
 
+import com.yuhubs.ms.security.auth.AuthUser;
+import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
 
 import java.util.Optional;

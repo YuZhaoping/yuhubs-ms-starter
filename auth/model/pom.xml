@@ -10,9 +10,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>auth-webmvc</artifactId>
-	<name>auth-webmvc</name>
-	<description>Auth WebMvc</description>
+	<artifactId>auth-model</artifactId>
+	<name>auth-model</name>
+	<description>Auth Model</description>
 
 	<packaging>jar</packaging>
 
@@ -21,27 +21,14 @@
 		<!-- Compile -->
 		<dependency>
 			<groupId>com.yuhubs.ms.auth</groupId>
-			<artifactId>auth-model</artifactId>
+			<artifactId>auth-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.yuhubs.ms.commons</groupId>
-			<artifactId>commons-webmvc</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 	</dependencies>

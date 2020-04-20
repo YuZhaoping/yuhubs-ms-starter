@@ -1,7 +1,8 @@
-package com.yuhubs.ms.auth.mock;
+package com.yuhubs.ms.auth.mock.reactive;
 
+import com.yuhubs.ms.auth.mock.MockUserManager;
+import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
-import com.yuhubs.ms.security.auth.AuthUserService;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

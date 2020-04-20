@@ -1,8 +1,8 @@
 package com.yuhubs.ms.auth.app;
 
-import com.yuhubs.ms.auth.mock.MockAuthUserService;
 import com.yuhubs.ms.auth.mock.MockUserManager;
 import com.yuhubs.ms.auth.mock.config.MockUserConfigSupport;
+import com.yuhubs.ms.auth.mock.reactive.MockAuthUserService;
 import com.yuhubs.ms.config.YamlPropertyLoaderFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
