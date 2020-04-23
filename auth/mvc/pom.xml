@@ -32,7 +32,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.yuhubs.ms.commons</groupId>
+			<groupId>com.yuhubs.ms</groupId>
 			<artifactId>commons-webmvc</artifactId>
 			<version>${project.version}</version>
 		</dependency>

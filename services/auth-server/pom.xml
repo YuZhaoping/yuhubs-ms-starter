@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.yuhubs.ms.services</groupId>
+		<groupId>com.yuhubs.ms</groupId>
 		<artifactId>services-baseconfig</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.yuhubs.ms.services</groupId>
+	<groupId>com.yuhubs.ms.auth</groupId>
 	<artifactId>auth-server</artifactId>
 	<name>auth-server</name>
 	<description>Auth Server</description>

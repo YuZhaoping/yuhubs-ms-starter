@@ -10,7 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.yuhubs.ms.services</groupId>
+	<groupId>com.yuhubs.ms</groupId>
 	<artifactId>services-baseconfig</artifactId>
 	<name>services-baseconfig</name>
 	<description>Services Base Configuration</description>

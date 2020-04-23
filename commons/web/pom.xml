@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.yuhubs.ms.commons</groupId>
+		<groupId>com.yuhubs.ms</groupId>
 		<artifactId>commons-baseconfig</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -29,7 +29,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.yuhubs.ms.commons</groupId>
+			<groupId>com.yuhubs.ms</groupId>
 			<artifactId>commons-basis</artifactId>
 			<version>${project.version}</version>
 		</dependency>

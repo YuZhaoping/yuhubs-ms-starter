@@ -10,7 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.yuhubs.ms.commons</groupId>
+	<groupId>com.yuhubs.ms</groupId>
 	<artifactId>commons-baseconfig</artifactId>
 	<name>commons-baseconfig</name>
 	<description>Commons Base Configuration</description>
