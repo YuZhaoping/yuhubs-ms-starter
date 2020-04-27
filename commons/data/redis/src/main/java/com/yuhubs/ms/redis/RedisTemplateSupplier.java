@@ -15,12 +15,12 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-public class RedisTemplateSupport {
+public class RedisTemplateSupplier {
 
 	protected final LettuceConnectionManager connectionManager;
 
 
-	public RedisTemplateSupport(LettuceConnectionManager connectionManager) {
+	public RedisTemplateSupplier(LettuceConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 	}
 
