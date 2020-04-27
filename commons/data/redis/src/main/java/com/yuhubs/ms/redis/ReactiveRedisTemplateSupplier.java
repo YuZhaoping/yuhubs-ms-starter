@@ -3,10 +3,7 @@ package com.yuhubs.ms.redis;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.*;
 
 public class ReactiveRedisTemplateSupplier extends RedisTemplateSupplierBase {
 
@@ -40,7 +37,7 @@ public class ReactiveRedisTemplateSupplier extends RedisTemplateSupplierBase {
 
 	protected RedisSerializationContext<String, Object> createJdkSerializationContext() {
 		RedisSerializationContext.RedisSerializationContextBuilder<String, Object> builder =
-				RedisSerializationContext.newSerializationContext();
+				RedisSerializationContext.newSerializationContext(RedisSerializer.java());
 
 		builder.key(StringRedisSerializer.UTF_8).value(new JdkSerializationRedisSerializer());
 
@@ -49,7 +46,7 @@ public class ReactiveRedisTemplateSupplier extends RedisTemplateSupplierBase {
 
 	protected RedisSerializationContext<String, Object> createJsonSerializationContext() {
 		RedisSerializationContext.RedisSerializationContextBuilder<String, Object> builder =
-				RedisSerializationContext.newSerializationContext();
+				RedisSerializationContext.newSerializationContext(RedisSerializer.json());
 
 		builder.key(StringRedisSerializer.UTF_8)
 				.value(new GenericJackson2JsonRedisSerializer(createJackson2ObjectMapper()));
