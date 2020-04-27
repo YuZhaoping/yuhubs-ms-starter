@@ -7,15 +7,6 @@ import org.springframework.data.redis.connection.lettuce.LettuceClientConfigurat
 @Configuration
 public class RedisConfigurationSupport {
 
-	private final LettuceConnectionManager connectionManager;
-
-
-	public RedisConfigurationSupport() {
-		LettuceConfigProperties properties = createLettuceConfigProperties();
-		this.connectionManager = new LettuceConnectionManager(properties, new BuildTweaker(this));
-	}
-
-
 	private static final class BuildTweaker implements LettuceClientBuildTweaker {
 
 		private final RedisConfigurationSupport support;
@@ -51,12 +42,13 @@ public class RedisConfigurationSupport {
 	}
 
 
-	protected LettuceConfigProperties createLettuceConfigProperties() {
-		return new LettuceConfigProperties();
+	protected final LettuceConnectionManager lettuceConnectionManagerBean() {
+		LettuceConfigProperties properties = createLettuceConfigProperties();
+		return new LettuceConnectionManager(properties, new BuildTweaker(this));
 	}
 
-	protected final LettuceConnectionManager lettuceConnectionManagerBean() {
-		return this.connectionManager;
+	protected LettuceConfigProperties createLettuceConfigProperties() {
+		return new LettuceConfigProperties();
 	}
 
 }
