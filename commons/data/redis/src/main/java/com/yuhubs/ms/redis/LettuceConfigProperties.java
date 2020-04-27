@@ -25,7 +25,7 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 
 	public boolean clusterConfigEnabled() {
 		return this.props.keySet().stream().map(key -> key.toString())
-				.anyMatch(key -> key.equals("spring.redis.cluster.nodes"));
+				.anyMatch(key -> key.equals("cluster.nodes"));
 	}
 
 	public RedisClusterConfiguration buildClusterConfiguration() {
@@ -40,9 +40,9 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 
 	private static boolean isClusterProperty(String key) {
 		switch (key) {
-			case "spring.redis.cluster.nodes":
-			case "spring.redis.cluster.max-redirects":
-			case "spring.redis.password":
+			case "cluster.nodes":
+			case "cluster.max-redirects":
+			case "password":
 				return true;
 		}
 
@@ -53,13 +53,13 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 		String value = this.props.getProperty(key);
 
 		switch (key) {
-			case "spring.redis.cluster.nodes":
+			case "cluster.nodes":
 				setClusterNodes(config, value);
 				break;
-			case "spring.redis.cluster.max-redirects":
+			case "cluster.max-redirects":
 				config.setMaxRedirects(Integer.parseInt(value));
 				break;
-			case "spring.redis.password":
+			case "password":
 				config.setPassword(RedisPassword.of(value));
 				break;
 		}
@@ -99,10 +99,10 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 
 	private static boolean isStandaloneProperty(String key) {
 		switch (key) {
-			case "spring.redis.host":
-			case "spring.redis.port":
-			case "spring.redis.database":
-			case "spring.redis.password":
+			case "host":
+			case "port":
+			case "database":
+			case "password":
 				return true;
 		}
 
@@ -113,16 +113,16 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 		String value = this.props.getProperty(key);
 
 		switch (key) {
-			case "spring.redis.host":
+			case "host":
 				config.setHostName(value);
 				break;
-			case "spring.redis.port":
+			case "port":
 				config.setPort(Integer.parseInt(value));
 				break;
-			case "spring.redis.database":
+			case "database":
 				config.setDatabase(Integer.parseInt(value));
 				break;
-			case "spring.redis.password":
+			case "password":
 				config.setPassword(RedisPassword.of(value));
 				break;
 		}
@@ -173,9 +173,9 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 
 	private static boolean isClientProperty(String key) {
 		switch (key) {
-			case "spring.redis.client-name":
-			case "spring.redis.lettuce.shutdown-timeout":
-			case "spring.redis.ssl":
+			case "client-name":
+			case "lettuce.shutdown-timeout":
+			case "ssl":
 				return true;
 		}
 
@@ -188,13 +188,13 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 		String value = this.props.getProperty(key);
 
 		switch (key) {
-			case "spring.redis.client-name":
+			case "client-name":
 				builder.clientName(value);
 				break;
-			case "spring.redis.lettuce.shutdown-timeout":
+			case "lettuce.shutdown-timeout":
 				builder.shutdownTimeout(parseDuration(value));
 				break;
-			case "spring.redis.ssl":
+			case "ssl":
 				if (Boolean.parseBoolean(value)) {
 					tweaker.tweakLettuceSslClientBuilder(builder.useSsl());
 				}
@@ -205,14 +205,14 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 
 	public boolean poolConfigEnabled() {
 		return this.props.keySet().stream().map(key -> key.toString())
-				.anyMatch(key -> key.startsWith("spring.redis.lettuce.pool."));
+				.anyMatch(key -> key.startsWith("lettuce.pool."));
 	}
 
 	private GenericObjectPoolConfig buildPoolConfig() {
 		final GenericObjectPoolConfig poolConfig = defaultPoolConfig();
 
 		this.props.keySet().stream().map(key -> key.toString())
-				.filter(key -> key.startsWith("spring.redis.lettuce.pool."))
+				.filter(key -> key.startsWith("lettuce.pool."))
 				.forEach(key -> doSetPoolConfig(poolConfig, key));
 
 		return poolConfig;
@@ -232,7 +232,7 @@ public final class LettuceConfigProperties extends RedisConfigProperties {
 	private void doSetPoolConfig(GenericObjectPoolConfig poolConfig, String key) {
 		String value = this.props.getProperty(key);
 
-		key = key.substring("spring.redis.lettuce.pool.".length());
+		key = key.substring("lettuce.pool.".length());
 
 		switch (key) {
 			case "max-active": poolConfig.setMaxTotal(Integer.parseInt(value)); break;

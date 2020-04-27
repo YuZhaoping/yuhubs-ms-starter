@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
+/**
+ * NOTE: All properties' key MUST remove the prefix "spring.redis."
+ */
 public class RedisConfigProperties {
 
 	protected final Properties props;
@@ -26,7 +29,17 @@ public class RedisConfigProperties {
 	public void load(ResourceLoader loader, String resourcePath) throws IOException {
 		Resource resource = loader.getResource(resourcePath);
 
-		PropertiesLoaderUtils.fillProperties(this.props, new EncodedResource(resource, "UTF-8"));
+		final Properties temp = new Properties();
+
+		PropertiesLoaderUtils.fillProperties(temp, new EncodedResource(resource, "UTF-8"));
+
+		final int beginIndex = "spring.redis.".length();
+
+		temp.keySet().stream().map(key -> key.toString())
+				.filter(key -> key.startsWith("spring.redis."))
+				.forEach(key -> {
+					this.props.setProperty(key.substring(beginIndex), temp.getProperty(key));
+				});
 	}
 
 
