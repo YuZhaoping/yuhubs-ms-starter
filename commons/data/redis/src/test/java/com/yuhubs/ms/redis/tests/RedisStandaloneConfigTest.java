@@ -6,6 +6,9 @@ import com.yuhubs.ms.redis.RedisTemplateSupplier;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import static org.junit.Assert.*;
 
@@ -53,6 +56,33 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 		final String key = "test-string:1";
 		final String value = "test-string:1:value";
 
+		StepVerifier.create(reactiveRedisTemplate.hasKey(key))
+				.expectNext(false)
+				.expectComplete().verify();
+
+		ReactiveValueOperations<String, String> valueOps = reactiveRedisTemplate.opsForValue();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(true)
+				.expectNext(true)
+				.expectComplete().verify();
+
+		StepVerifier.create(valueOps.get(key))
+				.expectNext(value)
+				.expectComplete().verify();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.delete(key).flatMap(c -> Mono.just(c > 0)))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(false)
+				.expectNext(true)
+				.expectNext(false)
+				.expectComplete().verify();
 	}
 
 	@Test
@@ -92,6 +122,33 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 		final String key = "test-jdk:1";
 		final RedisTestEntity value = new RedisTestEntity("test-jdk:1:value", 0);
 
+		StepVerifier.create(reactiveRedisTemplate.hasKey(key))
+				.expectNext(false)
+				.expectComplete().verify();
+
+		ReactiveValueOperations<String, Object> valueOps = reactiveRedisTemplate.opsForValue();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(true)
+				.expectNext(true)
+				.expectComplete().verify();
+
+		StepVerifier.create(valueOps.get(key))
+				.expectNext(value)
+				.expectComplete().verify();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.delete(key).flatMap(c -> Mono.just(c > 0)))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(false)
+				.expectNext(true)
+				.expectNext(false)
+				.expectComplete().verify();
 	}
 
 	@Test
@@ -131,6 +188,33 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 		final String key = "test-json:1";
 		final RedisTestEntity value = new RedisTestEntity("test-json:1:value", 0);
 
+		StepVerifier.create(reactiveRedisTemplate.hasKey(key))
+				.expectNext(false)
+				.expectComplete().verify();
+
+		ReactiveValueOperations<String, Object> valueOps = reactiveRedisTemplate.opsForValue();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(true)
+				.expectNext(true)
+				.expectComplete().verify();
+
+		StepVerifier.create(valueOps.get(key))
+				.expectNext(value)
+				.expectComplete().verify();
+
+		StepVerifier.create(
+				Flux.first(valueOps.setIfAbsent(key, value))
+						.concatWith(reactiveRedisTemplate.delete(key).flatMap(c -> Mono.just(c > 0)))
+						.concatWith(reactiveRedisTemplate.hasKey(key))
+		)
+				.expectNext(false)
+				.expectNext(true)
+				.expectNext(false)
+				.expectComplete().verify();
 	}
 
 }
