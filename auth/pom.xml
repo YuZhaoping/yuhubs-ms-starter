@@ -21,6 +21,7 @@
 	<modules>
 		<module>core</module>
 		<module>model</module>
+		<module>data/redis</module>
 		<module>flux</module>
 		<module>mvc</module>
 		<module>mail</module>
