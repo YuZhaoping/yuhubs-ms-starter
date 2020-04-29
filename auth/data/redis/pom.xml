@@ -10,10 +10,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.yuhubs.ms.auth.data</groupId>
-	<artifactId>auth-redis</artifactId>
-	<name>auth-redis</name>
-	<description>Auth Redis</description>
+	<groupId>com.yuhubs.ms.auth</groupId>
+	<artifactId>auth-data-redis</artifactId>
+	<name>auth-data-redis</name>
+	<description>Auth Data Redis</description>
 
 	<packaging>jar</packaging>
 
