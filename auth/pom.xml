@@ -24,7 +24,7 @@
 		<module>data/redis</module>
 		<module>web/flux</module>
 		<module>web/mvc</module>
-		<module>utils/mail</module>
+		<module>ext/mail</module>
 	</modules>
 
 

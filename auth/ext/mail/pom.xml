@@ -10,9 +10,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>auth-util-mail</artifactId>
-	<name>auth-util-mail</name>
-	<description>Auth Util Mail</description>
+	<artifactId>auth-mail</artifactId>
+	<name>auth-mail</name>
+	<description>Auth Mail</description>
 
 	<packaging>jar</packaging>
 

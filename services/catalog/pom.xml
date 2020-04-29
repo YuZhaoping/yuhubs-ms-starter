@@ -49,7 +49,7 @@
 
 		<dependency>
 			<groupId>com.yuhubs.ms.auth</groupId>
-			<artifactId>auth-util-mail</artifactId>
+			<artifactId>auth-mail</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
