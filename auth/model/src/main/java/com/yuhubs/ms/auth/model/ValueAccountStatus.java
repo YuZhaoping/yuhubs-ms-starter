@@ -1,4 +1,4 @@
-package com.yuhubs.ms.security.auth.domain;
+package com.yuhubs.ms.auth.model;
 
 import com.yuhubs.ms.security.auth.AccountStatus;
 

@@ -1,10 +1,10 @@
 package com.yuhubs.ms.auth.mock;
 
+import com.yuhubs.ms.auth.model.ValueAccountStatus;
 import com.yuhubs.ms.security.GrantedRolePermission;
 import com.yuhubs.ms.security.auth.AccountStatus;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.AuthUserProfile;
-import com.yuhubs.ms.security.auth.domain.ValueAccountStatus;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;

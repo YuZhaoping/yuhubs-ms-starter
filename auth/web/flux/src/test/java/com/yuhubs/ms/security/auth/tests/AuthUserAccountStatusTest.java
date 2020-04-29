@@ -2,9 +2,9 @@ package com.yuhubs.ms.security.auth.tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yuhubs.ms.auth.mock.reactive.MockAuthUserService;
+import com.yuhubs.ms.auth.model.ValueAccountStatus;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.WebConfiguredTestBase;
-import com.yuhubs.ms.security.auth.domain.ValueAccountStatus;
 import com.yuhubs.ms.security.auth.web.AuthApiEndpoints;
 import com.yuhubs.ms.security.auth.web.dto.LoginRequestDto;
 import org.junit.Before;
