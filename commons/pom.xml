@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>basis</module>
+		<module>model</module>
 		<module>data/redis</module>
 		<module>web</module>
 		<module>mvc</module>
