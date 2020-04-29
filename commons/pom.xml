@@ -23,8 +23,8 @@
 		<module>model</module>
 		<module>data/redis</module>
 		<module>web</module>
-		<module>mvc</module>
 		<module>flux</module>
+		<module>mvc</module>
 	</modules>
 
 
