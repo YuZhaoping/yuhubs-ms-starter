@@ -22,6 +22,7 @@
 		<module>core</module>
 		<module>model</module>
 		<module>data/redis</module>
+		<module>ext/mock</module>
 		<module>web/flux</module>
 		<module>web/mvc</module>
 		<module>ext/mail</module>

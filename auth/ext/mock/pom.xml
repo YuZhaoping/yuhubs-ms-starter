@@ -10,9 +10,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>auth-webmvc</artifactId>
-	<name>auth-webmvc</name>
-	<description>Auth WebMvc</description>
+	<artifactId>auth-mock</artifactId>
+	<name>auth-mock</name>
+	<description>Auth Mock</description>
 
 	<packaging>jar</packaging>
 
@@ -26,29 +26,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.yuhubs.ms</groupId>
-			<artifactId>commons-webmvc</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
-		<!-- Test -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.yuhubs.ms.auth</groupId>
-			<artifactId>auth-mock</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 	</dependencies>
