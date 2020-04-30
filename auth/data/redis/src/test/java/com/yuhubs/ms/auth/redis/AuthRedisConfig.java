@@ -23,7 +23,7 @@ public class AuthRedisConfig extends RedisConfigurationSupport {
 	@Bean
 	public ReactiveRedisTemplateProvider authReactiveRedisTemplateProvider(
 			LettuceConnectionManager authRedisConnectionManager) {
-		return new ReactiveRedisTemplateSupplier(authRedisConnectionManager);
+		return new ReactiveRedisTemplateProvider(authRedisConnectionManager);
 	}
 
 	@Bean
