@@ -26,8 +26,8 @@ public class RedisClusterConfig extends RedisConfigurationSupport {
 	}
 
 	@Bean
-	public ReactiveRedisTemplateSupplier clusterRedisTemplateSupplier(LettuceConnectionManager redisClusterConnectionManager) {
-		return new ReactiveRedisTemplateSupplier(redisClusterConnectionManager);
+	public ReactiveRedisTemplateProvider clusterRedisTemplateProvider(LettuceConnectionManager redisClusterConnectionManager) {
+		return new ReactiveRedisTemplateProvider(redisClusterConnectionManager);
 	}
 
 

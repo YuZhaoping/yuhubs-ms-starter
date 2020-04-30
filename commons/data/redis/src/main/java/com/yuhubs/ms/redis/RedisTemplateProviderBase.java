@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class RedisTemplateSupplierBase {
+public class RedisTemplateProviderBase {
 
 	protected final LettuceConnectionManager connectionManager;
 
 
-	public RedisTemplateSupplierBase(LettuceConnectionManager connectionManager) {
+	public RedisTemplateProviderBase(LettuceConnectionManager connectionManager) {
 		this.connectionManager = connectionManager;
 	}
 

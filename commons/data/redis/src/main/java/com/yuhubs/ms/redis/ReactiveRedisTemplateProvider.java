@@ -5,9 +5,9 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
-public class ReactiveRedisTemplateSupplier extends RedisTemplateSupplierBase {
+public class ReactiveRedisTemplateProvider extends RedisTemplateProviderBase {
 
-	public ReactiveRedisTemplateSupplier(LettuceConnectionManager connectionManager) {
+	public ReactiveRedisTemplateProvider(LettuceConnectionManager connectionManager) {
 		super(connectionManager);
 	}
 

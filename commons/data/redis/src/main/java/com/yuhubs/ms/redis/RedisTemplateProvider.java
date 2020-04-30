@@ -7,9 +7,9 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-public class RedisTemplateSupplier extends RedisTemplateSupplierBase {
+public class RedisTemplateProvider extends RedisTemplateProviderBase {
 
-	public RedisTemplateSupplier(LettuceConnectionManager connectionManager) {
+	public RedisTemplateProvider(LettuceConnectionManager connectionManager) {
 		super(connectionManager);
 	}
 

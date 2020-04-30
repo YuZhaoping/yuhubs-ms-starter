@@ -1,8 +1,8 @@
 package com.yuhubs.ms.redis.tests;
 
 import com.yuhubs.ms.redis.ConfiguredTestBase;
-import com.yuhubs.ms.redis.ReactiveRedisTemplateSupplier;
-import com.yuhubs.ms.redis.RedisTemplateSupplier;
+import com.yuhubs.ms.redis.ReactiveRedisTemplateProvider;
+import com.yuhubs.ms.redis.RedisTemplateProvider;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
@@ -15,16 +15,16 @@ import static org.junit.Assert.*;
 public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 
 	@Autowired
-	private ReactiveRedisTemplateSupplier standaloneReactiveRedisTemplateSupplier;
+	private ReactiveRedisTemplateProvider standaloneReactiveRedisTemplateProvider;
 
 	@Autowired
-	private RedisTemplateSupplier standaloneRedisTemplateSupplier;
+	private RedisTemplateProvider standaloneRedisTemplateProvider;
 
 
 	@Test
 	public void testStringRedisTemplate() {
 		StringRedisTemplate redisTemplate =
-				standaloneRedisTemplateSupplier.createStringRedisTemplate();
+				standaloneRedisTemplateProvider.createStringRedisTemplate();
 		assertNotNull(redisTemplate);
 
 		final String key = "test-string:0";
@@ -50,7 +50,7 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testReactiveStringRedisTemplate() {
 		ReactiveStringRedisTemplate reactiveRedisTemplate =
-				standaloneReactiveRedisTemplateSupplier.createReactiveStringRedisTemplate();
+				standaloneReactiveRedisTemplateProvider.createReactiveStringRedisTemplate();
 		assertNotNull(reactiveRedisTemplate);
 
 		final String key = "test-string:1";
@@ -88,7 +88,7 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testJdkRedisTemplate() {
 		RedisTemplate<String, Object> redisTemplate =
-				standaloneRedisTemplateSupplier.createJdkRedisTemplate();
+				standaloneRedisTemplateProvider.createJdkRedisTemplate();
 		assertNotNull(redisTemplate);
 
 		redisTemplate.afterPropertiesSet();
@@ -116,7 +116,7 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testReactiveJdkRedisTemplate() {
 		ReactiveRedisTemplate<String, Object> reactiveRedisTemplate =
-				standaloneReactiveRedisTemplateSupplier.createReactiveJdkRedisTemplate();
+				standaloneReactiveRedisTemplateProvider.createReactiveJdkRedisTemplate();
 		assertNotNull(reactiveRedisTemplate);
 
 		final String key = "test-jdk:1";
@@ -154,7 +154,7 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testJsonRedisTemplate() {
 		RedisTemplate<String, Object> redisTemplate =
-				standaloneRedisTemplateSupplier.createJsonRedisTemplate();
+				standaloneRedisTemplateProvider.createJsonRedisTemplate();
 		assertNotNull(redisTemplate);
 
 		redisTemplate.afterPropertiesSet();
@@ -182,7 +182,7 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testReactiveJsonRedisTemplate() {
 		ReactiveRedisTemplate<String, Object> reactiveRedisTemplate =
-				standaloneReactiveRedisTemplateSupplier.createReactiveJsonRedisTemplate();
+				standaloneReactiveRedisTemplateProvider.createReactiveJsonRedisTemplate();
 		assertNotNull(reactiveRedisTemplate);
 
 		final String key = "test-json:1";

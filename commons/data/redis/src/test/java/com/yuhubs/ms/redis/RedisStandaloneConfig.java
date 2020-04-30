@@ -20,15 +20,15 @@ public class RedisStandaloneConfig extends RedisConfigurationSupport {
 	}
 
 	@Bean
-	public ReactiveRedisTemplateSupplier standaloneReactiveRedisTemplateSupplier(
+	public ReactiveRedisTemplateProvider standaloneReactiveRedisTemplateProvider(
 			LettuceConnectionManager redisStandaloneConnectionManager) {
-		return new ReactiveRedisTemplateSupplier(redisStandaloneConnectionManager);
+		return new ReactiveRedisTemplateProvider(redisStandaloneConnectionManager);
 	}
 
 	@Bean
-	public RedisTemplateSupplier standaloneRedisTemplateSupplier(
+	public RedisTemplateProvider standaloneRedisTemplateProvider(
 			LettuceConnectionManager redisStandaloneConnectionManager) {
-		return new RedisTemplateSupplier(redisStandaloneConnectionManager);
+		return new RedisTemplateProvider(redisStandaloneConnectionManager);
 	}
 
 
