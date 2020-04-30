@@ -7,6 +7,8 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.util.function.Supplier;
+
 public class RedisTemplateProvider extends RedisTemplateProviderBase {
 
 	public RedisTemplateProvider(LettuceConnectionManager connectionManager) {
@@ -16,6 +18,10 @@ public class RedisTemplateProvider extends RedisTemplateProviderBase {
 
 	public StringRedisTemplate createStringRedisTemplate() {
 		return new StringRedisTemplate(redisConnectionFactory());
+	}
+
+	public Supplier<StringRedisTemplate> stringRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(this::createStringRedisTemplate);
 	}
 
 	public RedisTemplate<String, Object> createJsonRedisTemplate() {
@@ -28,6 +34,14 @@ public class RedisTemplateProvider extends RedisTemplateProviderBase {
 		return template;
 	}
 
+	public Supplier<RedisTemplate<String, Object>> jsonRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(() -> {
+			RedisTemplate<String, Object> template = this.createJsonRedisTemplate();
+			template.afterPropertiesSet();
+			return template;
+		});
+	}
+
 	public RedisTemplate<String, Object> createJdkRedisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate();
 
@@ -36,6 +50,14 @@ public class RedisTemplateProvider extends RedisTemplateProviderBase {
 		template.setValueSerializer(new JdkSerializationRedisSerializer());
 
 		return template;
+	}
+
+	public Supplier<RedisTemplate<String, Object>> jdkRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(() -> {
+			RedisTemplate<String, Object> template = this.createJdkRedisTemplate();
+			template.afterPropertiesSet();
+			return template;
+		});
 	}
 
 

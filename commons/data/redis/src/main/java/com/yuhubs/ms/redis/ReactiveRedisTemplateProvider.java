@@ -5,6 +5,8 @@ import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
+import java.util.function.Supplier;
+
 public class ReactiveRedisTemplateProvider extends RedisTemplateProviderBase {
 
 	public ReactiveRedisTemplateProvider(LettuceConnectionManager connectionManager) {
@@ -18,16 +20,28 @@ public class ReactiveRedisTemplateProvider extends RedisTemplateProviderBase {
 		);
 	}
 
+	public Supplier<ReactiveStringRedisTemplate> stringRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(this::createReactiveStringRedisTemplate);
+	}
+
 	public ReactiveRedisTemplate<String, Object> createReactiveJsonRedisTemplate() {
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory(),
 				createJsonSerializationContext()
 		);
 	}
 
+	public Supplier<ReactiveRedisTemplate<String, Object>> jsonRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(this::createReactiveJsonRedisTemplate);
+	}
+
 	public ReactiveRedisTemplate<String, Object> createReactiveJdkRedisTemplate() {
 		return new ReactiveRedisTemplate<>(reactiveRedisConnectionFactory(),
 				createJdkSerializationContext()
 		);
+	}
+
+	public Supplier<ReactiveRedisTemplate<String, Object>> jdkRedisTemplateSupplier() {
+		return new RedisTemplateSupplier<>(this::createReactiveJdkRedisTemplate);
 	}
 
 

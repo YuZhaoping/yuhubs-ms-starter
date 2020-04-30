@@ -88,10 +88,8 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testJdkRedisTemplate() {
 		RedisTemplate<String, Object> redisTemplate =
-				standaloneRedisTemplateProvider.createJdkRedisTemplate();
+				standaloneRedisTemplateProvider.jdkRedisTemplateSupplier().get();
 		assertNotNull(redisTemplate);
-
-		redisTemplate.afterPropertiesSet();
 
 		final String key = "test-jdk:0";
 		final RedisTestEntity value = new RedisTestEntity("test-jdk:0:value", 0);
@@ -154,10 +152,8 @@ public class RedisStandaloneConfigTest extends ConfiguredTestBase {
 	@Test
 	public void testJsonRedisTemplate() {
 		RedisTemplate<String, Object> redisTemplate =
-				standaloneRedisTemplateProvider.createJsonRedisTemplate();
+				standaloneRedisTemplateProvider.jsonRedisTemplateSupplier().get();
 		assertNotNull(redisTemplate);
-
-		redisTemplate.afterPropertiesSet();
 
 		final String key = "test-json:0";
 		final RedisTestEntity value = new RedisTestEntity("test-json:0:value", 0);
