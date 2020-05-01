@@ -1,5 +1,6 @@
 package com.yuhubs.ms.auth.model;
 
+import com.yuhubs.ms.model.Entity;
 import com.yuhubs.ms.security.GrantedRolePermission;
 import com.yuhubs.ms.security.auth.AccountStatus;
 import com.yuhubs.ms.security.auth.AuthUser;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GenericAuthUser implements AuthUser {
+public class GenericAuthUser implements AuthUser, Entity<GenericAuthUser> {
 
 	public static final class Permission implements GrantedRolePermission {
 
@@ -42,6 +43,12 @@ public class GenericAuthUser implements AuthUser {
 		this.accountStatus = createAccountStatus();
 
 		this.accountStatus.setValue(generalValue.getStatus());
+	}
+
+
+	@Override
+	public boolean sameIdentityAs(GenericAuthUser other) {
+		return this.generalValue.sameValueAs(other.generalValue);
 	}
 
 
