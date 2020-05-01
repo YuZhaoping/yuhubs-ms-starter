@@ -1,6 +1,11 @@
 package com.yuhubs.ms.security.auth;
 
-public class AccountStatus {
+import java.io.Serializable;
+
+public class AccountStatus implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 
 	public enum Op {
 		SET_ACCOUNT_EXPIRED,
