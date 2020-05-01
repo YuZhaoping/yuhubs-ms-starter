@@ -50,6 +50,22 @@ public class ValueAccountStatus extends AccountStatus {
 	}
 
 
+	public ValueAccountStatus setAccountStatus(AccountStatus.Op op) {
+		switch (op) {
+			case SET_ACCOUNT_EXPIRED: return setAccountExpired();
+			case UNSET_ACCOUNT_EXPIRED: return setAccountNonExpired();
+			case SET_ACCOUNT_LOCKED: return setAccountLocked();
+			case UNSET_ACCOUNT_LOCKED: return setAccountNonLocked();
+			case SET_CREDENTIALS_EXPIRED: return setCredentialsExpired();
+			case UNSET_CREDENTIALS_EXPIRED: return setCredentialsNonExpired();
+			case SET_ACCOUNT_DISABLED: return setAccountDisabled();
+			case UNSET_ACCOUNT_DISABLED: return setAccountEnabled();
+			case SET_EMAIL_VERIFIED: return setEmailVerified();
+			case UNSET_EMAIL_VERIFIED: return setEmailNotVerified();
+		}
+		return this;
+	}
+
 	public ValueAccountStatus reset() {
 		this.value = 0;
 		return this;
