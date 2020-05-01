@@ -69,7 +69,7 @@ public class ReactiveRedisTemplateProvider extends RedisTemplateProviderBase {
 	}
 
 
-	protected final ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
+	public final ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
 		return this.connectionManager.getReactiveConnectionFactory();
 	}
 

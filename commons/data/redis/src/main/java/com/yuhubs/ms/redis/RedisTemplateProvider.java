@@ -61,7 +61,7 @@ public class RedisTemplateProvider extends RedisTemplateProviderBase {
 	}
 
 
-	protected final RedisConnectionFactory redisConnectionFactory() {
+	public final RedisConnectionFactory redisConnectionFactory() {
 		return this.connectionManager.getConnectionFactory();
 	}
 
