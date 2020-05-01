@@ -1,5 +1,7 @@
 package com.yuhubs.ms.auth.redis.reactive;
 
+import com.yuhubs.ms.auth.model.AuthUserGeneralValue;
+import com.yuhubs.ms.auth.model.AuthUserProfileValue;
 import com.yuhubs.ms.auth.redis.RedisAuthUserServiceBase;
 import com.yuhubs.ms.redis.ReactiveRedisTemplateProvider;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -10,12 +12,18 @@ import java.util.function.Supplier;
 public final class RedisAuthUserService extends RedisAuthUserServiceBase {
 
 	private final Supplier<ReactiveStringRedisTemplate> stringTemplateSupplier;
-	private final Supplier<ReactiveRedisTemplate<String, Object>> objectTemplateSupplier;
+
+	private final UserGeneralValueTemplateSupplier generalValueTemplateSupplier;
+	private final UserProfileTemplateSupplier profileTemplateSupplier;
 
 
 	public RedisAuthUserService(ReactiveRedisTemplateProvider templateProvider) {
 		this.stringTemplateSupplier = templateProvider.stringRedisTemplateSupplier();
-		this.objectTemplateSupplier = templateProvider.jdkRedisTemplateSupplier();
+
+		this.generalValueTemplateSupplier =
+				new UserGeneralValueTemplateSupplier(templateProvider.reactiveRedisConnectionFactory());
+		this.profileTemplateSupplier =
+				new UserProfileTemplateSupplier(templateProvider.reactiveRedisConnectionFactory());
 	}
 
 
@@ -23,8 +31,12 @@ public final class RedisAuthUserService extends RedisAuthUserServiceBase {
 		return this.stringTemplateSupplier.get();
 	}
 
-	private ReactiveRedisTemplate<String, Object> objectTemplate() {
-		return this.objectTemplateSupplier.get();
+	private ReactiveRedisTemplate<String, AuthUserGeneralValue> generalValueTemplate() {
+		return this.generalValueTemplateSupplier.get();
+	}
+
+	private ReactiveRedisTemplate<String, AuthUserProfileValue> profileValueTemplate() {
+		return this.profileTemplateSupplier.get();
 	}
 
 }
