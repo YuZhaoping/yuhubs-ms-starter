@@ -1,8 +1,13 @@
 package com.yuhubs.ms.auth.model;
 
+import com.yuhubs.ms.model.ValueObject;
 import com.yuhubs.ms.security.auth.AccountStatus;
 
-public class ValueAccountStatus extends AccountStatus {
+public class ValueAccountStatus extends AccountStatus
+		implements ValueObject<ValueAccountStatus> {
+
+	private static final long serialVersionUID = 1L;
+
 
 	public static final int ACCOUNT_EXPIRED = 0x01;
 	public static final int ACCOUNT_LOCKED = 0x02;
@@ -21,6 +26,12 @@ public class ValueAccountStatus extends AccountStatus {
 
 	public ValueAccountStatus(int value) {
 		this.value = value;
+	}
+
+
+	@Override
+	public boolean sameValueAs(ValueAccountStatus other) {
+		return this.value == other.value;
 	}
 
 
