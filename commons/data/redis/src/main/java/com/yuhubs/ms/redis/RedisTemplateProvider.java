@@ -61,6 +61,11 @@ public class RedisTemplateProvider extends RedisTemplateProviderBase {
 	}
 
 
+	public RedisSequenceSupplier getRedisSequenceSupplier(String seqName, long initValue) {
+		return new RedisSequenceSupplier(redisConnectionFactory(), seqName, initValue);
+	}
+
+
 	public final RedisConnectionFactory redisConnectionFactory() {
 		return this.connectionManager.getConnectionFactory();
 	}

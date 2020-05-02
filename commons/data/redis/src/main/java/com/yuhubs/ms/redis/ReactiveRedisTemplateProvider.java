@@ -45,6 +45,11 @@ public class ReactiveRedisTemplateProvider extends RedisTemplateProviderBase {
 	}
 
 
+	public RedisSequenceSupplier getRedisSequenceSupplier(String seqName, long initValue) {
+		return new RedisSequenceSupplier(this.connectionManager.getConnectionFactory(), seqName, initValue);
+	}
+
+
 	protected RedisSerializationContext<String, String> createStringSerializationContext() {
 		return RedisSerializationContext.string();
 	}
