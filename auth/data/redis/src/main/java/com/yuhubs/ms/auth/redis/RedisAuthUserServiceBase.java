@@ -2,6 +2,9 @@ package com.yuhubs.ms.auth.redis;
 
 public class RedisAuthUserServiceBase {
 
+	protected static final String USER_ID_SEQ_NAME = "auth-user:id-seq";
+	protected static final long USER_ID_SEQ_INIT_VALUE = 1000L;
+
 	private static final String USER_ID_KEY_PREFIX    = "auth-user:id:";
 	private static final String USER_NAME_KEY_PREFIX  = "auth-user:name:";
 
