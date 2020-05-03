@@ -3,6 +3,7 @@ package com.yuhubs.ms.auth.model;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class AuthUserGroupRoleSupport {
@@ -37,6 +38,7 @@ public class AuthUserGroupRoleSupport {
 	private final Stream<String> rolesStreamByGroups(String groups) {
 		return streamOfString(groups)
 				.map(this::getUserGroupRoles)
+				.filter(Objects::nonNull)
 				.flatMap(roles -> rolesStream(roles))
 				.distinct();
 	}
@@ -44,9 +46,11 @@ public class AuthUserGroupRoleSupport {
 	private final Stream<String> permissionsStreamByRoles(Stream<String> rolesStream) {
 		return rolesStream
 				.map(this::getRolePermissions)
+				.filter(Objects::nonNull)
 				.flatMap(permissions -> permissionsStream(permissions))
 				.distinct();
 	}
+
 
 	private static Stream<String> rolesStream(String roles) {
 		return streamOfString(roles);
@@ -72,7 +76,11 @@ public class AuthUserGroupRoleSupport {
 	}
 
 	public String getUserGroupRoles(String userGroup) {
-		return userGroup;
+		switch (userGroup) {
+			case "ROOT":  case "ADMIN":  case "USER":
+				return userGroup;
+		}
+		return null;
 	}
 
 	public String getRolePermissions(String role) {
