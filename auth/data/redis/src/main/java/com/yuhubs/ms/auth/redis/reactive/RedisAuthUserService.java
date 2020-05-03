@@ -70,8 +70,7 @@ public final class RedisAuthUserService
 		final String name = request.getUsername();
 		final String nameKey = userNameToKey(name);
 
-		final ReactiveStringRedisTemplate keyTemplate = stringTemplate();
-		final ReactiveValueOperations<String, String> keyOps = keyTemplate.opsForValue();
+		final ReactiveValueOperations<String, String> keyOps = stringValueOps();
 
 		final String groups = getDefaultUserGroups();
 
@@ -81,7 +80,7 @@ public final class RedisAuthUserService
 		return keyOps.setIfAbsent(nameKey, userIdKey).filter(r -> r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(name))))
 				.then(keyOps.setIfAbsent(emailKey, userIdKey)).filter(r -> r)
-				.switchIfEmpty(Mono.defer(() -> keyTemplate.delete(nameKey)
+				.switchIfEmpty(Mono.defer(() -> keyOps.delete(nameKey)
 						.then(Mono.error(emailAlreadyExistsException(email)))))
 				.then(Mono.just(generalValue))
 				.doOnNext(value -> {

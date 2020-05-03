@@ -39,12 +39,12 @@ public class RedisAuthUserServiceBase {
 
 
 	protected static UserAlreadyExistsException
-	usernameAlreadyExistsException(String username) {
+		usernameAlreadyExistsException(String username) {
 		return new UserAlreadyExistsException("The username already exists");
 	}
 
 	protected static UserAlreadyExistsException
-	emailAlreadyExistsException(String email) {
+		emailAlreadyExistsException(String email) {
 		return new UserAlreadyExistsException("The email already exists");
 	}
 
