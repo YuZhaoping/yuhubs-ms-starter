@@ -10,7 +10,7 @@ export const tokenAuthUser = function(claims) {
   return {
     id: claims.sub,
     permissions: claims.auth,
-    name:profile.name,
+    name: profile.name,
     groups: profile.groups,
     expiration: exp
   }
