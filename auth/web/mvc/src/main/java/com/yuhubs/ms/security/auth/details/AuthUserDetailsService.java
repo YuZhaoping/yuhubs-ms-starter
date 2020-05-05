@@ -1,5 +1,6 @@
 package com.yuhubs.ms.security.auth.details;
 
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +35,7 @@ public class AuthUserDetailsService implements UserDetailsService {
 		if (isNumeric(username)) {
 			user = userService.getUserById(Long.valueOf(username));
 		} else {
-			user = userService.getUserByName(username);
+			user = userService.getUserByName(AuthUsername.of(username));
 		}
 
 		if (!user.isPresent()) {

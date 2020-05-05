@@ -97,6 +97,20 @@ public final class MockUserManager {
 		return Optional.ofNullable(nameMapUsers.get(username));
 	}
 
+	public boolean deleteUser(AuthUser user) {
+		MockAuthUser mockUser = (MockAuthUser)user;
+
+		final String username = mockUser.getProfile().getName();
+		final String email = mockUser.getProfile().getEmail();
+
+		nameMapUsers.remove(email);
+		nameMapUsers.remove(username);
+
+		idMapUsers.remove(mockUser.getId());
+
+		return true;
+	}
+
 
 	public void clearUsers() {
 		idMapUsers.clear();

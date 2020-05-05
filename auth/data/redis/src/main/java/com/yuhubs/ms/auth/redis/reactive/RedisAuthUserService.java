@@ -2,6 +2,8 @@ package com.yuhubs.ms.auth.redis.reactive;
 
 import com.yuhubs.ms.auth.model.AuthUserGeneralValue;
 import com.yuhubs.ms.auth.model.AuthUserProfileValue;
+import com.yuhubs.ms.auth.model.AuthUserUpdatedValuesMark;
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.model.GenericAuthUser;
 import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.auth.redis.RedisAuthUserServiceBase;
@@ -105,8 +107,8 @@ public final class RedisAuthUserService
 	}
 
 	@Override
-	public Mono<AuthUser> getUserByName(final String username) {
-		return stringValueOps().get(username)
+	public Mono<AuthUser> getUserByName(final AuthUsername username) {
+		return stringValueOps().get(username.value())
 				.switchIfEmpty(Mono.empty())
 				.flatMap(this::getUserByIdKey);
 	}
@@ -126,6 +128,22 @@ public final class RedisAuthUserService
 		authUser.setProfile(profileValue);
 
 		return Mono.just(authUser);
+	}
+
+
+	@Override
+	public Mono<AuthUser> updateUsername(AuthUser user, AuthUsername username) {
+		return Mono.just(user);
+	}
+
+	@Override
+	public Mono<AuthUser> updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		return Mono.just(user);
+	}
+
+	@Override
+	public Mono<Boolean> deleteUser(AuthUser user) {
+		return Mono.just(false);
 	}
 
 

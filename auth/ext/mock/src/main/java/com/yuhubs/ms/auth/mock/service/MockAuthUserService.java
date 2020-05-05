@@ -1,6 +1,8 @@
 package com.yuhubs.ms.auth.mock.service;
 
 import com.yuhubs.ms.auth.mock.MockUserManager;
+import com.yuhubs.ms.auth.model.AuthUserUpdatedValuesMark;
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.SignUpRequest;
@@ -31,8 +33,23 @@ public class MockAuthUserService implements AuthUserService {
 	}
 
 	@Override
-	public Optional<AuthUser> getUserByName(String username) {
-		return this.userManager.getUserByName(username);
+	public Optional<AuthUser> getUserByName(AuthUsername username) {
+		return this.userManager.getUserByName(username.value());
+	}
+
+	@Override
+	public AuthUser updateUsername(AuthUser user, AuthUsername username) throws UsernameAlreadyExistsException {
+		return user;
+	}
+
+	@Override
+	public AuthUser updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		return user;
+	}
+
+	@Override
+	public boolean deleteUser(AuthUser user) {
+		return this.userManager.deleteUser(user);
 	}
 
 

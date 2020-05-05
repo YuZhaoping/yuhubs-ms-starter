@@ -1,5 +1,7 @@
 package com.yuhubs.ms.security.auth.service;
 
+import com.yuhubs.ms.auth.model.AuthUserUpdatedValuesMark;
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.SignUpRequest;
@@ -30,8 +32,23 @@ public final class NoOpAuthUserService implements AuthUserService {
 	}
 
 	@Override
-	public Optional<AuthUser> getUserByName(String username) {
+	public Optional<AuthUser> getUserByName(AuthUsername username) {
 		return Optional.empty();
+	}
+
+	@Override
+	public AuthUser updateUsername(AuthUser user, AuthUsername username) throws UsernameAlreadyExistsException {
+		return user;
+	}
+
+	@Override
+	public AuthUser updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		return user;
+	}
+
+	@Override
+	public boolean deleteUser(AuthUser user) {
+		return false;
 	}
 
 }

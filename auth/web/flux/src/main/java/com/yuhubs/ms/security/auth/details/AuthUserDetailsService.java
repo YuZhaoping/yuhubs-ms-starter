@@ -1,5 +1,6 @@
 package com.yuhubs.ms.security.auth.details;
 
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
@@ -32,7 +33,7 @@ public class AuthUserDetailsService implements ReactiveUserDetailsService {
 		if (isNumeric(username)) {
 			user = userService.getUserById(Long.valueOf(username));
 		} else {
-			user = userService.getUserByName(username);
+			user = userService.getUserByName(AuthUsername.of(username));
 		}
 
 		return user.switchIfEmpty(Mono.defer(() -> {

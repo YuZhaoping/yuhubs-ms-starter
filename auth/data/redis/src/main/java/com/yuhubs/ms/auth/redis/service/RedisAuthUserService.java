@@ -2,6 +2,8 @@ package com.yuhubs.ms.auth.redis.service;
 
 import com.yuhubs.ms.auth.model.AuthUserGeneralValue;
 import com.yuhubs.ms.auth.model.AuthUserProfileValue;
+import com.yuhubs.ms.auth.model.AuthUserUpdatedValuesMark;
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.model.GenericAuthUser;
 import com.yuhubs.ms.auth.redis.RedisAuthUserServiceBase;
 import com.yuhubs.ms.auth.service.AuthUserService;
@@ -104,8 +106,8 @@ public final class RedisAuthUserService
 	}
 
 	@Override
-	public Optional<AuthUser> getUserByName(String username) {
-		final String usernameKey = userNameToKey(username);
+	public Optional<AuthUser> getUserByName(AuthUsername username) {
+		final String usernameKey = userNameToKey(username.value());
 
 		final String userIdKey = stringValueOps().get(usernameKey);
 		if (userIdKey == null) {
@@ -125,6 +127,22 @@ public final class RedisAuthUserService
 		authUser.setProfile(profileValueOps().get(userIdKey));
 
 		return Optional.of(authUser);
+	}
+
+
+	@Override
+	public AuthUser updateUsername(AuthUser user, AuthUsername username) throws UsernameAlreadyExistsException {
+		return user;
+	}
+
+	@Override
+	public AuthUser updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		return user;
+	}
+
+	@Override
+	public boolean deleteUser(AuthUser user) {
+		return false;
 	}
 
 

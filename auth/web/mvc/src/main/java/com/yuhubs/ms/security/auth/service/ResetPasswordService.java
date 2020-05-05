@@ -1,5 +1,6 @@
 package com.yuhubs.ms.security.auth.service;
 
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.security.auth.AccountChecker;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
@@ -19,7 +20,7 @@ public final class ResetPasswordService extends AuthServiceBase {
 
 
 	public void emitResetPassword(ResetPasswordRequestDto dto) throws AuthenticationException {
-		Optional<AuthUser> userOp = authUserService().getUserByName(dto.getEmail());
+		Optional<AuthUser> userOp = authUserService().getUserByName(AuthUsername.ofEmail(dto.getEmail()));
 		if (!userOp.isPresent()) {
 			throw new UsernameNotFoundException("User not found by " + dto.getEmail());
 		}

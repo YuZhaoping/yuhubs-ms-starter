@@ -1,5 +1,6 @@
 package com.yuhubs.ms.security.auth.service;
 
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.security.auth.AccountChecker;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.web.dto.ConfirmPasswordDto;
@@ -20,7 +21,7 @@ public final class ResetPasswordService extends AuthServiceBase {
 
 	public Mono<Void> emitResetPassword(final ResetPasswordRequestDto dto)
 			throws AuthenticationException {
-		return authUserService().getUserByName(dto.getEmail())
+		return authUserService().getUserByName(AuthUsername.ofEmail(dto.getEmail()))
 				.switchIfEmpty(Mono.defer(() -> this.handleOnEmpty(dto)))
 				.doOnNext(user -> AccountChecker.checkAccountStatus(user.getAccountStatus()))
 				.doOnNext(user -> authEventPublisher().publishResetPasswordEvent(user, dto.getEmail()))

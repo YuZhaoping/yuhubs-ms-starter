@@ -1,6 +1,8 @@
 package com.yuhubs.ms.auth.mock.reactive;
 
 import com.yuhubs.ms.auth.mock.MockUserManager;
+import com.yuhubs.ms.auth.model.AuthUserUpdatedValuesMark;
+import com.yuhubs.ms.auth.model.AuthUsername;
 import com.yuhubs.ms.auth.reactive.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.SignUpRequest;
@@ -37,13 +39,28 @@ public class MockAuthUserService implements AuthUserService {
 	}
 
 	@Override
-	public Mono<AuthUser> getUserByName(String username) {
-		final Optional<AuthUser> userOp = this.userManager.getUserByName(username);
+	public Mono<AuthUser> getUserByName(AuthUsername username) {
+		final Optional<AuthUser> userOp = this.userManager.getUserByName(username.value());
 		if (userOp.isPresent()) {
 			return Mono.just(userOp.get());
 		} else {
 			return Mono.empty();
 		}
+	}
+
+	@Override
+	public Mono<AuthUser> updateUsername(AuthUser user, AuthUsername username) {
+		return Mono.just(user);
+	}
+
+	@Override
+	public Mono<AuthUser> updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		return Mono.just(user);
+	}
+
+	@Override
+	public Mono<Boolean> deleteUser(AuthUser user) {
+		return Mono.just(this.userManager.deleteUser(user));
 	}
 
 
