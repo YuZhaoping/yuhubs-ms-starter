@@ -39,11 +39,16 @@ public class MockAuthUserService implements AuthUserService {
 
 	@Override
 	public AuthUser updateUsername(AuthUser user, AuthUsername username) throws UsernameAlreadyExistsException {
-		return user;
+		if (username.isEmail()) {
+			return this.userManager.updateUserEmail(user, username.value());
+		} else {
+			return this.userManager.updateUserName(user, username.value());
+		}
 	}
 
 	@Override
 	public AuthUser updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		// Nothing to do.
 		return user;
 	}
 

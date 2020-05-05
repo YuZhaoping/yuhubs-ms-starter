@@ -50,11 +50,16 @@ public class MockAuthUserService implements AuthUserService {
 
 	@Override
 	public Mono<AuthUser> updateUsername(AuthUser user, AuthUsername username) {
-		return Mono.just(user);
+		if (username.isEmail()) {
+			return Mono.just(this.userManager.updateUserEmail(user, username.value()));
+		} else {
+			return Mono.just(this.userManager.updateUserName(user, username.value()));
+		}
 	}
 
 	@Override
 	public Mono<AuthUser> updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+		// Nothing to do.
 		return Mono.just(user);
 	}
 

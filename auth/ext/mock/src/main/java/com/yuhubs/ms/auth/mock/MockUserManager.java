@@ -97,6 +97,32 @@ public final class MockUserManager {
 		return Optional.ofNullable(nameMapUsers.get(username));
 	}
 
+	public AuthUser updateUserName(AuthUser user, String name) throws UsernameAlreadyExistsException {
+		MockAuthUser mockUser = (MockAuthUser)user;
+
+		if (nameMapUsers.putIfAbsent(name, mockUser) != null) {
+			throw new UsernameAlreadyExistsException("The \'" + name + "\' already exists");
+		}
+
+		nameMapUsers.remove(mockUser.getProfile().getName());
+		mockUser.getProfile().setName(name);
+
+		return mockUser;
+	}
+
+	public AuthUser updateUserEmail(AuthUser user, String email) throws UsernameAlreadyExistsException {
+		MockAuthUser mockUser = (MockAuthUser)user;
+
+		if (nameMapUsers.putIfAbsent(email, mockUser) != null) {
+			throw new UsernameAlreadyExistsException("The \'" + email + "\' already exists");
+		}
+
+		nameMapUsers.remove(mockUser.getProfile().getEmail());
+		mockUser.getProfile().setEmail(email);
+
+		return mockUser;
+	}
+
 	public boolean deleteUser(AuthUser user) {
 		MockAuthUser mockUser = (MockAuthUser)user;
 
