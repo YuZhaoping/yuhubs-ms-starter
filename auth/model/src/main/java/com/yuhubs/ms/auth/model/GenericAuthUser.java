@@ -4,7 +4,6 @@ import com.yuhubs.ms.model.Entity;
 import com.yuhubs.ms.security.GrantedRolePermission;
 import com.yuhubs.ms.security.auth.AccountStatus;
 import com.yuhubs.ms.security.auth.AuthUser;
-import com.yuhubs.ms.security.auth.AuthUserProfile;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -35,7 +34,7 @@ public class GenericAuthUser implements AuthUser, Entity<GenericAuthUser> {
 
 	protected final ValueAccountStatus accountStatus;
 
-	protected AuthUserProfile profile;
+	protected AuthUserProfileValue profile;
 
 
 	public GenericAuthUser(AuthUserGeneralValue generalValue) {
@@ -91,11 +90,11 @@ public class GenericAuthUser implements AuthUser, Entity<GenericAuthUser> {
 	}
 
 	@Override
-	public AuthUserProfile getProfile() {
+	public AuthUserProfileValue getProfile() {
 		return profile;
 	}
 
-	public void setProfile(AuthUserProfile profile) {
+	public void setProfile(AuthUserProfileValue profile) {
 		this.profile = profile;
 	}
 

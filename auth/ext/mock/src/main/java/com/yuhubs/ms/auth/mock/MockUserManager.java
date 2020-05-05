@@ -2,9 +2,9 @@ package com.yuhubs.ms.auth.mock;
 
 import com.yuhubs.ms.auth.mock.config.MockUser;
 import com.yuhubs.ms.auth.mock.config.MockUserConfigSupport;
+import com.yuhubs.ms.auth.model.AuthUserProfileValue;
 import com.yuhubs.ms.security.auth.AuthSecurityContext;
 import com.yuhubs.ms.security.auth.AuthUser;
-import com.yuhubs.ms.security.auth.AuthUserProfile;
 import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Component
-public class MockUserManager {
+public final class MockUserManager {
 
 	private final MockUserConfigSupport configSupport;
 
@@ -75,7 +75,9 @@ public class MockUserManager {
 		MockAuthUser user = new MockAuthUser(userId, configSupport.getUserPermissions(username));
 
 		user.setPasswordHash(request.getPassword());
-		user.setProfile(new AuthUserProfile(username, configSupport.getUserRole(username)));
+		user.setProfile(new AuthUserProfileValue(username));
+		user.getProfile().setGroups(configSupport.getUserRole(username));
+		user.getProfile().setEmail(email);
 
 		user.getAccountStatus().setValue(request.getStatus());
 

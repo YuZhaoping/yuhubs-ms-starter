@@ -15,9 +15,8 @@ public class AuthUserProfile implements Serializable {
 	public AuthUserProfile() {
 	}
 
-	public AuthUserProfile(String name, String groups) {
+	public AuthUserProfile(String name) {
 		this.name = name;
-		this.groups = groups;
 	}
 
 
