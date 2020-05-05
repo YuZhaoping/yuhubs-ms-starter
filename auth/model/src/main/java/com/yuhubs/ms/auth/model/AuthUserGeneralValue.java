@@ -19,6 +19,14 @@ public class AuthUserGeneralValue
 	private int status;
 
 
+	public AuthUserGeneralValue() {
+	}
+
+	public AuthUserGeneralValue(Long id) {
+		this.id = id;
+	}
+
+
 	@Override
 	public boolean sameValueAs(AuthUserGeneralValue other) {
 		return Objects.equals(this.id, other.id);
