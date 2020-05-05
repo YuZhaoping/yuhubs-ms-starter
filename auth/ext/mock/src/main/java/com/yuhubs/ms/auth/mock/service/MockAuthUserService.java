@@ -4,7 +4,7 @@ import com.yuhubs.ms.auth.mock.MockUserManager;
 import com.yuhubs.ms.auth.service.AuthUserService;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.SignUpRequest;
-import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
+import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,7 +21,7 @@ public class MockAuthUserService implements AuthUserService {
 
 
 	@Override
-	public Optional<AuthUser> signUpUser(SignUpRequest request) throws UserAlreadyExistsException {
+	public Optional<AuthUser> signUpUser(SignUpRequest request) throws UsernameAlreadyExistsException {
 		return Optional.of(this.userManager.signUpUser(request));
 	}
 

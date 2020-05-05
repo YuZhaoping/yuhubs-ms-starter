@@ -56,7 +56,7 @@ public final class RedisAuthUserService
 		return keyTemplate.hasKey(nameKey).filter(r -> !r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(name))))
 				.then(keyTemplate.hasKey(emailKey)).filter(r -> !r)
-				.switchIfEmpty(Mono.defer(() -> Mono.error(emailAlreadyExistsException(email))))
+				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(email))))
 				.then(Mono.just(Long.valueOf(userIdSequence().nextVal())))
 				.flatMap(userId -> doSignUpUser(request, userId));
 	}
@@ -81,7 +81,7 @@ public final class RedisAuthUserService
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(name))))
 				.then(keyOps.setIfAbsent(emailKey, userIdKey)).filter(r -> r)
 				.switchIfEmpty(Mono.defer(() -> keyOps.delete(nameKey)
-						.then(Mono.error(emailAlreadyExistsException(email)))))
+						.then(Mono.error(usernameAlreadyExistsException(email)))))
 				.then(Mono.just(generalValue))
 				.doOnNext(value -> {
 					value.setId(userId);

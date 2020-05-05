@@ -1,7 +1,7 @@
 package com.yuhubs.ms.auth.redis;
 
 import com.yuhubs.ms.auth.model.AuthUserGroupRoleSupport;
-import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
+import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 
 public class RedisAuthUserServiceBase {
 
@@ -38,14 +38,9 @@ public class RedisAuthUserServiceBase {
 	}
 
 
-	protected static UserAlreadyExistsException
+	protected static UsernameAlreadyExistsException
 		usernameAlreadyExistsException(String username) {
-		return new UserAlreadyExistsException("The username already exists");
-	}
-
-	protected static UserAlreadyExistsException
-		emailAlreadyExistsException(String email) {
-		return new UserAlreadyExistsException("The email already exists");
+		return new UsernameAlreadyExistsException("The \'" + username + "\' already exists");
 	}
 
 }

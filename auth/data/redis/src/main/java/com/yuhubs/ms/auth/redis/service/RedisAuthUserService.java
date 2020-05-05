@@ -10,7 +10,7 @@ import com.yuhubs.ms.redis.RedisSequenceSupplier;
 import com.yuhubs.ms.redis.RedisTemplateProvider;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.SignUpRequest;
-import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
+import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -45,7 +45,7 @@ public final class RedisAuthUserService
 
 
 	@Override
-	public Optional<AuthUser> signUpUser(SignUpRequest request) throws UserAlreadyExistsException {
+	public Optional<AuthUser> signUpUser(SignUpRequest request) throws UsernameAlreadyExistsException {
 		final String email = request.getEmail();
 		final String emailKey = userNameToKey(email);
 
@@ -59,7 +59,7 @@ public final class RedisAuthUserService
 		}
 
 		if (keyTemplate.hasKey(emailKey)) {
-			throw emailAlreadyExistsException(email);
+			throw usernameAlreadyExistsException(email);
 		}
 
 		final Long userId = Long.valueOf(userIdSequence().nextVal());
@@ -73,7 +73,7 @@ public final class RedisAuthUserService
 
 		if (!keyOps.setIfAbsent(emailKey, userIdKey)) {
 			keyTemplate.delete(nameKey);
-			throw emailAlreadyExistsException(email);
+			throw usernameAlreadyExistsException(email);
 		}
 
 		AuthUserGeneralValue generalValue = new AuthUserGeneralValue();

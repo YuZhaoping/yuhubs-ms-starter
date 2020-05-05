@@ -6,7 +6,7 @@ import com.yuhubs.ms.security.auth.AuthSecurityContext;
 import com.yuhubs.ms.security.auth.AuthUser;
 import com.yuhubs.ms.security.auth.AuthUserProfile;
 import com.yuhubs.ms.security.auth.SignUpRequest;
-import com.yuhubs.ms.security.auth.exceptions.UserAlreadyExistsException;
+import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class MockUserManager {
 	}
 
 
-	public AuthUser signUpUser(SignUpRequest request) throws UserAlreadyExistsException {
+	public AuthUser signUpUser(SignUpRequest request) throws UsernameAlreadyExistsException {
 		final String email = request.getEmail();
 		final String username = request.getUsername();
 
@@ -62,12 +62,12 @@ public class MockUserManager {
 
 		userOp = getUserByName(username);
 		if (userOp.isPresent()) {
-			throw new UserAlreadyExistsException("The username already exists");
+			throw new UsernameAlreadyExistsException("The \'" + username + "\' already exists");
 		}
 
 		userOp = getUserByName(email);
 		if (userOp.isPresent()) {
-			throw new UserAlreadyExistsException("The email already exists");
+			throw new UsernameAlreadyExistsException("The \'" + email + "\' already exists");
 		}
 
 		Long userId = userIdSeq.incrementAndGet();
