@@ -78,8 +78,7 @@ public final class RedisAuthUserService
 			throw usernameAlreadyExistsException(email);
 		}
 
-		AuthUserGeneralValue generalValue = new AuthUserGeneralValue();
-		generalValue.setId(userId);
+		final AuthUserGeneralValue generalValue = new AuthUserGeneralValue(userId);
 		generalValue.setPasswordHash(request.getPassword());
 		generalValue.setStatus(request.getStatus());
 
@@ -87,9 +86,9 @@ public final class RedisAuthUserService
 
 		generalValue.setPermissions(getPermissionsByUserGroups(groups));
 
-		AuthUserProfileValue profileValue = new AuthUserProfileValue();
-		profileValue.setName(name);
+		final AuthUserProfileValue profileValue = new AuthUserProfileValue(name);
 		profileValue.setGroups(groups);
+		profileValue.setEmail(email);
 
 		generalValueOps().set(userIdKey, generalValue);
 		profileValueOps().set(userIdKey, profileValue);
@@ -131,18 +130,79 @@ public final class RedisAuthUserService
 
 
 	@Override
-	public AuthUser updateUsername(AuthUser user, AuthUsername username) throws UsernameAlreadyExistsException {
+	public AuthUser updateUsername(AuthUser authUser, AuthUsername username) throws UsernameAlreadyExistsException {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		final String newName = username.value();
+
+		if (username.isEmail()) {
+			final String oldName = user.getProfile().getEmail();
+
+			user.getProfile().setEmail(newName);
+
+			return doUpdateUsername(user, newName, oldName);
+		} else {
+			final String oldName = user.getProfile().getName();
+
+			user.getProfile().setName(newName);
+
+			return doUpdateUsername(user, newName, oldName);
+		}
+	}
+
+	private AuthUser doUpdateUsername(GenericAuthUser user, String newName, String oldName)
+			throws UsernameAlreadyExistsException {
+		final StringRedisTemplate keyTemplate = stringTemplate();
+		final ValueOperations<String, String> keyOps = keyTemplate.opsForValue();
+
+		final String userIdKey = userIdToKey(user.getId());
+
+		if (!keyOps.setIfAbsent(userNameToKey(newName), userIdKey)) {
+			throw usernameAlreadyExistsException(newName);
+		}
+
+		keyTemplate.delete(userNameToKey(oldName));
+
+		profileValueOps().setIfPresent(userIdKey, user.getProfile());
+
 		return user;
 	}
 
 	@Override
-	public AuthUser updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
+	public AuthUser updateUser(AuthUser authUser, AuthUserUpdatedValuesMark mark) {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		final String userIdKey = userIdToKey(user.getId());
+
+		if (mark.isUserGroupsUpdated()) {
+			profileValueOps().setIfPresent(userIdKey, user.getProfile());
+
+			mark.unsetUserGroupsUpdated();
+		}
+
+		if (mark.hasUpdated()) {
+			generalValueOps().setIfPresent(userIdKey, user.generalValue());
+		}
+
 		return user;
 	}
 
+
 	@Override
-	public boolean deleteUser(AuthUser user) {
-		return false;
+	public boolean deleteUser(AuthUser authUser) {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		final StringRedisTemplate keyTemplate = stringTemplate();
+
+		keyTemplate.delete(userNameToKey(user.getProfile().getName()));
+		keyTemplate.delete(userNameToKey(user.getProfile().getEmail()));
+
+		final String userIdKey = userIdToKey(user.getId());
+
+		generalValueTemplate().delete(userIdKey);
+		profileValueTemplate().delete(userIdKey);
+
+		return true;
 	}
 
 

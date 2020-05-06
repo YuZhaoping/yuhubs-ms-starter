@@ -94,8 +94,13 @@ public class GenericAuthUser implements AuthUser, Entity<GenericAuthUser> {
 		return profile;
 	}
 
+
 	public void setProfile(AuthUserProfileValue profile) {
 		this.profile = profile;
+	}
+
+	public AuthUserGeneralValue generalValue() {
+		return this.generalValue;
 	}
 
 

@@ -76,8 +76,8 @@ public final class RedisAuthUserService
 
 		final String groups = getDefaultUserGroups();
 
-		final AuthUserGeneralValue generalValue = new AuthUserGeneralValue();
-		final AuthUserProfileValue profileValue = new AuthUserProfileValue();
+		final AuthUserGeneralValue generalValue = new AuthUserGeneralValue(userId);
+		final AuthUserProfileValue profileValue = new AuthUserProfileValue(name);
 
 		return keyOps.setIfAbsent(nameKey, userIdKey).filter(r -> r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(name))))
@@ -86,7 +86,6 @@ public final class RedisAuthUserService
 						.then(Mono.error(usernameAlreadyExistsException(email)))))
 				.then(Mono.just(generalValue))
 				.doOnNext(value -> {
-					value.setId(userId);
 					value.setPasswordHash(request.getPassword());
 					value.setPermissions(getPermissionsByUserGroups(groups));
 					value.setStatus(request.getStatus());
@@ -94,8 +93,8 @@ public final class RedisAuthUserService
 				.flatMap(value -> generalValueOps().set(userIdKey, value))
 				.then(Mono.just(profileValue))
 				.doOnNext(value -> {
-					value.setName(name);
 					value.setGroups(groups);
+					value.setEmail(email);
 				})
 				.flatMap(value -> profileValueOps().set(userIdKey,value))
 				.then(createAuthUser(generalValue, profileValue));
@@ -125,6 +124,7 @@ public final class RedisAuthUserService
 			final AuthUserProfileValue profileValue) {
 
 		final GenericAuthUser authUser = new GenericAuthUser(generalValue);
+
 		authUser.setProfile(profileValue);
 
 		return Mono.just(authUser);
@@ -132,18 +132,77 @@ public final class RedisAuthUserService
 
 
 	@Override
-	public Mono<AuthUser> updateUsername(AuthUser user, AuthUsername username) {
-		return Mono.just(user);
+	public Mono<AuthUser> updateUsername(AuthUser authUser, AuthUsername username) {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		final String newName = username.value();
+
+		if (username.isEmail()) {
+			final String oldName = user.getProfile().getEmail();
+
+			user.getProfile().setEmail(newName);
+
+			return doUpdateUsername(user, newName, oldName);
+		} else {
+			final String oldName = user.getProfile().getName();
+
+			user.getProfile().setName(newName);
+
+			return doUpdateUsername(user, newName, oldName);
+		}
+	}
+
+	private Mono<AuthUser> doUpdateUsername(GenericAuthUser user, String newName, String oldName) {
+		final String userIdKey = userIdToKey(user.getId());
+
+		final ReactiveValueOperations<String, String> keyOps = stringValueOps();
+
+		return keyOps.setIfAbsent(userNameToKey(newName), userIdKey).filter(r -> r)
+				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(newName))))
+				.then(keyOps.delete(userNameToKey(oldName)))
+				.then(profileValueOps().setIfPresent(userIdKey, user.getProfile()))
+				.thenReturn(user);
 	}
 
 	@Override
-	public Mono<AuthUser> updateUser(AuthUser user, AuthUserUpdatedValuesMark mark) {
-		return Mono.just(user);
+	public Mono<AuthUser> updateUser(AuthUser authUser, final AuthUserUpdatedValuesMark mark) {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		return tryUpdateProfileValue(user, mark)
+				.then(tryUpdateGeneralValue(user, mark))
+				.thenReturn(user);
 	}
 
+	private Mono<Boolean> tryUpdateProfileValue(GenericAuthUser user, AuthUserUpdatedValuesMark mark) {
+		if (mark.isUserGroupsUpdated()) {
+			mark.unsetUserGroupsUpdated();
+			return profileValueOps().setIfPresent(userIdToKey(user.getId()), user.getProfile());
+		} else {
+			return Mono.just(false);
+		}
+	}
+
+	private Mono<Boolean> tryUpdateGeneralValue(GenericAuthUser user, AuthUserUpdatedValuesMark mark) {
+		if (mark.hasUpdated()) {
+			return generalValueOps().setIfPresent(userIdToKey(user.getId()), user.generalValue());
+		} else {
+			return Mono.just(false);
+		}
+	}
+
+
 	@Override
-	public Mono<Boolean> deleteUser(AuthUser user) {
-		return Mono.just(false);
+	public Mono<Boolean> deleteUser(AuthUser authUser) {
+		final GenericAuthUser user = (GenericAuthUser)authUser;
+
+		final ReactiveValueOperations<String, String> keyOps = stringValueOps();
+
+		final String userIdKey = userIdToKey(user.getId());
+
+		return keyOps.delete(userNameToKey(user.getProfile().getName()))
+				.then(keyOps.delete(userNameToKey(user.getProfile().getEmail())))
+				.then(generalValueOps().delete(userIdKey))
+				.then(profileValueOps().delete(userIdKey));
 	}
 
 
