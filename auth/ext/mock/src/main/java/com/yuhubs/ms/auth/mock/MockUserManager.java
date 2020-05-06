@@ -9,10 +9,10 @@ import com.yuhubs.ms.security.auth.SignUpRequest;
 import com.yuhubs.ms.security.auth.exceptions.UsernameAlreadyExistsException;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Component
@@ -20,8 +20,8 @@ public final class MockUserManager {
 
 	private final MockUserConfigSupport configSupport;
 
-	private final Map<Long, AuthUser> idMapUsers;
 	private final Map<String, Long> nameMapIds;
+	private final Map<Long, AuthUser> idMapUsers;
 
 	private final AtomicLong userIdSeq;
 
@@ -29,8 +29,8 @@ public final class MockUserManager {
 	public MockUserManager(MockUserConfigSupport configSupport) {
 		this.configSupport = configSupport;
 
-		this.idMapUsers = new HashMap<>();
-		this.nameMapIds = new HashMap<>();
+		this.nameMapIds = new ConcurrentHashMap<>();
+		this.idMapUsers = new ConcurrentHashMap<>();
 
 		this.userIdSeq = new AtomicLong(userIdSeqStart());
 	}
@@ -58,19 +58,22 @@ public final class MockUserManager {
 		final String email = request.getEmail();
 		final String username = request.getUsername();
 
-		Optional<AuthUser> userOp;
-
-		userOp = getUserByName(username);
-		if (userOp.isPresent()) {
-			throw new UsernameAlreadyExistsException("The \'" + username + "\' already exists");
+		if (nameMapIds.get(username) != null) {
+			throw usernameAlreadyExistsException(username);
 		}
-
-		userOp = getUserByName(email);
-		if (userOp.isPresent()) {
-			throw new UsernameAlreadyExistsException("The \'" + email + "\' already exists");
+		if (nameMapIds.get(email) != null) {
+			throw usernameAlreadyExistsException(email);
 		}
 
 		Long userId = userIdSeq.incrementAndGet();
+
+		if (nameMapIds.putIfAbsent(username, userId) != null) {
+			throw usernameAlreadyExistsException(username);
+		}
+		if (nameMapIds.putIfAbsent(email, userId) != null) {
+			nameMapIds.remove(username);
+			throw usernameAlreadyExistsException(email);
+		}
 
 		MockAuthUser user = new MockAuthUser(userId, configSupport.getUserPermissions(username));
 
@@ -82,9 +85,6 @@ public final class MockUserManager {
 		user.getAccountStatus().setValue(request.getStatus());
 
 		idMapUsers.put(userId, user);
-
-		nameMapIds.put(username, userId);
-		nameMapIds.put(email, userId);
 
 		return user;
 	}
@@ -106,7 +106,7 @@ public final class MockUserManager {
 		MockAuthUser mockUser = (MockAuthUser)user;
 
 		if (nameMapIds.putIfAbsent(name, user.getId()) != null) {
-			throw new UsernameAlreadyExistsException("The \'" + name + "\' already exists");
+			throw usernameAlreadyExistsException(name);
 		}
 
 		nameMapIds.remove(mockUser.getProfile().getName());
@@ -119,7 +119,7 @@ public final class MockUserManager {
 		MockAuthUser mockUser = (MockAuthUser)user;
 
 		if (nameMapIds.putIfAbsent(email, user.getId()) != null) {
-			throw new UsernameAlreadyExistsException("The \'" + email + "\' already exists");
+			throw usernameAlreadyExistsException(email);
 		}
 
 		nameMapIds.remove(mockUser.getProfile().getEmail());
@@ -148,6 +148,10 @@ public final class MockUserManager {
 		idMapUsers.clear();
 	}
 
+
+	private static UsernameAlreadyExistsException usernameAlreadyExistsException(String name) {
+		return new UsernameAlreadyExistsException("The \'" + name + "\' already exists");
+	}
 
 	private final int userIdSeqStart() {
 		return 1000;
