@@ -21,7 +21,7 @@ public final class MockUserManager {
 	private final MockUserConfigSupport configSupport;
 
 	private final Map<Long, AuthUser> idMapUsers;
-	private final Map<String, AuthUser> nameMapUsers;
+	private final Map<String, Long> nameMapIds;
 
 	private final AtomicLong userIdSeq;
 
@@ -30,7 +30,7 @@ public final class MockUserManager {
 		this.configSupport = configSupport;
 
 		this.idMapUsers = new HashMap<>();
-		this.nameMapUsers = new HashMap<>();
+		this.nameMapIds = new HashMap<>();
 
 		this.userIdSeq = new AtomicLong(userIdSeqStart());
 	}
@@ -83,8 +83,8 @@ public final class MockUserManager {
 
 		idMapUsers.put(userId, user);
 
-		nameMapUsers.put(email, user);
-		nameMapUsers.put(username, user);
+		nameMapIds.put(username, userId);
+		nameMapIds.put(email, userId);
 
 		return user;
 	}
@@ -94,17 +94,22 @@ public final class MockUserManager {
 	}
 
 	public Optional<AuthUser> getUserByName(String username) {
-		return Optional.ofNullable(nameMapUsers.get(username));
+		final Long userId = nameMapIds.get(username);
+		if (userId != null) {
+			return Optional.ofNullable(idMapUsers.get(userId));
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	public AuthUser updateUserName(AuthUser user, String name) throws UsernameAlreadyExistsException {
 		MockAuthUser mockUser = (MockAuthUser)user;
 
-		if (nameMapUsers.putIfAbsent(name, mockUser) != null) {
+		if (nameMapIds.putIfAbsent(name, user.getId()) != null) {
 			throw new UsernameAlreadyExistsException("The \'" + name + "\' already exists");
 		}
 
-		nameMapUsers.remove(mockUser.getProfile().getName());
+		nameMapIds.remove(mockUser.getProfile().getName());
 		mockUser.getProfile().setName(name);
 
 		return mockUser;
@@ -113,11 +118,11 @@ public final class MockUserManager {
 	public AuthUser updateUserEmail(AuthUser user, String email) throws UsernameAlreadyExistsException {
 		MockAuthUser mockUser = (MockAuthUser)user;
 
-		if (nameMapUsers.putIfAbsent(email, mockUser) != null) {
+		if (nameMapIds.putIfAbsent(email, user.getId()) != null) {
 			throw new UsernameAlreadyExistsException("The \'" + email + "\' already exists");
 		}
 
-		nameMapUsers.remove(mockUser.getProfile().getEmail());
+		nameMapIds.remove(mockUser.getProfile().getEmail());
 		mockUser.getProfile().setEmail(email);
 
 		return mockUser;
@@ -129,8 +134,8 @@ public final class MockUserManager {
 		final String username = mockUser.getProfile().getName();
 		final String email = mockUser.getProfile().getEmail();
 
-		nameMapUsers.remove(email);
-		nameMapUsers.remove(username);
+		nameMapIds.remove(username);
+		nameMapIds.remove(email);
 
 		idMapUsers.remove(mockUser.getId());
 
@@ -139,8 +144,8 @@ public final class MockUserManager {
 
 
 	public void clearUsers() {
+		nameMapIds.clear();
 		idMapUsers.clear();
-		nameMapUsers.clear();
 	}
 
 
