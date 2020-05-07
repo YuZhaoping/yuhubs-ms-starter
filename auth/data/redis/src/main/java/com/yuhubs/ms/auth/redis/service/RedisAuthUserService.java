@@ -91,9 +91,9 @@ public final class RedisAuthUserService
 		profileValue.setEmail(email);
 
 		generalValueOps().set(userIdKey, generalValue);
-		profileValueOps().set(userIdKey, profileValue);
+		profileValueOps().set(userIdToProfileKey(userId), profileValue);
 
-		GenericAuthUser authUser = new GenericAuthUser(generalValue);
+		final GenericAuthUser authUser = new GenericAuthUser(generalValue);
 		authUser.setProfile(profileValue);
 
 		return Optional.of(authUser);
@@ -122,8 +122,10 @@ public final class RedisAuthUserService
 			return Optional.empty();
 		}
 
-		GenericAuthUser authUser = new GenericAuthUser(generalValue);
-		authUser.setProfile(profileValueOps().get(userIdKey));
+		final GenericAuthUser authUser = new GenericAuthUser(generalValue);
+
+		final Long userId = userIdFromKey(userIdKey);
+		authUser.setProfile(profileValueOps().get(userIdToProfileKey(userId)));
 
 		return Optional.of(authUser);
 	}
@@ -155,15 +157,13 @@ public final class RedisAuthUserService
 		final StringRedisTemplate keyTemplate = stringTemplate();
 		final ValueOperations<String, String> keyOps = keyTemplate.opsForValue();
 
-		final String userIdKey = userIdToKey(user.getId());
-
-		if (!keyOps.setIfAbsent(userNameToKey(newName), userIdKey)) {
+		if (!keyOps.setIfAbsent(userNameToKey(newName), userIdToKey(user.getId()))) {
 			throw usernameAlreadyExistsException(newName);
 		}
 
 		keyTemplate.delete(userNameToKey(oldName));
 
-		profileValueOps().setIfPresent(userIdKey, user.getProfile());
+		profileValueOps().setIfPresent(userIdToProfileKey(user.getId()), user.getProfile());
 
 		return user;
 	}
@@ -172,16 +172,14 @@ public final class RedisAuthUserService
 	public AuthUser updateUser(AuthUser authUser, AuthUserUpdatedValuesMark mark) {
 		final GenericAuthUser user = (GenericAuthUser)authUser;
 
-		final String userIdKey = userIdToKey(user.getId());
-
 		if (mark.isUserGroupsUpdated()) {
-			profileValueOps().setIfPresent(userIdKey, user.getProfile());
+			profileValueOps().setIfPresent(userIdToProfileKey(user.getId()), user.getProfile());
 
 			mark.unsetUserGroupsUpdated();
 		}
 
 		if (mark.hasUpdated()) {
-			generalValueOps().setIfPresent(userIdKey, user.generalValue());
+			generalValueOps().setIfPresent(userIdToKey(user.getId()), user.generalValue());
 		}
 
 		return user;
@@ -197,12 +195,9 @@ public final class RedisAuthUserService
 		keyTemplate.delete(userNameToKey(user.getProfile().getName()));
 		keyTemplate.delete(userNameToKey(user.getProfile().getEmail()));
 
-		final String userIdKey = userIdToKey(user.getId());
+		profileValueTemplate().delete(userIdToProfileKey(user.getId()));
 
-		generalValueTemplate().delete(userIdKey);
-		profileValueTemplate().delete(userIdKey);
-
-		return true;
+		return generalValueTemplate().delete(userIdToKey(user.getId()));
 	}
 
 

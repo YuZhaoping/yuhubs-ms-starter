@@ -47,17 +47,14 @@ public final class RedisAuthUserService
 
 	@Override
 	public Mono<AuthUser> signUpUser(final SignUpRequest request) {
-		final String email = request.getEmail();
-		final String emailKey = userNameToKey(email);
-
 		final String name = request.getUsername();
-		final String nameKey = userNameToKey(name);
+		final String email = request.getEmail();
 
 		final ReactiveStringRedisTemplate keyTemplate = stringTemplate();
 
-		return keyTemplate.hasKey(nameKey).filter(r -> !r)
+		return keyTemplate.hasKey(userNameToKey(name)).filter(r -> !r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(name))))
-				.then(keyTemplate.hasKey(emailKey)).filter(r -> !r)
+				.then(keyTemplate.hasKey(userNameToKey(email))).filter(r -> !r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(email))))
 				.then(Mono.just(Long.valueOf(userIdSequence().nextVal())))
 				.flatMap(userId -> doSignUpUser(request, userId));
@@ -96,7 +93,7 @@ public final class RedisAuthUserService
 					value.setGroups(groups);
 					value.setEmail(email);
 				})
-				.flatMap(value -> profileValueOps().set(userIdKey,value))
+				.flatMap(value -> profileValueOps().set(userIdToProfileKey(userId),value))
 				.then(createAuthUser(generalValue, profileValue));
 	}
 
@@ -107,15 +104,17 @@ public final class RedisAuthUserService
 
 	@Override
 	public Mono<AuthUser> getUserByName(final AuthUsername username) {
-		return stringValueOps().get(username.value())
-				.switchIfEmpty(Mono.empty())
+		final String usernameKey = userNameToKey(username.value());
+
+		return stringValueOps().get(usernameKey)
+				.switchIfEmpty(Mono.defer(() -> Mono.empty()))
 				.flatMap(this::getUserByIdKey);
 	}
 
 	private Mono<AuthUser> getUserByIdKey(final String userIdKey) {
 		return generalValueOps().get(userIdKey)
-				.switchIfEmpty(Mono.empty())
-				.zipWith(profileValueOps().get(userIdKey))
+				.switchIfEmpty(Mono.defer(() -> Mono.empty()))
+				.zipWith(profileValueOps().get(userIdToProfileKey(userIdFromKey(userIdKey))))
 				.flatMap(tuple -> createAuthUser(tuple.getT1(), tuple.getT2()));
 	}
 
@@ -154,13 +153,14 @@ public final class RedisAuthUserService
 
 	private Mono<AuthUser> doUpdateUsername(GenericAuthUser user, String newName, String oldName) {
 		final String userIdKey = userIdToKey(user.getId());
+		final String userIdProfileKey = userIdToProfileKey(user.getId());
 
 		final ReactiveValueOperations<String, String> keyOps = stringValueOps();
 
 		return keyOps.setIfAbsent(userNameToKey(newName), userIdKey).filter(r -> r)
 				.switchIfEmpty(Mono.defer(() -> Mono.error(usernameAlreadyExistsException(newName))))
 				.then(keyOps.delete(userNameToKey(oldName)))
-				.then(profileValueOps().setIfPresent(userIdKey, user.getProfile()))
+				.then(profileValueOps().setIfPresent(userIdProfileKey, user.getProfile()))
 				.thenReturn(user);
 	}
 
@@ -176,7 +176,7 @@ public final class RedisAuthUserService
 	private Mono<Boolean> tryUpdateProfileValue(GenericAuthUser user, AuthUserUpdatedValuesMark mark) {
 		if (mark.isUserGroupsUpdated()) {
 			mark.unsetUserGroupsUpdated();
-			return profileValueOps().setIfPresent(userIdToKey(user.getId()), user.getProfile());
+			return profileValueOps().setIfPresent(userIdToProfileKey(user.getId()), user.getProfile());
 		} else {
 			return Mono.just(false);
 		}
@@ -197,12 +197,10 @@ public final class RedisAuthUserService
 
 		final ReactiveValueOperations<String, String> keyOps = stringValueOps();
 
-		final String userIdKey = userIdToKey(user.getId());
-
 		return keyOps.delete(userNameToKey(user.getProfile().getName()))
 				.then(keyOps.delete(userNameToKey(user.getProfile().getEmail())))
-				.then(generalValueOps().delete(userIdKey))
-				.then(profileValueOps().delete(userIdKey));
+				.then(profileValueOps().delete(userIdToProfileKey(user.getId())))
+				.then(generalValueOps().delete(userIdToKey(user.getId())));
 	}
 
 
