@@ -23,6 +23,13 @@ This starter uses eCommerce store supportive app as the demonstration.
 
 ![](ms-architecture.png)
 
+### Prerequisites
+
+* [JDK 8](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
+* [Apache Maven](https://maven.apache.org/)
+* [Node JS](https://nodejs.org/en/download/)
+* [Docker](https://docs.docker.com/engine/install/)
+
 ## Authors
 
 * **Zhaoping Yu** - *Initial work* - yuzhaoping1970@gmail.com
