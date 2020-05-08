@@ -4,7 +4,7 @@ The project is as starter to build microservices-oriented architecture applicati
 * Using the best practices for building microservices project.
 * Scaling for serving up to millions of concurrent accesses.
 * Deploying from a standalone server to public cloud platform cluster.
-* High-Available for cluster components.
+* High-Available for each cluster component.
 
 This starter uses eCommerce store supportive app as the demonstration.
 
