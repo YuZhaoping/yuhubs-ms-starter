@@ -18,6 +18,10 @@ This starter uses eCommerce store supportive app as the demonstration.
 * services - Home for project services.
 * utils - Project utilities.
 
+## Architecture
+
+![](ms-architecture.png)
+
 ## Authors
 
 * **Zhaoping Yu** - *Initial work* - yuzhaoping1970@gmail.com
