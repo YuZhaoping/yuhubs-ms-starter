@@ -4,16 +4,17 @@ The project is as starter to build microservices-oriented architecture applicati
 * Using the best practices for building microservices project.
 * Scaling for serving up to millions of concurrent accesses.
 * Deploying from a standalone server to public cloud platform cluster.
+* High-Available for cluster components.
 
 This starter uses eCommerce store supportive app as the demonstration.
 
 ## Project directory structure
 
-* auth - Security supports, based on spring-security and JWT(json web token).
+* auth - Security supports, based on spring-security and JWT (json web token).
 * certs - Configure and generate the certificates for app components.
 * commons - Common libs for building RESTful-API, reactive, high-performance, spring-framework based services.
 * docker - Set up docker supporting images and containers.
-* front-end - Web front-end for app, SPA based on ReactJS, react-redux, redux-saga, Material-UI.
+* front-end - The web front-end for app, a SPA based on ReactJS, react-redux, redux-saga, Material-UI, etc.
 * k8s - (Coming soon) Set up kubernetes components and resource-objects.
 * services - Home for project services.
 * utils - Project utilities.
