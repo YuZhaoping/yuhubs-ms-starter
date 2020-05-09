@@ -26,8 +26,9 @@ This starter uses eCommerce store supportive app as the demonstration.
 ### Prerequisites
 
 * [JDK 8](https://www.oracle.com/java/technologies/javase-jdk8-downloads.html)
-* [Apache Maven](https://maven.apache.org/)
+* [Maven](https://maven.apache.org/)
 * [Node JS](https://nodejs.org/en/download/)
+* [Webpack](https://webpack.js.org/)
 * [Docker](https://docs.docker.com/engine/install/)
 
 ## Authors
