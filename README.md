@@ -10,7 +10,7 @@ This starter uses eCommerce store supportive app as the demonstration.
 
 ## Project directory structure
 
-* auth - Security supports, based on spring-security and JWT (json web token).
+* auth - WebFlux and WebMVC security supports, based on spring-security and JWT (json web token).
 * certs - Configure and generate the certificates for app components.
 * commons - Common libs for building RESTful-API, reactive, high-performance, spring-framework based services.
 * docker - Set up docker supporting images and containers.
