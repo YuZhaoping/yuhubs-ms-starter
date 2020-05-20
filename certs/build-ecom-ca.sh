@@ -12,16 +12,19 @@ export PREFIX=yuhubs
 
 
 # Build the CAs
-if [ ! -f "$OUTPUT_CA_DIR/$PREFIX-ecom.pem" ]; then
+if [ ! -f "$OUTPUT_CA_DIR/$PREFIX-ca.pem" ]; then
 
 # Build Root CA
 echo "--- Build Root CA ---"
 cfssl gencert -initca ./ca/ca-csr.json | \
 cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ca
 
+fi
 
-# Build Ecom CA (intermediate)
-echo "--- Build Ecom CA (intermediate) ---"
+if [ ! -f "$OUTPUT_CA_DIR/$PREFIX-ecom.pem" ]; then
+
+# Build ECOM CA (intermediate)
+echo "--- Build ECOM CA (intermediate) ---"
 cfssl gencert -initca ./ca/ecom-csr.json | \
 cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ecom
 
@@ -32,15 +35,15 @@ cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ecom
 
 fi
 
-# Verify the Ecom CA
-echo "--- Verify the Ecom CA ---"
+# Verify the ECOM CA
+echo "--- Verify the ECOM CA ---"
 openssl verify -CAfile $OUTPUT_CA_DIR/$PREFIX-ca.pem \
   $OUTPUT_CA_DIR/$PREFIX-ecom.pem
 
 
-# Bundle the Root & Ecom CAs
+# Bundle the Root & ECOM CAs
 if [ ! -f "$OUTPUT_DIR/$PREFIX-ecom-ca.crt" ]; then
-echo "--- Bundle the Root & Ecom CAs ---"
+echo "--- Bundle the Root & ECOM CAs ---"
 mkbundle -f $OUTPUT_DIR/$PREFIX-root-ca.crt $OUTPUT_CA_DIR/$PREFIX-ca.pem
 mkbundle -f $OUTPUT_DIR/$PREFIX-ecom-ca.crt \
   $OUTPUT_CA_DIR/$PREFIX-ca.pem $OUTPUT_CA_DIR/$PREFIX-ecom.pem
