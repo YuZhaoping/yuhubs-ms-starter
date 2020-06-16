@@ -1,0 +1,40 @@
+[Unit]
+Description=etcd - highly-available key value store
+Documentation=https://etcd.io/docs/v3.4.0/op-guide/configuration/
+Documentation=man:etcd
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+WorkingDirectory=/var/lib/etcd
+EnvironmentFile=-<etcd_etc_home>/etcd-global.env
+EnvironmentFile=-<etcd_etc_home>/etcd-node.env
+User=<k8s_run_user>
+ExecStart=<etcd_bin_home>/etcd \
+  --data-dir=${ETCD_DATA_DIR} \
+  --name="${ETCD_NAME}" \
+  --trusted-ca-file=${ETCD_PKI_HOME}/ca.crt \
+  --cert-file=${ETCD_PKI_HOME}/server.crt \
+  --key-file=${ETCD_PKI_HOME}/server.key \
+  --peer-trusted-ca-file=${ETCD_PKI_HOME}/ca.crt \
+  --peer-cert-file=${ETCD_PKI_HOME}/peer.crt \
+  --peer-key-file=${ETCD_PKI_HOME}/peer.key \
+  --client-cert-auth \
+  --peer-client-cert-auth \
+  --initial-advertise-peer-urls="${ETCD_INITIAL_ADVERTISE_PEER_URLS}" \
+  --initial-cluster-token="${ETCD_INITIAL_CLUSTER_TOKEN}" \
+  --initial-cluster="${ETCD_INITIAL_CLUSTER}" \
+  --initial-cluster-state=${ETCD_INITIAL_CLUSTER_STATE} \
+  --advertise-client-urls="${ETCD_ADVERTISE_CLIENT_URLS}" \
+  --listen-peer-urls="${ETCD_LISTEN_PEER_URLS}" \
+  --listen-client-urls="${ETCD_LISTEN_CLIENT_URLS}" \
+  --heartbeat-interval=3000 \
+  --election-timeout=30000
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+Alias=etcd2.service
