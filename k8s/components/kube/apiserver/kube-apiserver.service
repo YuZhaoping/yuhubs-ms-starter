@@ -1,0 +1,55 @@
+[Unit]
+Description=Kubernetes API Server
+Documentation=https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
+After=network.target
+After=etcd.service
+
+[Service]
+Type=notify
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-<kube_etc_home>/kube-node.env
+EnvironmentFile=-<kube_etc_home>/apiserver.env
+User=<k8s_run_user>
+ExecStart=<kube_bin_home>/kube-apiserver \
+  --bind-address=${KUBE_NODE_BIND_IP} \
+  --secure-port=${KUBE_APISERVER_SECURE_PORT} \
+  --insecure-port=0 \
+  --admission-control="${KUBE_ADMISSION_CONTROL}" \
+  --kubelet-preferred-address-types="${KUBELET_PREFERRED_ADDRESS_TYPES}" \
+  --authorization-mode=Node,RBAC \
+  --anonymous-auth=false \
+  --enable-bootstrap-token-auth=true \
+  --token-auth-file=${KUBE_ETC_HOME}/token.csv \
+  --service-cluster-ip-range="${KUBE_SERVICE_CLUSTER_IP_RANGE}" \
+  --service-node-port-range="${KUBE_SERVICE_NODE_PORT_RANGE}" \
+  --client-ca-file=${KUBE_PKI_HOME}/ca.crt \
+  --tls-cert-file=${KUBE_PKI_HOME}/apiserver.crt \
+  --tls-private-key-file=${KUBE_PKI_HOME}/apiserver.key \
+  --service-account-key-file=${KUBE_PKI_HOME}/sa.pub \
+  --requestheader-client-ca-file=${KUBE_PKI_HOME}/front-proxy-ca.crt \
+  --proxy-client-cert-file=${KUBE_PKI_HOME}/front-proxy-client.crt \
+  --proxy-client-key-file=${KUBE_PKI_HOME}/front-proxy-client.key \
+  --requestheader-username-headers=X-Remote-User \
+  --requestheader-group-headers=X-Remote-Group \
+  --requestheader-extra-headers-prefix=X-Remote-Extra- \
+  --requestheader-allowed-names=front-proxy-client \
+  --etcd-cafile=${KUBE_PKI_HOME}/etcd/ca.crt \
+  --etcd-certfile=${KUBE_PKI_HOME}/apiserver-etcd-client.crt \
+  --etcd-keyfile=${KUBE_PKI_HOME}/apiserver-etcd-client.key \
+  --etcd-servers="${KUBE_ETCD_SERVERS}" \
+  --apiserver-count=${KUBE_APISERVER_COUNT} \
+  --enable-swagger-ui=true \
+  ${KUBE_ALLOW_PRIVILEGED} \
+  ${KUBE_APISERVER_EXTRA_OPTIONS} \
+  --event-ttl=1h \
+  --audit-log-maxage=30 \
+  --audit-log-maxbackup=3 \
+  --audit-log-maxsize=100 \
+  --audit-log-path=${KUBE_LOG_DIR}/apiserver-audit.log \
+  --log-dir=${KUBE_LOG_DIR} \
+  ${KUBE_LOG_OPTIONS} ${KUBE_LOG_LEVEL}
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
