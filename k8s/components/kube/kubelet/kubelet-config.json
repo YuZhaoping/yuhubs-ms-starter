@@ -1,0 +1,38 @@
+{
+  "kind": "KubeletConfiguration",
+  "apiVersion": "kubelet.config.k8s.io/v1beta1",
+  "authentication": {
+    "anonymous": {
+      "enabled": false
+    },
+    "webhook": {
+      "cacheTTL": "2m0s",
+      "enabled": true
+    },
+    "x509": {
+      "clientCAFile": "<kube_pki_home>/ca.crt"
+    }
+  },
+  "authorization": {
+    "mode": "Webhook",
+    "webhook": {
+      "cacheAuthorizedTTL": "5m0s",
+      "cacheUnauthorizedTTL": "30s"
+    }
+  },
+  "address": "<kube_node_bind_ip>",
+  "healthzBindAddress": "<kube_node_bind_ip>",
+  "clusterDNS": ["<kube_cluster_dns_server_ips>"],
+  "clusterDomain": "<kube_cluster_domain>",
+  "hairpinMode": "promiscuous-bridge",
+  "readOnlyPort": 0,
+  "cgroupDriver": "systemd",
+  "kubeletCgroups": "/systemd/system.slice",
+  "failSwapOn": false,
+  "featureGates": {
+    "RotateKubeletClientCertificate": true,
+    "RotateKubeletServerCertificate": true
+  },
+  "serializeImagePulls": false,
+  "serverTLSBootstrap": true
+}

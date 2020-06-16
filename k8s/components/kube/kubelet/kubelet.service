@@ -1,0 +1,29 @@
+[Unit]
+Description=Kubernetes Kubelet
+Documentation=https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/
+After=docker.service
+Requires=docker.service
+
+[Service]
+WorkingDirectory=/var/lib/kubelet
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-<kube_etc_home>/kube-node.env
+EnvironmentFile=-<kube_etc_home>/kubelet.env
+User=<k8s_run_user>
+ExecStart=<kube_bin_home>/kubelet \
+  --root-dir=/var/lib/kubelet \
+  --hostname-override="${KUBE_NODE_NAME}" \
+  --cert-dir=${KUBE_PKI_HOME} \
+  --config=${KUBE_ETC_HOME}/kubelet.config.json \
+  --bootstrap-kubeconfig=${KUBE_ETC_HOME}/bootstrap-kubelet.conf \
+  --kubeconfig=${KUBE_ETC_HOME}/kubelet.conf \
+  ${KUBE_ALLOW_PRIVILEGED} \
+  ${KUBELET_EXTRA_OPTIONS} \
+  --log-dir=${KUBE_LOG_DIR} \
+  ${KUBE_LOG_OPTIONS} \
+  ${KUBE_LOG_LEVEL}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
