@@ -1,0 +1,29 @@
+[Unit]
+Description=Kubernetes Scheduler
+Documentation=https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/
+After=kube-apiserver.service
+Requires=kube-apiserver.service
+
+[Service]
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-<kube_etc_home>/kube-node.env
+EnvironmentFile=-<kube_etc_home>/scheduler.env
+User=<k8s_run_user>
+ExecStart=<kube_bin_home>/kube-scheduler \
+  --port=0 \
+  --bind-address=127.0.0.1 \
+  --master="${KUBE_APISERVER_SECURE_ADDRESS}" \
+  --leader-elect=true \
+  --cert-dir=${KUBE_PKI_HOME}/sa \
+  --tls-cert-file=${KUBE_PKI_HOME}/sa/scheduler.crt \
+  --tls-private-key-file=${KUBE_PKI_HOME}/sa/scheduler.key \
+  --client-ca-file=${KUBE_PKI_HOME}/ca.crt \
+  --requestheader-client-ca-file=${KUBE_PKI_HOME}/front-proxy-ca.crt \
+  ${KUBE_SCHEDULER_EXTRA_OPTIONS} \
+  --log-dir=${KUBE_LOG_DIR} \
+  ${KUBE_LOG_OPTIONS} ${KUBE_LOG_LEVEL}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
