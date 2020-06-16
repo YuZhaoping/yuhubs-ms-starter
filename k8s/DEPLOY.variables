@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export K8S_VAGRANT_BOX_BASENAME="Debian-K8S0"
+export K8S_VAGRANT_BOX_BASENAME="Debian-K8S"
 
 
 export K8S_INSTALL_HOME="/opt/k8s"
