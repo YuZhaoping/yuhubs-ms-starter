@@ -4,7 +4,7 @@ cd $(dirname $0)
 
 
 export OUTPUT_DIR=./deploy
-export OUTPUT_CA_DIR=$OUTPUT_DIR/ca
+export OUTPUT_CA_DIR=$OUTPUT_DIR/CA
 
 mkdir -p $OUTPUT_CA_DIR
 
@@ -16,7 +16,7 @@ if [ ! -f "$OUTPUT_CA_DIR/$PREFIX-ca.pem" ]; then
 
 # Build Root CA
 echo "--- Build Root CA ---"
-cfssl gencert -initca ./ca/ca-csr.json | \
+cfssl gencert -initca ./CA/ca-csr.json | \
 cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ca
 
 fi
@@ -25,11 +25,11 @@ if [ ! -f "$OUTPUT_CA_DIR/$PREFIX-ecom.pem" ]; then
 
 # Build ECOM CA (intermediate)
 echo "--- Build ECOM CA (intermediate) ---"
-cfssl gencert -initca ./ca/ecom-csr.json | \
+cfssl gencert -initca ./CA/ecom-csr.json | \
 cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ecom
 
 cfssl sign -ca=$OUTPUT_CA_DIR/$PREFIX-ca.pem -ca-key=$OUTPUT_CA_DIR/$PREFIX-ca-key.pem \
-  -config=./ca/ca-config.json -profile="intermediate_ca" \
+  -config=./CA/ca-config.json -profile="intermediate_ca" \
   $OUTPUT_CA_DIR/$PREFIX-ecom.csr | \
 cfssljson -bare $OUTPUT_CA_DIR/$PREFIX-ecom
 
