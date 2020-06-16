@@ -1,0 +1,40 @@
+[Unit]
+Description=Kubernetes Controller Manager
+Documentation=https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/
+After=kube-apiserver.service
+Requires=kube-apiserver.service
+
+[Service]
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-<kube_etc_home>/kube-node.env
+EnvironmentFile=-<kube_etc_home>/controller-manager.env
+User=<k8s_run_user>
+ExecStart=<kube_bin_home>/kube-controller-manager \
+  --cluster-name="${KUBE_CLUSTER_NAME}" \
+  --port=0 \
+  --bind-address=127.0.0.1 \
+  --master="${KUBE_APISERVER_SECURE_ADDRESS}" \
+  --leader-elect=true \
+  --controllers=*,bootstrapsigner,tokencleaner \
+  --allocate-node-cidrs=true \
+  --cluster-cidr="${KUBE_CLUSTER_CIDR}" \
+  --service-cluster-ip-range="${KUBE_SERVICE_CLUSTER_IP_RANGE}" \
+  --use-service-account-credentials=true \
+  --cert-dir=${KUBE_PKI_HOME}/sa \
+  --tls-cert-file=${KUBE_PKI_HOME}/sa/controller-manager.crt \
+  --tls-private-key-file=${KUBE_PKI_HOME}/sa/controller-manager.key \
+  --root-ca-file=${KUBE_PKI_HOME}/ca.crt \
+  --cluster-signing-cert-file=${KUBE_PKI_HOME}/ca.crt \
+  --cluster-signing-key-file=${KUBE_PKI_HOME}/ca.key \
+  --service-account-private-key-file=${KUBE_PKI_HOME}/sa.key \
+  --client-ca-file=${KUBE_PKI_HOME}/ca.crt \
+  --requestheader-client-ca-file=${KUBE_PKI_HOME}/front-proxy-ca.crt \
+  --kubeconfig=${KUBE_ETC_HOME}/controller-manager.conf \
+  ${KUBE_CONTROLLER_MANAGER_EXTRA_OPTIONS} \
+  --log-dir=${KUBE_LOG_DIR} \
+  ${KUBE_LOG_OPTIONS} ${KUBE_LOG_LEVEL}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
