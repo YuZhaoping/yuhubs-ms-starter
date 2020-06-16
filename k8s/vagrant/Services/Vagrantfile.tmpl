@@ -1,0 +1,67 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box_check_update = false
+
+  node_names = Array["<node_names>"]
+  node_ips = Array["<node_ips>"]
+
+  (0...node_names.length).each do |i|
+    node_name = node_names.at(i)
+
+    config.vm.define "#{node_name}" do |node|
+
+      node.vm.box = "<vagrant_box_name>"
+
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{node_name}"
+      end
+
+      node.vm.hostname = "#{node_name}"
+
+      ip = "#{node_ips.at(i)}"
+      node.vm.network "private_network", ip: ip
+
+
+      node.vm.provision "install", type: "shell",
+        path: "install.sh", args: [i]
+
+
+      node.vm.provision "startup-phase-1", type: "shell", run: "never",
+        path: "startup.sh", args: ["phase-1", i]
+
+      node.vm.provision "shutdown-phase-1", type: "shell", run: "never",
+        path: "shutdown.sh", args: ["phase-1", i]
+
+
+      node.vm.provision "startup-phase-2", type: "shell", run: "never",
+        path: "startup.sh", args: ["phase-2", i]
+
+      node.vm.provision "shutdown-phase-2", type: "shell", run: "never",
+        path: "shutdown.sh", args: ["phase-2", i]
+
+
+      node.vm.provision "startup-phase-3", type: "shell", run: "never",
+        path: "startup.sh", args: ["phase-3", i]
+
+      node.vm.provision "shutdown-phase-3", type: "shell", run: "never",
+        path: "shutdown.sh", args: ["phase-3", i]
+
+
+      node.vm.provision "startup-phase-4", type: "shell", run: "never",
+        path: "startup.sh", args: ["phase-4", i]
+
+      node.vm.provision "shutdown-phase-4", type: "shell", run: "never",
+        path: "shutdown.sh", args: ["phase-4", i]
+
+
+      node.vm.provision "startup-phase-5", type: "shell", run: "never",
+        path: "startup.sh", args: ["phase-5", i]
+
+      node.vm.provision "shutdown-phase-5", type: "shell", run: "never",
+        path: "shutdown.sh", args: ["phase-5", i]
+
+    end
+  end
+end
