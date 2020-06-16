@@ -1,0 +1,57 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "output_directory": "{{ user `build_directory` }}/VirtualBox/{{ user `name` }}",
+      "source_path": "{{ user `build_directory` }}/VirtualBox/{{ user `basename` }}/{{ user `basename` }}.ovf",
+      "checksum": "{{ user `build_directory` }}/VirtualBox/{{ user `basename` }}/SHA256SUMS",
+      "checksum_type": "sha256",
+      "headless": "{{ user `headless` }}",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/shutdown -hP now",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
+      "vm_name": "{{ user `name` }}"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "{{ user `build_directory` }}/VirtualBox/{{ user `name` }}/SHA256SUMS",
+      "type": "checksum",
+      "checksum_types": ["sha256"],
+      "keep_input_artifact": true
+    }
+  ],
+  "provisioners": [
+    {
+      "environment_vars": [
+        "HOME_DIR=/home/vagrant",
+        "http_proxy={{user `http_proxy`}}",
+        "https_proxy={{user `https_proxy`}}",
+        "no_proxy={{user `no_proxy`}}"
+      ],
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "expect_disconnect": true,
+      "scripts": [
+        "{{template_dir}}/scripts/apt-update.sh",
+        "{{template_dir}}/scripts/docker/grub-config.sh",
+        "{{template_dir}}/scripts/docker/apt-docker.sh",
+        "{{template_dir}}/scripts/docker/utils.sh",
+        "{{template_dir}}/scripts/cleanup.sh",
+        "{{template_dir}}/../_commons/minimize.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "headless": "false",
+    "http_proxy": "{{env `http_proxy`}}",
+    "https_proxy": "{{env `https_proxy`}}",
+    "no_proxy": "{{env `no_proxy`}}",
+    "build_directory": "{{env `PACKER_BUILD_DIR`}}",
+    "basename": "Debian-AMD64",
+    "name": "Debian-Docker",
+    "version": "TIMESTAMP"
+  }
+}
