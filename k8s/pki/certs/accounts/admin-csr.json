@@ -1,0 +1,17 @@
+{
+    "CN": "kubernetes-admin",
+    "hosts": [],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "OU": "DevOps",
+            "O": "system:masters",
+            "L": "Cary",
+            "ST": "NC",
+            "C": "US"
+        }
+    ]
+}
