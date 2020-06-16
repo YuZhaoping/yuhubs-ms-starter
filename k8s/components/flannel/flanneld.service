@@ -1,0 +1,29 @@
+[Unit]
+Description=Flanneld overlay address etcd agent
+Documentation=https://github.com/coreos/flannel/
+After=network.target
+After=network-online.target
+Wants=network-online.target
+After=etcd.service
+Before=docker.service
+
+[Service]
+Type=notify
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-/etc/flanneld/flanneld.env
+ExecStart=<flannel_bin_home>/flanneld \
+  -etcd-cafile=${KUBE_PKI_HOME}/etcd/ca.crt \
+  -etcd-certfile=${KUBE_PKI_HOME}/flannel/flanneld.crt \
+  -etcd-keyfile=${KUBE_PKI_HOME}/flannel/flanneld.key \
+  -etcd-endpoints="${KUBE_ETCD_SERVERS}" \
+  -etcd-prefix="${FLANNEL_ETCD_PREFIX}" \
+  -subnet-file=/var/run/flannel/subnet.env \
+  ${FLANNEL_EXTRA_OPTIONS}
+ExecStartPost=<flannel_bin_home>/mk-docker-opts.sh \
+  -k DOCKER_NETWORK_OPTIONS \
+  -d /var/run/flannel/docker
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+RequiredBy=docker.service
