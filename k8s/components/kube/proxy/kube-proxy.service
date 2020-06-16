@@ -1,0 +1,28 @@
+[Unit]
+Description=Kubernetes Kube-Proxy
+Documentation=https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/
+After=network.target
+
+[Service]
+WorkingDirectory=/var/lib/kube-proxy
+EnvironmentFile=-<kube_etc_home>/kube-global.env
+EnvironmentFile=-<kube_etc_home>/kube-node.env
+EnvironmentFile=-<kube_etc_home>/proxy.env
+User=<k8s_run_user>
+ExecStart=<kube_bin_home>/kube-proxy \
+  --hostname-override="${KUBE_NODE_NAME}" \
+  --bind-address=${KUBE_NODE_BIND_IP} \
+  --master="${KUBE_APISERVER_SECURE_ADDRESS}" \
+  --healthz-bind-address="${KUBE_NODE_BIND_IP}:10256" \
+  --metrics-bind-address="${KUBE_NODE_BIND_IP}:10249" \
+  --cluster-cidr="${KUBE_CLUSTER_CIDR}" \
+  --kubeconfig=${KUBE_ETC_HOME}/proxy.conf \
+  ${KUBE_PROXY_EXTRA_OPTIONS} \
+  --log-dir=${KUBE_LOG_DIR} \
+  ${KUBE_LOG_OPTIONS} ${KUBE_LOG_LEVEL}
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
