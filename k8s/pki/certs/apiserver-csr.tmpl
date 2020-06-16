@@ -1,0 +1,27 @@
+{
+    "CN": "kube-apiserver",
+    "hosts": [
+        "127.0.0.1",
+        "<apiserver-nodes-hostname-Host_IPs>",
+        "<apiserver-advertise_IP-other_name_IPs>",
+        "<cluster_IP>",
+        "kubernetes",
+        "kubernetes.default",
+        "kubernetes.default.svc",
+        "kubernetes.default.svc.<service_dns_subdomain>",
+        "kubernetes.default.svc.<service_dns_domain>"
+    ],
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "OU": "DevOps",
+            "O": "Yuhubs_MS_K8S",
+            "L": "Cary",
+            "ST": "NC",
+            "C": "US"
+        }
+    ]
+}
