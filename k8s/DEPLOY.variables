@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+export K8S_VAGRANT_BOX_BASENAME="Debian-K8S0"
+
+
+export K8S_INSTALL_HOME="/opt/k8s"
+
+export K8S_ETCD_BIN_HOME="$K8S_INSTALL_HOME/etcd/bin"
+export K8S_FLANNEL_BIN_HOME="$K8S_INSTALL_HOME/flannel/bin"
+export K8S_KUBE_BIN_HOME="$K8S_INSTALL_HOME/kube/bin"
+
+
+export K8S_RUN_USER="k8s"
+# Default: root
+
+export K8S_ETCD_ETC_HOME="$K8S_INSTALL_HOME/etc/etcd"
+# Default: "/etc/etcd"
+export K8S_KUBE_ETC_HOME="$K8S_INSTALL_HOME/etc/kube"
+# Default: "/etc/kubernetes"
+export K8S_KUBE_PKI_HOME="$K8S_KUBE_ETC_HOME/pki"
+# Default: "/etc/kubernetes/pki"
+
+
+### Kubernetes service nodes
+
+export K8S_SERVICE_NODE_NAMES=("K8S-Node21" "K8S-Node22" "K8S-Node23")
+export K8S_SERVICE_NODE_IPS=("192.168.88.21" "192.168.88.22" "192.168.88.23")
+
+
+export K8S_ETCD_NODE_NAMES=("${K8S_SERVICE_NODE_NAMES[@]}")
+export K8S_ETCD_NODE_IPS=("${K8S_SERVICE_NODE_IPS[@]}")
+# Use all of the service nodes ([0, 1, 2]) as etcd-node for this deployment.
+
+export K8S_FLANNEL_ETCD_PREFIX="/k8s/network"
+export K8S_FLANNEL_INTER_HOST_IFACE="eth1"
+
+
+export K8S_KUBE_NODE_NAMES=("${K8S_SERVICE_NODE_NAMES[@]}")
+export K8S_KUBE_NODE_IPS=("${K8S_SERVICE_NODE_IPS[@]}")
+
+export K8S_APISERVER_NODE_NAMES=("${K8S_KUBE_NODE_NAMES[@]:0:2}")
+export K8S_APISERVER_NODE_IPS=("${K8S_KUBE_NODE_IPS[@]:0:2}")
+# Use the [0, 1] nodes as kube-apiserver-node for this deployment.
+
+export K8S_KUBELET_NODE_NAMES=("${K8S_KUBE_NODE_NAMES[@]:1}")
+export K8S_KUBELET_NODE_IPS=("${K8S_KUBE_NODE_IPS[@]:1}")
+# Use the [1, 2] nodes as kubelet-node for this deployment.
+
+
+export K8S_APISERVER_BIND_PORT=6443
+
+export K8S_APISERVER_VIRTUAL_IP="192.168.88.20"
+export K8S_APISERVER_VIRTUAL_PORT=8443
+
+
+export K8S_POD_NETWORK_CIDR="172.30.0.0/16"
+# alias: K8S_CLUSTER_CIDR
+
+export K8S_SERVICE_CIDR="10.96.0.0/12"
+# alias: K8S_SERVICE_CLUSTER_IP_RANGE
+
+export K8S_APISERVER_CLUSTER_IP="10.96.0.1"
+
+export K8S_CLUSTER_DNS_SERVER_IPS=("10.96.0.2")
+export K8S_SERVICE_DNS_DOMAIN="cluster.local"
+
+export K8S_CLUSTER_NAME="default-cluster"
+
+export K8S_SERVICE_NODE_PORT_RANGE="8400-9000"
+
+
+### Kubernetes ingress nodes
+
+export K8S_INGRESS_NODE_NAMES=("K8S-Node11" "K8S-Node12")
+export K8S_INGRESS_NODE_IPS=("192.168.88.11" "192.168.88.12")
+
+export K8S_INGRESS_VIRTUAL_IP="192.168.88.10"
