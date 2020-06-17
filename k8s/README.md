@@ -82,5 +82,5 @@ Deploy the vagrant files:
 ./vagrant/deploy-all.sh
 ```
 
-NOTE:
+### NOTE:
 All of the built and deployed results are putting in the ./build directory.
