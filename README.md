@@ -15,7 +15,7 @@ This starter uses eCommerce store supportive app as the demonstration.
 * commons - Common libs for building RESTful-API, reactive, high-performance, spring-framework based services.
 * docker - Set up docker supporting images and containers.
 * front-end - The web front-end for app, a SPA based on ReactJS, react-redux, redux-saga, Material-UI, etc.
-* k8s - (Coming soon) Set up kubernetes components and resource-objects.
+* k8s - Set up a distributed Kubernetes cluster for deployment.
 * services - Home for project services.
 * utils - Project utilities.
 

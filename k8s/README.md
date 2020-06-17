@@ -39,7 +39,7 @@ TODO
 
 ### Set up
 
-Edit the DEPLOY.variables file to adjust the deployment if any.
+First, edit the DEPLOY.variables file to adjust the deployment if any.
 
 Build and deploy required PKI certificates:
 
@@ -80,6 +80,7 @@ Then, add the VirtualBox image as vagrant box (if haven't added):
 Deploy the vagrant files:
 ```
 ./vagrant/deploy-all.sh
+```
 
-
+NOTE:
 All of the built and deployed results are putting in the ./build directory.
