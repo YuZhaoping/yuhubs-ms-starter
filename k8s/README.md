@@ -27,11 +27,11 @@ Using Packer and Vagrant to build and manage VirtualBox vagrant boxes for local 
 
 ## Architecture
 
-TODO
+![](DEPLOYMENT-VIEW.png)
 
 ## Usage
 
-### Prerequisites
+### Prerequisites (Optional)
 
 * [HashiCorp Packer](https://www.packer.io/downloads/)
 * [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads)
@@ -39,7 +39,7 @@ TODO
 
 ### Set up
 
-First, edit the DEPLOY.variables file to adjust the deployment if any.
+First, edit the DEPLOY.variables file to adjust the deployment options, if any.
 
 Build and deploy required PKI certificates:
 
