@@ -3,7 +3,7 @@
 cd $(dirname $0) && cd ../
 
 
-export YUHUBS_MS_HTML_LOCATION=`../../front-end/bin/export-html-location.sh`
+export YUHUBS_MS_HTML_LOCATION=`../../front-end/cmd/export-html-location.sh`
 echo ""
 echo "export YUHUBS_MS_HTML_LOCATION=\"${YUHUBS_MS_HTML_LOCATION}\""
 echo ""
