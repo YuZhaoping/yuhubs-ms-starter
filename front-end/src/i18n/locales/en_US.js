@@ -28,6 +28,8 @@ const en_US = {
   "Dashboard": "Dashboard",
   "Index": "Index",
 
+  "appsmenu.tooltip": "Ecom apps",
+
   "Apps": "Apps",
   "Catalog": "Catalog",
   "Categories": "Categories",

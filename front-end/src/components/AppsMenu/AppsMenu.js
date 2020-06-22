@@ -113,7 +113,8 @@ const AppsMenu = (props) => {
   return (
     <React.Fragment>
 
-      <Tooltip title="Apps" placement="left-end">
+      <Tooltip title={ intl.formatMessage({id: "appsmenu.tooltip"}) }
+        placement="left-end">
         <IconButton onClick={ toggleMenu }>
           <AppsIcon />
         </IconButton>
