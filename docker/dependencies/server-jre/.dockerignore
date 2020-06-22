@@ -1,4 +1,4 @@
 Dockerfile
 .dockerignore
 .directory
-docker-bin/
+docker-cmd/
