@@ -9,7 +9,7 @@ mvn -N install
 ./utils/build-all.sh
 ./auth/build-all.sh
 
-./services/auth-server/bin/build.sh
-./services/catalog/bin/build.sh
+./services/auth-server/cmd/build.sh
+./services/catalog/cmd/build.sh
 
-./front-end/bin/build.sh
+./front-end/cmd/build.sh
