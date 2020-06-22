@@ -14,6 +14,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import AppsIcon from '@material-ui/icons/Apps';
 
@@ -112,9 +113,11 @@ const AppsMenu = (props) => {
   return (
     <React.Fragment>
 
-      <IconButton onClick={ toggleMenu }>
-        <AppsIcon />
-      </IconButton>
+      <Tooltip title="Apps" placement="left-end">
+        <IconButton onClick={ toggleMenu }>
+          <AppsIcon />
+        </IconButton>
+      </Tooltip>
 
       <StyledMenu
         id="apps-menu"
