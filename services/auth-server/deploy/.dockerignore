@@ -1,5 +1,5 @@
 Dockerfile
 .dockerignore
 .directory
-docker-bin/
+docker-cmd/
 build/dev/
