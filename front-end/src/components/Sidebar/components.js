@@ -38,7 +38,7 @@ export const ItemHeader = styled(Typography)(({
   theme
 }) => ({
   display: 'block',
-  color: theme.palette.common.white,
+  color: theme.sidebar.color,
   padding: theme.spacing(2, 4, 1, 4),
   opacity: 0.9
 }));
@@ -53,7 +53,7 @@ const Item = styled(ListItem)(({
   paddingBottom: `${theme.spacing(3)}px`,
 
   '& svg': {
-    color: theme.palette.common.white,
+    color: theme.sidebar.color,
     fontSize: '20px',
     width: '20px',
     height: '20px'
@@ -67,7 +67,7 @@ const Item = styled(ListItem)(({
     backgroundColor: darken(0.05, theme.sidebar.background),
 
     '& span': {
-      color: theme.palette.grey["100"]
+      color: darken(0.05, theme.sidebar.color)
     }
   }
 }));
@@ -79,7 +79,7 @@ const ItemText = styled(ListItemText)(({
   padding: 0,
 
   '& span': {
-    color: theme.palette.common.white,
+    color: theme.sidebar.color,
     fontSize: '14px',
     padding: '0 16px'
   }
@@ -89,13 +89,13 @@ const ItemText = styled(ListItemText)(({
 const IconLess = styled(ExpandLess)(({
   theme
 }) => ({
-  color: rgba(theme.palette.common.white, 0.5)
+  color: rgba(theme.sidebar.color, 0.5)
 }));
 
 const IconMore = styled(ExpandMore)(({
   theme
 }) => ({
-  color: rgba(theme.palette.common.white, 0.5)
+  color: rgba(theme.sidebar.color, 0.5)
 }));
 
 
@@ -108,7 +108,7 @@ const createSubItem = level => styled(ListItem)(({
   paddingBottom: `${theme.spacing(2)}px`,
 
   '& svg': {
-    color: theme.palette.common.white,
+    color: theme.sidebar.color,
     fontSize: '16px',
     width: '16px',
     height: '16px'
@@ -122,7 +122,7 @@ const createSubItem = level => styled(ListItem)(({
     backgroundColor: darken(0.06, theme.sidebar.background),
 
     '& span': {
-      color: theme.palette.grey["100"]
+      color: darken(0.06, theme.sidebar.color)
     }
   }
 }));
@@ -134,7 +134,7 @@ const SubItemText = styled(ListItemText)(({
   marginBottom: 0,
 
   '& span': {
-    color: theme.palette.common.white,
+    color: theme.sidebar.color,
     fontSize: '14px',
     padding: '0 12px'
   }

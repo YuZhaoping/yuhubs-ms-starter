@@ -21,7 +21,8 @@ const variants = [
       }
     },
     sidebar: {
-      background: blue[700]
+      background: grey[50],
+      color: grey[700]
     },
     menubar: {
       background: grey[200],
