@@ -141,8 +141,18 @@ const SubItemText = styled(ListItemText)(({
 }));
 
 
+const StyledLink = styled(RouterNavLink)(({
+  theme
+}) => ({
+  textDecoration: 'none',
+
+  '&:focus, &:hover, &:visited, &:link, &:active': {
+    textDecoration: 'none'
+  }
+}));
+
 const NavLink = React.forwardRef((props, ref) => (
-  <RouterNavLink innerRef={ref} {...props} />
+  <StyledLink innerRef={ref} {...props} />
 ));
 
 
