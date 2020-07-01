@@ -1,5 +1,5 @@
 const en_US = {
-  "app.name": "E-com assistant",
+  "app.name": "E-com Assistant",
 
   "auth.signin.title": "Sign in",
   "auth.prompt.forgot-password": "Forgot password?",
