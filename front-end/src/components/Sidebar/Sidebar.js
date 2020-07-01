@@ -28,7 +28,9 @@ import {
 } from './components';
 
 
-const brandBarHeight = 48;
+import sizes from 'Components/sizes';
+
+const brandBarHeight = sizes.headerToolbarHeight;
 
 
 const BrandBar = styled(BrandBarBase)(({
