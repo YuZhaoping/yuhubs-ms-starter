@@ -7,13 +7,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {
   AppBar,
   Toolbar,
-  SidebarButton,
   BrandBar,
   GrowSpace,
   PlaceHold
 } from './components';
 
 import AppsMenu from 'Components/AppsMenu';
+import SidebarButton from 'Components/SidebarButton';
 import LanguageSwitcher from 'Components/LanguageSwitcher';
 import AccountMenu from 'Components/AccountMenu';
 
@@ -22,12 +22,8 @@ const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
   <Toolbar>
 
     <SidebarButton
-      onClick={ onDrawerToggle }
-      color="inherit"
-      aria-label="Open drawer"
-    >
-      <MenuIcon />
-    </SidebarButton>
+      onDrawerToggle={ onDrawerToggle }
+    />
 
     <GrowSpace />
 

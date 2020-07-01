@@ -9,7 +9,6 @@ const toolbarHeight = sizes.headerToolbarHeight;
 import styled from '@material-ui/core/styles/styled';
 
 import MuiAppBar from '@material-ui/core/AppBar';
-import MuiIconButton from '@material-ui/core/IconButton';
 
 
 import BrandBarBase from 'Components/BrandBar';
@@ -31,13 +30,6 @@ export const Toolbar = styled('div')({
 
   height: `${toolbarHeight}px`
 });
-
-
-export const SidebarButton = styled(MuiIconButton)(({
-  theme
-}) => ({
-  padding: theme.spacing(2)
-}));
 
 
 export const BrandBar = styled(BrandBarBase)(({
