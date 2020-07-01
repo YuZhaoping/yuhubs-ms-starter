@@ -20,29 +20,35 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const BrandIcon= styled('div')({
+const BrandIcon= styled('div')(({
+  theme
+}) => ({
+  padding: theme.spacing(0, 0, 0, 2),
   textAlign: 'center',
   '& img': {
     width: 24,
     height: 24
   }
-});
+}));
 
 const BrandName = styled('div')(({
   theme
 }) => ({
   whiteSpace: 'nowrap',
-  padding: theme.spacing(1, 4)
+  padding: theme.spacing(1, 4, 1, 2)
 }));
 
 
 const BrandBar = (props) => {
-  const { className } = props;
+  const { className, menuComponent, ...rest } = props;
 
   const classes = useStyles();
 
+  const C = menuComponent;
+
   return (
     <div className={ clsx(classes.root, className) } >
+      { C && <C {...rest} /> }
       <BrandIcon>
         <img src={ require("Assets/img/logo.png") } />
       </BrandIcon>

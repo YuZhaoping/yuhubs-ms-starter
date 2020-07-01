@@ -15,6 +15,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 
 
 import BrandBarBase from 'Components/BrandBar';
+import SidebarButton from 'Components/SidebarButton';
 
 import { wholeRoutes as items } from 'Routes/index';
 
@@ -33,7 +34,7 @@ const brandBarHeight = 48;
 const BrandBar = styled(BrandBarBase)(({
   theme
 }) => ({
-  padding: theme.spacing(3, 2, 2, 6),
+  padding: theme.spacing(3, 2, 2, 0),
 
   backgroundColor: theme.palette.primary.dark,
   color: theme.palette.primary.contrastText,
@@ -62,6 +63,7 @@ const Sidebar = (props) => {
     dispatch,
     currentApp,
     switchApp,
+    onClose,
     ...rest
   } = props;
 
@@ -87,8 +89,11 @@ const Sidebar = (props) => {
 
 
   return (
-    <Drawer {...rest} >
-      <BrandBar />
+    <Drawer onClose={ onClose } {...rest} >
+      <BrandBar
+        menuComponent={ SidebarButton }
+        onDrawerToggle={ onClose }
+      />
 
       <Scrollbar>
         <MenuList disablePadding>

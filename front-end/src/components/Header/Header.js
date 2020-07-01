@@ -1,9 +1,6 @@
 import React from 'react';
 
 
-import MenuIcon from '@material-ui/icons/Menu';
-
-
 import {
   AppBar,
   Toolbar,
@@ -18,12 +15,14 @@ import LanguageSwitcher from 'Components/LanguageSwitcher';
 import AccountMenu from 'Components/AccountMenu';
 
 
-const AuthedToolbar = ({ onDrawerToggle, authUser }) => (
+const AuthedToolbar = ({ sidebarOpen, onDrawerToggle, authUser }) => (
   <Toolbar>
 
-    <SidebarButton
-      onDrawerToggle={ onDrawerToggle }
-    />
+    { !sidebarOpen &&
+      <SidebarButton
+        onDrawerToggle={ onDrawerToggle }
+      />
+    }
 
     <GrowSpace />
 
@@ -54,11 +53,11 @@ const UnauthedToolbar = () => (
 );
 
 
-const Header = ({ onDrawerToggle, authUser }) => (
+const Header = ({ sidebarOpen, onDrawerToggle, authUser }) => (
   <AppBar position="sticky" elevation={0}>
 
     { authUser
-      ? AuthedToolbar({ onDrawerToggle, authUser })
+      ? AuthedToolbar({ sidebarOpen, onDrawerToggle, authUser })
       : UnauthedToolbar()
     }
 
