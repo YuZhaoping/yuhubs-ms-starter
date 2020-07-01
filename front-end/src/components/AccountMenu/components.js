@@ -6,6 +6,7 @@ import styled from '@material-ui/core/styles/styled';
 
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
+import Avatar from '@material-ui/core/Avatar';
 
 
 import { darken } from 'polished';
@@ -18,7 +19,7 @@ export const MenuToggle = styled('div')(({
   alignItems: 'center',
 
   margin: theme.spacing(0, 2),
-  padding: theme.spacing(1, 2),
+  padding: theme.spacing(0.75, 2),
 
   borderStyle: 'solid',
   borderColor: theme.palette.primary.main,
@@ -30,6 +31,18 @@ export const MenuToggle = styled('div')(({
   '&:hover': {
     backgroundColor: darken(0.025, theme.palette.grey["100"])
   }
+}));
+
+
+export const AvatarWrapper = styled(Avatar)(({
+  theme
+}) => ({
+  backgroundColor: 'inherit',
+  color: theme.palette.primary.main,
+  marginLeft: theme.spacing(1),
+
+  width: '22px',
+  height: '22px'
 }));
 
 

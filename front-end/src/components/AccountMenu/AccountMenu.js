@@ -10,10 +10,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 import {
   MenuToggle,
+  AvatarWrapper,
   Username,
   ArrowDropDownWrapper,
   Menu,
@@ -74,6 +76,9 @@ const AccountMenu = props => {
     <React.Fragment>
 
       <MenuToggle onClick={ toggleMenu }>
+        <AvatarWrapper>
+          <AccountCircleIcon />
+        </AvatarWrapper>
         <Username>
           { username }
         </Username>
