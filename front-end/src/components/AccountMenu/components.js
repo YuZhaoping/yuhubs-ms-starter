@@ -14,12 +14,17 @@ import { darken } from 'polished';
 export const MenuToggle = styled('div')(({
   theme
 }) => ({
-  display: 'inline-flex',
-  verticalAlign: 'middle',
+  display: 'flex',
+  alignItems: 'center',
 
-  margin: theme.spacing(0, 2, 0, 1),
+  margin: theme.spacing(0, 2),
   padding: theme.spacing(1, 2),
+
+  borderStyle: 'solid',
+  borderColor: theme.palette.primary.main,
+  borderWidth: '1px',
   borderRadius: '2px',
+
   cursor: 'pointer',
 
   '&:hover': {
@@ -28,15 +33,21 @@ export const MenuToggle = styled('div')(({
 }));
 
 
-export const Username = styled('span')({
+export const Username = styled('span')(({
+  theme
+}) => ({
+  color: theme.palette.primary.main,
+  marginLeft: theme.spacing(2),
+
   whiteSpace: 'nowrap',
   height: '24px'
-});
+}));
 
 
 export const ArrowDropDownWrapper = styled('span')(({
   theme
 }) => ({
+  color: theme.palette.primary.main,
   marginLeft: theme.spacing(2),
 
   '& svg': {
