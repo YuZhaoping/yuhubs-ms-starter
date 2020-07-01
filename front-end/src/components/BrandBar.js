@@ -42,7 +42,7 @@ const BrandBar = (props) => {
   const classes = useStyles();
 
   return (
-    <div className={clsx(classes.root, className)} >
+    <div className={ clsx(classes.root, className) } >
       <BrandIcon>
         <img src={ require("Assets/img/logo.png") } />
       </BrandIcon>
