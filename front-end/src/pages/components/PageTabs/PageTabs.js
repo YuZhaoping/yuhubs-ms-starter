@@ -27,7 +27,7 @@ const Tabs = withStyles(theme => ({
     backgroundColor: 'transparent',
 
     '& > div': {
-      backgroundColor: theme.palette.common.white,
+      backgroundColor: theme.menubar.color,
       maxWidth: theme.spacing(12),
       width: '100%'
     }
@@ -49,7 +49,7 @@ const Tab = withStyles(theme => ({
     fontWeight: theme.typography.fontWeightRegular,
 
     '&:hover': {
-      color: theme.palette.common.white,
+      color: theme.menubar.color,
       opacity: 1
     },
 

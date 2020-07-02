@@ -14,8 +14,8 @@ const useStyles = makeStyles(theme => ({
   },
 
   pageHeader: {
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.common.white,
+    backgroundColor: theme.menubar.background,
+    color: theme.menubar.color,
     padding: theme.spacing(0, 2)
   },
 

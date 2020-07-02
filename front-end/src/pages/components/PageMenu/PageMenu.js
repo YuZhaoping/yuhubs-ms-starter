@@ -23,7 +23,7 @@ const IconButton = styled(MuiIconButton)(({
   theme
 }) => ({
   padding: theme.spacing(2, 2),
-  color: theme.palette.common.white,
+  color: theme.menubar.color,
 
   '& svg': {
     fontSize: '16px',

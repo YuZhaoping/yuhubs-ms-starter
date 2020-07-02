@@ -20,7 +20,7 @@ const variants = [
     },
     menubar: {
       background: grey[200],
-      dark: grey[500]
+      color: grey[700]
     },
     body: {
       background: grey[100]
