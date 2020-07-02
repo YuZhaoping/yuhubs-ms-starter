@@ -99,13 +99,16 @@ const PageMenu = (props) => {
         {menus.map((item, index) => (
           <StyledMenuItem
             key={ index }
-            onClick={() => {
+            onClick={ (event) => {
               closeMenu();
-            }}
-            component={ Link }
+              item.handleClick && item.handleClick(event);
+            } }
+            component={ item.path ? Link : 'li' }
             to={ item.path }
           >
-            <ListItemIcon>{ item.icon }</ListItemIcon>
+            <ListItemIcon>
+              { item.icon }
+            </ListItemIcon>
             <ListItemText primary={ item.name } />
           </StyledMenuItem>
         ))}
