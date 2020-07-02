@@ -14,7 +14,7 @@ const Wrapper = styled('div')(({
   theme
 }) => ({
   padding: `${theme.spacing(1) / 4}px ${theme.spacing(4)}px`,
-  background: theme.palette.common.white
+  background: theme.footer.background
 }));
 
 
@@ -40,7 +40,7 @@ const ListItem = styled(MuiListItem)(({
 const ListItemText = styled(MuiListItemText)(({
   theme
 }) => ({
-  color: theme.menubar.dark
+  color: theme.footer.color
 }));
 
 

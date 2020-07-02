@@ -18,8 +18,8 @@ export const AppBar = styled(MuiAppBar)(({
   theme
 }) => ({
   top: 0,
-  background: theme.palette.common.white,
-  color: theme.menubar.dark
+  background: theme.header.background,
+  color: theme.header.color
 }));
 
 

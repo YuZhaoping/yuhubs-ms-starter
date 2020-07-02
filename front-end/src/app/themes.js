@@ -6,6 +6,14 @@ import grey from '@material-ui/core/colors/grey';
 const variants = [
   {
     name: "Default",
+    header: {
+      background: grey[50],
+      color: grey[500]
+    },
+    footer: {
+      background: grey[50],
+      color: grey[500]
+    },
     sidebar: {
       background: grey[50],
       color: grey[700]
@@ -31,6 +39,12 @@ const theme = variant => {
         }
       },
       shadows: Array(25).fill("none"),
+      header: {
+        ...variant.header
+      },
+      footer: {
+        ...variant.footer
+      },
       sidebar: {
         ...variant.sidebar
       },
