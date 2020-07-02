@@ -4,7 +4,7 @@ import React from 'react';
 import PagesLayout from 'Pages/PagesLayout';
 
 import tabs from './tabs';
-import menus from './routes';
+import menus from './menus';
 
 
 const title = 'Inventory';
