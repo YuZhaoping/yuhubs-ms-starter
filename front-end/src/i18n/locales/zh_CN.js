@@ -43,7 +43,10 @@ const zh_CN = {
   "Sale": "销售",
   "Accounts": "账户",
   "Supply": "供应",
-  "Suppliers": "供应商"
+  "Suppliers": "供应商",
+
+  "Extra-Page1": "扩展页面1",
+  "Extra-Page2": "扩展页面2"
 };
 
 

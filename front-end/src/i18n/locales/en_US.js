@@ -43,7 +43,10 @@ const en_US = {
   "Sale": "Sale",
   "Accounts": "Accounts",
   "Supply": "Supply",
-  "Suppliers": "Suppliers"
+  "Suppliers": "Suppliers",
+
+  "Extra-Page1": "Extra Page1",
+  "Extra-Page2": "Extra Page2"
 };
 
 

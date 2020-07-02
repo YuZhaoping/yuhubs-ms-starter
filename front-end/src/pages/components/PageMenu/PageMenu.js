@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 
+import { useIntl } from 'react-intl';
+
+
 import withStyles from '@material-ui/styles/withStyles';
 import styled from '@material-ui/core/styles/styled';
 
@@ -69,6 +72,8 @@ const Link = React.forwardRef((props, ref) => (
 const PageMenu = (props) => {
   const { menus } = props;
 
+  const intl = useIntl();
+
 
   const [anchorMenu, setAnchorMenu] = useState(null);
 
@@ -109,7 +114,9 @@ const PageMenu = (props) => {
             <ListItemIcon>
               { item.icon }
             </ListItemIcon>
-            <ListItemText primary={ item.name } />
+            <ListItemText
+              primary={ intl.formatMessage({id: item.name}) }
+            />
           </StyledMenuItem>
         ))}
       </StyledMenu>
