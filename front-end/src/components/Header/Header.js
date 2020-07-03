@@ -15,10 +15,10 @@ import LanguageSwitcher from 'Components/LanguageSwitcher';
 import AccountMenu from 'Components/AccountMenu';
 
 
-const AuthedToolbar = ({ sidebarOpen, onSidebarToggle, authUser }) => (
+const AuthedToolbar = ({ sidebarOpened, onSidebarToggle, authUser }) => (
   <Toolbar>
 
-    { !sidebarOpen &&
+    { !sidebarOpened &&
       <SidebarButton
         onSidebarToggle={ onSidebarToggle }
       />
@@ -53,11 +53,11 @@ const UnauthedToolbar = () => (
 );
 
 
-const Header = ({ sidebarOpen, onSidebarToggle, authUser }) => (
+const Header = ({ sidebarOpened, onSidebarToggle, authUser }) => (
   <AppBar position="sticky" elevation={0}>
 
     { authUser
-      ? AuthedToolbar({ sidebarOpen, onSidebarToggle, authUser })
+      ? AuthedToolbar({ sidebarOpened, onSidebarToggle, authUser })
       : UnauthedToolbar()
     }
 

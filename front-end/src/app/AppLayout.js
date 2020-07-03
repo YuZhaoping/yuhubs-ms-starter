@@ -34,22 +34,22 @@ const AppLayout = (props) => {
   const { authUser } = props;
 
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpened, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    setSidebarOpen(!sidebarOpened);
   }
 
 
   return (
     <React.Fragment>
 
-      { sidebarOpen &&
+      { sidebarOpened &&
       <SidebarWrapper>
         <Sidebar
           PaperProps={{ style: { width: sidebarWidth } }}
           variant="permanent"
-          open={ sidebarOpen }
+          open={ sidebarOpened }
           onClose={ toggleSidebar }
         />
       </SidebarWrapper> }
@@ -57,7 +57,7 @@ const AppLayout = (props) => {
       <AppContent>
 
         <Header
-          sidebarOpen={ sidebarOpen }
+          sidebarOpened={ sidebarOpened }
           onSidebarToggle={ toggleSidebar }
           authUser={ authUser }
         />
