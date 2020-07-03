@@ -94,7 +94,7 @@ const Sidebar = (props) => {
     <Drawer onClose={ onClose } {...rest} >
       <BrandBar
         menuComponent={ SidebarButton }
-        onDrawerToggle={ onClose }
+        onSidebarToggle={ onClose }
       />
 
       <Scrollbar>

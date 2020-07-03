@@ -15,9 +15,9 @@ const IconButton = styled(MuiIconButton)(({
 }));
 
 
-const SidebarButton = ({ onDrawerToggle }) => (
+const SidebarButton = ({ onSidebarToggle }) => (
   <IconButton
-    onClick={ onDrawerToggle }
+    onClick={ onSidebarToggle }
     color="inherit"
     aria-label="Open drawer"
   >

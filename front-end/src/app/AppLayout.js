@@ -58,7 +58,7 @@ const AppLayout = (props) => {
 
         <Header
           sidebarOpen={ sidebarOpen }
-          onDrawerToggle={ toggleSidebar }
+          onSidebarToggle={ toggleSidebar }
           authUser={ authUser }
         />
 
