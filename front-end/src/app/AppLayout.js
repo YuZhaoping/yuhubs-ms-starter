@@ -7,14 +7,14 @@ import styled from '@material-ui/core/styles/styled';
 
 import sizes from 'Components/sizes';
 
-const drawerWidth = sizes.appSidebarWidth;
+const sidebarWidth = sizes.appSidebarWidth;
 
 
 const SidebarWrapper = styled('div')(({
   theme
 }) => ({
   [theme.breakpoints.up("md")]: {
-    width: `${drawerWidth}px`,
+    width: `${sidebarWidth}px`,
     flexShrink: 0
   }
 }));
@@ -47,7 +47,7 @@ const AppLayout = (props) => {
       { sidebarOpen &&
       <SidebarWrapper>
         <Sidebar
-          PaperProps={{ style: { width: drawerWidth } }}
+          PaperProps={{ style: { width: sidebarWidth } }}
           variant="permanent"
           open={ sidebarOpen }
           onClose={ toggleSidebar }
