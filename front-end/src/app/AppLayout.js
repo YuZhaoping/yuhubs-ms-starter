@@ -36,7 +36,7 @@ const AppLayout = (props) => {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
+  const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   }
 
@@ -50,7 +50,7 @@ const AppLayout = (props) => {
           PaperProps={{ style: { width: drawerWidth } }}
           variant="permanent"
           open={ sidebarOpen }
-          onClose={ handleDrawerToggle }
+          onClose={ toggleSidebar }
         />
       </Drawer> }
 
@@ -58,7 +58,7 @@ const AppLayout = (props) => {
 
         <Header
           sidebarOpen={ sidebarOpen }
-          onDrawerToggle={ handleDrawerToggle }
+          onDrawerToggle={ toggleSidebar }
           authUser={ authUser }
         />
 
