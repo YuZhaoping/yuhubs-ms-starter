@@ -10,7 +10,7 @@ import sizes from 'Components/sizes';
 const drawerWidth = sizes.appSidebarWidth;
 
 
-const Drawer = styled('div')(({
+const SidebarWrapper = styled('div')(({
   theme
 }) => ({
   [theme.breakpoints.up("md")]: {
@@ -45,14 +45,14 @@ const AppLayout = (props) => {
     <React.Fragment>
 
       { sidebarOpen &&
-      <Drawer>
+      <SidebarWrapper>
         <Sidebar
           PaperProps={{ style: { width: drawerWidth } }}
           variant="permanent"
           open={ sidebarOpen }
           onClose={ toggleSidebar }
         />
-      </Drawer> }
+      </SidebarWrapper> }
 
       <AppContent>
 
