@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-import sizes from 'Components/sizes';
+import sizes from 'Pages/components/sizes';
 
 const titleBarHeight = sizes.pageTitleBarHeight;
 

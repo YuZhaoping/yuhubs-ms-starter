@@ -10,7 +10,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Layout from './Layout'
 
 
-import sizes from 'Components/sizes';
+import sizes from 'Pages/components/sizes';
 
 const sidebarWidth = sizes.pageSidebarWidth;
 const footerHeight = sizes.footerHeight;

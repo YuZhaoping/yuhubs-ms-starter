@@ -17,7 +17,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
-import sizes from 'Components/sizes';
+import sizes from 'Pages/components/sizes';
 
 const menuItemHeight = sizes.pageMenuItemHeight;
 

@@ -11,7 +11,7 @@ import MuiTabs from '@material-ui/core/Tabs';
 import MuiTab from '@material-ui/core/Tab';
 
 
-import sizes from 'Components/sizes';
+import sizes from 'Pages/components/sizes';
 
 const tabsHeight = sizes.pageTabsHeight;
 
