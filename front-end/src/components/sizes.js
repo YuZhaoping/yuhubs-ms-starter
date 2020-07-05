@@ -9,6 +9,7 @@ const appsMenuItemHeight = 36;
 const pageTitleBarHeight = 36;
 const pageMenuItemHeight = 36;
 const pageTabsHeight = 12;
+const pageSidebarWidth = 276;
 
 
 export default {
@@ -18,5 +19,6 @@ export default {
   appsMenuItemHeight,
   pageTitleBarHeight,
   pageMenuItemHeight,
-  pageTabsHeight
+  pageTabsHeight,
+  pageSidebarWidth
 };
