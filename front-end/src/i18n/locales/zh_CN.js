@@ -28,7 +28,7 @@ const zh_CN = {
   "Dashboard": "仪表盘",
   "Index": "起始页",
 
-  "appsmenu.tooltip": "Ecom 应用",
+  "appsmenu.tooltip": "E-comm 应用",
 
   "Apps": "应用",
   "Catalog": "产品目录",
