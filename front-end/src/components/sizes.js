@@ -1,5 +1,6 @@
 
 const headerToolbarHeight = 48;
+const footerHeight = 36;
 
 const appSidebarWidth = 252;
 
@@ -12,6 +13,7 @@ const pageTabsHeight = 12;
 
 export default {
   headerToolbarHeight,
+  footerHeight,
   appSidebarWidth,
   appsMenuItemHeight,
   pageTitleBarHeight,

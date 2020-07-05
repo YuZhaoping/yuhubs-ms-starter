@@ -10,11 +10,18 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 
 
+import sizes from 'Components/sizes';
+
+const footerHeight = sizes.footerHeight;
+
+
 const Wrapper = styled('div')(({
   theme
 }) => ({
   padding: `${theme.spacing(1) / 4}px ${theme.spacing(4)}px`,
-  background: theme.footer.background
+  background: theme.footer.background,
+
+  height: `${footerHeight}px`
 }));
 
 
