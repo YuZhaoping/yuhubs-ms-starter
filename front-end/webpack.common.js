@@ -143,8 +143,7 @@ module.exports = {
       Constants: path.resolve(__dirname, 'src/constants/'),
       Routes: path.resolve(__dirname, 'src/routes/'),
       Pages: path.resolve(__dirname, 'src/pages/'),
-      Services: path.resolve(__dirname, 'src/services/'),
-      Utils: path.resolve(__dirname, 'src/util/')
+      Services: path.resolve(__dirname, 'src/services/')
     }
   },
   externals: {
