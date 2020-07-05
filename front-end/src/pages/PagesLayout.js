@@ -33,10 +33,10 @@ const PagesLayout = (props) => {
 
   return (
     <div className={ classes.root } >
-      <div className={ classes.pageHeader }>
+      <div className={ classes.pageHeader } >
         <PageTitleBar { ...rest } />
       </div>
-      <div className={ classes.pageContent }>
+      <div className={ classes.pageContent } >
         { children }
       </div>
     </div>
