@@ -36,8 +36,7 @@ export const BrandBar = styled(BrandBarBase)(({
   theme
 }) => ({
   borderRadius: '4px',
-  margin: theme.spacing(0, 4),
-  padding: theme.spacing(1, 2, 0, 2)
+  padding: theme.spacing(3, 2, 2, 0)
 }));
 
 
@@ -48,5 +47,5 @@ export const GrowSpace = styled('div')({
 
 
 export const PlaceHold = styled('div')({
-  width: '16px'
+  width: '48px'
 });

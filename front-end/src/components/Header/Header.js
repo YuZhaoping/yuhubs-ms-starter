@@ -1,10 +1,11 @@
 import React from 'react';
 
 
+import Hidden from '@material-ui/core/Hidden';
+
+
 import {
-  AppBar,
-  Toolbar,
-  BrandBar,
+  AppBar, Toolbar, BrandBar,
   GrowSpace,
   PlaceHold
 } from './components';
@@ -24,6 +25,10 @@ const AuthedToolbar = ({ sidebarOpened, onSidebarToggle, authUser }) => (
       />
     }
 
+    { !sidebarOpened &&
+      <Hidden smDown> <BrandBar /> </Hidden>
+    }
+
     <GrowSpace />
 
     <AppsMenu />
@@ -40,6 +45,8 @@ const AuthedToolbar = ({ sidebarOpened, onSidebarToggle, authUser }) => (
 
 const UnauthedToolbar = () => (
   <Toolbar>
+
+    <SidebarButton disabled />
 
     <BrandBar />
 
