@@ -19,7 +19,7 @@ export const MenuToggle = styled('div')(({
   alignItems: 'center',
 
   margin: theme.spacing(0, 2),
-  padding: theme.spacing(0.75, 2),
+  padding: theme.spacing(2, 2, 1, 2),
 
   borderStyle: 'solid',
   borderColor: theme.palette.primary.main,
