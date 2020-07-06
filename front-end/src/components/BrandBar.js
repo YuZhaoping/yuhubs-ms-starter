@@ -23,13 +23,14 @@ const useStyles = makeStyles(theme => ({
 const BrandIcon= styled('div')(({
   theme
 }) => ({
-  padding: theme.spacing(0, 0, 0, 2),
+  padding: theme.spacing(0, 0, 0, 4),
   textAlign: 'center',
   '& img': {
     width: 24,
     height: 24
   }
 }));
+
 
 const BrandName = styled('div')(({
   theme
