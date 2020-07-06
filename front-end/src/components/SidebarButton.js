@@ -12,15 +12,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 const IconButton = styled(MuiIconButton)(({
   theme
 }) => ({
-  padding: theme.spacing(2)
+  padding: theme.spacing(2, 2)
 }));
 
 
-const SidebarButton = ({ onSidebarToggle }) => (
+const SidebarButton = ({ onSidebarToggle, ...rest }) => (
   <IconButton
     onClick={ onSidebarToggle }
     color="inherit"
-    aria-label="Open drawer"
+    aria-label="Toggle sidebar"
+    { ...rest }
   >
     <MenuIcon />
   </IconButton>
