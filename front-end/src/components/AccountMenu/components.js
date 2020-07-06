@@ -19,7 +19,7 @@ export const MenuToggle = styled('div')(({
   alignItems: 'center',
 
   margin: theme.spacing(0, 2),
-  padding: theme.spacing(2, 2, 1, 2),
+  padding: theme.spacing(1, 2, 0.25, 2),
 
   borderStyle: 'solid',
   borderColor: theme.palette.primary.main,
@@ -39,7 +39,7 @@ export const AvatarWrapper = styled(Avatar)(({
 }) => ({
   backgroundColor: 'inherit',
   color: theme.palette.primary.main,
-  marginLeft: theme.spacing(1),
+  margin: theme.spacing(0, 1),
 
   width: '22px',
   height: '22px'
