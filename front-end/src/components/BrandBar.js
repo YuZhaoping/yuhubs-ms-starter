@@ -8,8 +8,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import clsx from 'clsx';
 
-
 import styled from '@material-ui/core/styles/styled';
+
+
+import Typography from '@material-ui/core/Typography';
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,7 +34,7 @@ const BrandIcon= styled('div')(({
 }));
 
 
-const BrandName = styled('div')(({
+const BrandName = styled(Typography)(({
   theme
 }) => ({
   whiteSpace: 'nowrap',
@@ -53,7 +55,7 @@ const BrandBar = (props) => {
       <BrandIcon>
         <img src={ require("Assets/img/logo.png") } />
       </BrandIcon>
-      <BrandName>
+      <BrandName variant="subtitle2">
         <FormattedMessage id={ "app.name" }/>
       </BrandName>
     </div>
