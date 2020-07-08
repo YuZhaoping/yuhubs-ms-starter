@@ -79,7 +79,7 @@ const AccountMenu = props => {
         <AvatarWrapper>
           <AccountCircleIcon />
         </AvatarWrapper>
-        <Username>
+        <Username variant="subtitle2">
           { username }
         </Username>
         <ArrowDropDownWrapper>

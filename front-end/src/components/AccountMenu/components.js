@@ -4,6 +4,8 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import styled from '@material-ui/core/styles/styled';
 
+import Typography from '@material-ui/core/Typography';
+
 import MuiMenu from '@material-ui/core/Menu';
 import MuiMenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
@@ -46,7 +48,7 @@ export const AvatarWrapper = styled(Avatar)(({
 }));
 
 
-export const Username = styled('span')(({
+export const Username = styled(Typography)(({
   theme
 }) => ({
   color: theme.palette.primary.main,
