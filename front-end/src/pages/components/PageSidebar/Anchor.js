@@ -7,7 +7,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Container from './Container';
 import Fab from './FabWrapper';
 
-import DimensionReferrer from 'Components/DimensionReferrer';
+import DimensionReferrer from 'Pages/components/DimensionReferrer';
 
 
 const Anchor = (props) => {
