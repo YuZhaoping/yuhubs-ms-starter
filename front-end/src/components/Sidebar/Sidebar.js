@@ -36,9 +36,9 @@ const brandBarHeight = sizes.headerToolbarHeight;
 const BrandBar = styled(BrandBarBase)(({
   theme
 }) => ({
-  padding: theme.spacing(3, 2, 2, 0),
+  padding: theme.spacing(2, 2, 2, 0),
 
-  backgroundColor: theme.palette.primary.dark,
+  backgroundColor: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
 
   height: `${brandBarHeight}px`

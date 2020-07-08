@@ -36,7 +36,7 @@ export const BrandBar = styled(BrandBarBase)(({
   theme
 }) => ({
   borderRadius: '4px',
-  padding: theme.spacing(3, 2, 2, 0)
+  padding: theme.spacing(2, 2, 2, 0)
 }));
 
 
