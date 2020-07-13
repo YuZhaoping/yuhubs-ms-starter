@@ -2,13 +2,13 @@ import {
   createGetInit,
   createPostJSONInit,
   createPutJSONInit
-} from 'Services/util/requests';
+} from 'Services/http/requests';
 
 import {
   checkStatus,
   parseJSON,
   parseApiData
-} from 'Services/util/responses';
+} from 'Services/http/responses';
 
 
 import {

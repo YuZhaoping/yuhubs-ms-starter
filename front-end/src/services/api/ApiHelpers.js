@@ -4,13 +4,13 @@ import {
   createPutJSONInit,
   createPatchJSONInit,
   createDeleteInit
-} from '../util/requests';
+} from '../http/requests';
 
 import {
   checkStatus,
   parseJSON,
   parseApiData
-} from '../util/responses';
+} from '../http/responses';
 
 
 export const doGet = function(url) {
