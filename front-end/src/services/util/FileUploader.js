@@ -26,7 +26,7 @@ FileUploader.prototype.setOptions = function(opts) {
 };
 
 
-FileUploader.prototype.upload = function(file) {
+FileUploader.prototype.startUpload = function(file) {
   if (!file || this.status !== 0) {
     return;
   }
