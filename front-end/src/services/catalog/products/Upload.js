@@ -10,14 +10,14 @@ function inheritPrototype(subType, superType) {
 }
 
 
-const Uploader = function(opts) {
+const Upload = function(opts) {
   FileUploader.call(this, {
     ...opts,
     url: baseUrl + '/upload/products'
   });
 };
 
-inheritPrototype(Uploader, FileUploader);
+inheritPrototype(Upload, FileUploader);
 
 
-export default Uploader;
+export default Upload;
