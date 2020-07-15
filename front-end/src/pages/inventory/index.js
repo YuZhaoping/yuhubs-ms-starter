@@ -9,7 +9,7 @@ const Default = () => (
   <Switch>
 
     {routes.map((route, index) => (
-      route.component &&
+      route.component && route.path &&
       <Route
         key={ index }
         path={ route.path }
