@@ -70,7 +70,7 @@ const Link = React.forwardRef((props, ref) => (
 
 
 const PageMenu = (props) => {
-  const { menus } = props;
+  const { menus, pageRef } = props;
 
   const intl = useIntl();
 
@@ -86,6 +86,23 @@ const PageMenu = (props) => {
   }
 
   const open = Boolean(anchorMenu);
+
+
+  const handleMenuItemClick = (item, index) => {
+    closeMenu();
+
+    if (item.path) {
+      return;
+    }
+
+    if (pageRef && pageRef.current) {
+      const onMenuItemClick = pageRef.current.onMenuItemClick;
+
+      if (onMenuItemClick) {
+        onMenuItemClick(index);
+      }
+    }
+  };
 
 
   return (
@@ -104,10 +121,7 @@ const PageMenu = (props) => {
         {menus.map((item, index) => (
           <StyledMenuItem
             key={ index }
-            onClick={ (event) => {
-              closeMenu();
-              item.handleClick && item.handleClick(event);
-            } }
+            onClick={ (event) => { handleMenuItemClick(item, index); } }
             component={ item.path ? Link : 'li' }
             to={ item.path }
           >

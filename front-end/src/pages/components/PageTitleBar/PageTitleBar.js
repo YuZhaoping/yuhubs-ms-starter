@@ -16,7 +16,7 @@ import PageTabs from 'Pages/components/PageTabs';
 
 
 const PageTitleBar = (props) => {
-  const { title, menus, tabs, ...rest } = props;
+  const { title, tabs, menus, pageRef, ...rest } = props;
 
   const classes = useStyles();
 
@@ -29,7 +29,7 @@ const PageTitleBar = (props) => {
       <GrowSpace />
       { tabs && <PageTabs tabs={ tabs } { ...rest } /> }
       { menus
-        ? <PageMenu menus={ menus } />
+        ? <PageMenu menus={ menus } pageRef={ pageRef } />
         : <PlaceHold />
       }
     </div>
