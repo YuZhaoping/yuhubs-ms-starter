@@ -9,11 +9,14 @@ const pageTabsHeight = 12;
 
 const pageSidebarWidth = 276;
 
+const uploadDialogWidth = 640;
+
 
 export default {
   ...sizes,
   pageTitleBarHeight,
   pageMenuItemHeight,
   pageTabsHeight,
-  pageSidebarWidth
+  pageSidebarWidth,
+  uploadDialogWidth
 };
