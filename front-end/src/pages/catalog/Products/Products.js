@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 
 import Layout from '../Layout';
-
-
-import Divider from '@material-ui/core/Divider';
+import View from './View';
 
 
 const tab = 'products';
 
 const Products = (props) => {
 
+  const pageRef = useRef();
+
   return (
-    <Layout toTab={ tab } >
-      <Divider />
+    <Layout toTab={ tab } pageRef={ pageRef } >
+      <View ref={ pageRef } />
     </Layout>
   );
 };
