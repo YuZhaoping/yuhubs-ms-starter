@@ -32,6 +32,10 @@ const en_US = {
 
   "file-dropzone.prompt": "Drag and drop files here or click <alink>browse</alink> files",
 
+  "file-uploader.title": "File upload",
+  "file-uploader.submit": "Upload",
+  "file-uploader.uploading": "Uploading...",
+
   "Apps": "Apps",
   "Catalog": "Catalog",
   "Categories": "Categories",

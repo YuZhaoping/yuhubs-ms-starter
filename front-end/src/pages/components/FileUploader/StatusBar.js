@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 
+import { useIntl } from 'react-intl';
+
+
 import { formatFileSize } from './fileSize';
 
 
@@ -51,11 +54,11 @@ const calculatePercentage = function(file, loadedSize) {
   }
 };
 
-const formatPercentageStatus = function(uploadService, percentage) {
+const formatPercentageStatus = function(uploadService, percentage, uploadingPrompt) {
   if (uploadService
       && uploadService.isUploading()
       && percentage < 100) {
-    return "Uploading... " + percentage + '%';
+    return uploadingPrompt + ' ' + percentage + '%';
   }
   return percentage + '%';
 };
@@ -63,6 +66,9 @@ const formatPercentageStatus = function(uploadService, percentage) {
 
 const StatusBar = props => {
   const { file, uploadService } = props;
+
+  const intl = useIntl();
+
 
   const [uploadedSize, setUploadedSize] = useState(0);
 
@@ -86,7 +92,9 @@ const StatusBar = props => {
   const sizeStatus = formatSizeStatus(file, uploadedSize);
 
   const percentage = calculatePercentage(file, uploadedSize);
-  const percentageStatus = formatPercentageStatus(uploadService, percentage);
+
+  const uploadingPrompt = intl.formatMessage({id: "file-uploader.uploading"});
+  const percentageStatus = formatPercentageStatus(uploadService, percentage, uploadingPrompt);
 
 
   const classes = useStyles();

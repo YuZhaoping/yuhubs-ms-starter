@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
 
+import { FormattedMessage } from 'react-intl';
+
+
 import FileDropzone from './Dropzone';
 import FileProfile from './FileProfile';
 
@@ -129,7 +132,7 @@ const FileUploader = props => {
           <UploadIcon />
         </IconButton>
         <div className={ classes.titleText }>
-          File upload
+          <FormattedMessage id={ "file-uploader.title" } />
         </div>
         <IconButton
           disable={ uploadService ? "false" : "true" }
@@ -159,7 +162,7 @@ const FileUploader = props => {
             disabled={ !!(uploadService) || !currentFile }
             onClick={ startUpload }
           >
-            Upload
+            <FormattedMessage id={ "file-uploader.submit" } />
           </Button>
         </div>
       </div>

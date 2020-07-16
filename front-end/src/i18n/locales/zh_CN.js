@@ -32,6 +32,10 @@ const zh_CN = {
 
   "file-dropzone.prompt": "将文件拖放至此处或点击<alink>浏览</alink>文件",
 
+  "file-uploader.title": "上传文件",
+  "file-uploader.submit": "上传",
+  "file-uploader.uploading": "上传中...",
+
   "Apps": "应用",
   "Catalog": "产品目录",
   "Categories": "类别",
