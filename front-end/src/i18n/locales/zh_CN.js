@@ -45,6 +45,7 @@ const zh_CN = {
   "Supply": "供应",
   "Suppliers": "供应商",
 
+  "Import-Products": "导入产品",
   "Extra-Page1": "扩展页面1",
   "Extra-Page2": "扩展页面2"
 };

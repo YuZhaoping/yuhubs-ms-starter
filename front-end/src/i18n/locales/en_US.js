@@ -45,6 +45,7 @@ const en_US = {
   "Supply": "Supply",
   "Suppliers": "Suppliers",
 
+  "Import-Products": "Import Products",
   "Extra-Page1": "Extra Page1",
   "Extra-Page2": "Extra Page2"
 };
