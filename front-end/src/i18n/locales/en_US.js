@@ -30,6 +30,8 @@ const en_US = {
 
   "appsmenu.tooltip": "E-comm apps",
 
+  "file-dropzone.prompt": "Drag and drop files here or click <alink>browse</alink> files",
+
   "Apps": "Apps",
   "Catalog": "Catalog",
   "Categories": "Categories",

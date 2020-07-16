@@ -30,6 +30,8 @@ const zh_CN = {
 
   "appsmenu.tooltip": "E-comm 应用",
 
+  "file-dropzone.prompt": "将文件拖放至此处或点击<alink>浏览</alink>文件",
+
   "Apps": "应用",
   "Catalog": "产品目录",
   "Categories": "类别",

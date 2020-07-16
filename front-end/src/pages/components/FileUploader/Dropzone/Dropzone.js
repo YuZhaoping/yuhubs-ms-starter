@@ -2,12 +2,15 @@ import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+import { FormattedMessage } from 'react-intl';
 
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import clsx from 'clsx';
+
+
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 
 const useStyles = makeStyles(theme => ({
@@ -84,7 +87,12 @@ const Dropzone = props => {
             color="textSecondary"
             variant="body1"
           >
-            Drag and drop or <Link underline="always">browse</Link>{' '}your files
+            <FormattedMessage
+              id={ "file-dropzone.prompt" }
+              values={{
+                alink: chunks => <Link underline="always">{chunks}</Link>,
+              }}
+            />
           </Typography>
         </div>
       </div>
