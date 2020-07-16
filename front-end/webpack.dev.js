@@ -29,6 +29,7 @@ module.exports = function(env) {
 
       before: function(app) {
         app.use(apiMocker('/auth', 'mock/auth'));
+        app.use(apiMocker('/catalog', 'mock/catalog'));
       }
     }
   });
