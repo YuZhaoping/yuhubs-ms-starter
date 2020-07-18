@@ -2,4 +2,7 @@
 
 cd $(dirname $0)
 
+
+mvn -N install
+
 mvn install && mvn clean

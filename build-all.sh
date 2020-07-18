@@ -9,6 +9,7 @@ mvn -N install
 ./utils/build-all.sh
 ./auth/build-all.sh
 
+./services/build-pom.sh
 ./services/auth-server/cmd/build.sh
 ./services/catalog/cmd/build.sh
 
