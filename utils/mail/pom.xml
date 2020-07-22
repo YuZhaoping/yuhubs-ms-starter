@@ -10,9 +10,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>utils-mail</artifactId>
-	<name>utils-mail</name>
-	<description>Utils Mail</description>
+	<artifactId>mail-client</artifactId>
+	<name>mail-client</name>
+	<description>Mail Client</description>
 
 	<packaging>jar</packaging>
 

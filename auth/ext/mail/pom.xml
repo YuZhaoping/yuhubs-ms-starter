@@ -27,7 +27,7 @@
 
 		<dependency>
 			<groupId>com.yuhubs.ms.utils</groupId>
-			<artifactId>utils-mail</artifactId>
+			<artifactId>mail-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
