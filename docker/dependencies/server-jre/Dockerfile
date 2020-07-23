@@ -1,12 +1,12 @@
 # AlpineLinux with a glibc-2.31-r0 and Oracle Java 8
-FROM alpine:3.11
+FROM alpine:3.12
 
 MAINTAINER Zhaoping Yu <yuzhaoping1970@gmail.com>
 # Thanks to Anastas Dancha <anapsix@random.io> for the original work
 
 # Java version and other ENV
 ENV JAVA_VERSION_MAJOR=8 \
-    JAVA_VERSION_MINOR=251 \
+    JAVA_VERSION_MINOR=261 \
     JAVA_HOME=/opt/jdk \
     PATH=/opt/jdk/bin:${PATH} \
     LD_LIBRARY_PATH=/usr/glibc-compat/lib:/usr/lib:/lib \
