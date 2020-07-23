@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker pull alpine:3.11
+docker pull alpine:3.12
