@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+
+  test-pg-db:
+    container_name: test-pg-db
+    build: .
+    image: com.yuhubs.ms/test-pg:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=u123@Yuhubs
+    volumes:
+      - "test-pg-vol:/var/lib/postgresql/data"
+    networks:
+      - backend
+
+
+volumes:
+
+  test-pg-vol:
+    driver: local
+    name: test-pg-vol
+
+
+networks:
+
+  backend:
+    driver: bridge
+    name: ecom-backend
